@@ -63,6 +63,8 @@ function SignInBasic(props) {
 const [listLoader,setlistLoader]=useState(false);
 const theme = useTheme();
 const navigate = useNavigate();
+const dateform=['month','day','year'];
+const currDate=new Date();
 
 
  
@@ -78,12 +80,13 @@ const navigate = useNavigate();
   );
   const [errorState, seterrorState] = useState(
     {
-      firstName:"",
-      lastName:"",
-      dob:"",
-      email:"",
-      password:"",
-      confirmPassword:""
+      firstName:true,
+      lastName:true,
+      dob:true,
+      email:true,
+      password:true,
+      confirmPassword:true,
+      dob:true
     }
   );
   const [signinData, setsigninData] = useState(
@@ -105,17 +108,49 @@ const navigate = useNavigate();
   const handleSignup = () => setsignInState(!signInState);
 
   const inputFormValidation=(key,value)=>{
-    nameFormat=/^[a-zA-Z]+$/;
-    if(key=="firstName" && nameFormat.test(value))
+    let lastNameFormat=/^[a-zA-Z]+$/;
+    let nameFormat=/^[a-zA-Z]{3,}$/;
+    let emailFormat=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    let passwordFormat=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,15})/
+    const errorData={...errorState}
+    if(key=="firstName" && !nameFormat.test(value))
     {
-      
+      errorData[key]=true;
     }
+    else if(key=="lastName" && (!lastNameFormat.test(value) && value.trim()!=''))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="email" && !emailFormat.test(value))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="password" && !passwordFormat.test(value))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="confirmPassword" && signupData.password != value)
+    {
+      errorData[key]=true;
+    }
+    else
+    {
+      errorData[key]=false;
+    }
+
+    seterrorState(errorData);
+    // else if(key=="dob" && signupData.dob !== value)
+    // {
+    //   errorData[key]=true;
+    // }
+
   }
 
   const handleSignupInputs = (e,key) => {
     var value=e.target.value;
     const signupState={...signupData};
     signupState[key]=value;
+    inputFormValidation(key,value);
     setsignupData(signupState);
   }
 
@@ -236,22 +271,22 @@ const navigate = useNavigate();
     <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form">
                 <MKBox mb={2}>
-                  <MKInput onChange={(e)=>handleSignupInputs(e,"firstName")} type="text" label="First Name" value={signupData.firstName} fullWidth />
+                  <MKInput error={errorState.firstName} success={!errorState.firstName} onChange={(e)=>handleSignupInputs(e,"firstName")} type="text" label="First Name" value={signupData.firstName} fullWidth />
                   </MKBox>
                   <MKBox mb={2}>
-                  <MKInput onChange={(e)=>handleSignupInputs(e,"lastName")} type="text" label="Last Name" value={signupData.lastName} fullWidth />
+                  <MKInput error={errorState.lastName} success={!errorState.lastName} onChange={(e)=>handleSignupInputs(e,"lastName")} type="text" label="Last Name" value={signupData.lastName} fullWidth />
                   </MKBox>
                 <MKBox mb={2}>
-                  <MKInput onChange={(e)=>handleSignupInputs(e,"dob")} type="date" label="" value={signupData.dob} fullWidth />
+                  <MKInput views={dateform} maxDate={currDate} onChange={(e)=>handleSignupInputs(e,"dob")} type="date" label="" value={signupData.dob} fullWidth />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth />
+                    <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput onChange={(e)=>handleSignupInputs(e,"password")} type="password" label="Password" value={signupData.password} fullWidth />
+                    <MKInput error={errorState.password} success={!errorState.password} onChange={(e)=>handleSignupInputs(e,"password")} type="password" label="Password" value={signupData.password} fullWidth />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput onChange={(e)=>handleSignupInputs(e,"confirmPassword")} type="password" label="Confirm Password" value={signupData.confirmPassword} fullWidth />
+                    <MKInput error={errorState.confirmPassword} success={!errorState.confirmPassword} onChange={(e)=>handleSignupInputs(e,"confirmPassword")} type="password" label="Confirm Password" value={signupData.confirmPassword} fullWidth />
                   </MKBox>
                   <MKBox display="flex" alignItems="center" ml={-1}>
                     <Switch checked={asDirector} onChange={handlesetasDirector} />
