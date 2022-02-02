@@ -44,6 +44,7 @@ import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
+import MKAlert from "components/MKAlert"
 import axios from '../../../axios'
 
 // Material Kit 2 React example components
@@ -59,6 +60,10 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 function SignInBasic(props) {
   const [asDirector, setasDirector] = useState(false);
   const [signInState, setsignInState] = useState(true);
+  const [showError, setshowError] = useState(false);
+  const [errMsg, seterrMsg] = useState("Some Error Occurred!");
+  const [showSuccess, setshowSuccess] = useState(false);
+  const [succMsg, setsuccMsg] = useState("Success!");
   // const [loggedin, setloggedin] = useState(false);
 const [listLoader,setlistLoader]=useState(false);
 const theme = useTheme();
@@ -66,6 +71,11 @@ const navigate = useNavigate();
 const dateform=['month','day','year'];
 const currDate=new Date();
 
+const headers = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': "*",
+  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+}
 
  
   const [signupData, setsignupData] = useState(
@@ -82,11 +92,10 @@ const currDate=new Date();
     {
       firstName:true,
       lastName:true,
-      dob:true,
       email:true,
       password:true,
       confirmPassword:true,
-      dob:true
+      dob:false
     }
   );
   const [signinData, setsigninData] = useState(
@@ -112,7 +121,7 @@ const currDate=new Date();
     let nameFormat=/^[a-zA-Z]{3,}$/;
     let emailFormat=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     let passwordFormat=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,15})/
-    const errorData={...errorState}
+    const errorData={...errorState};
     if(key=="firstName" && !nameFormat.test(value))
     {
       errorData[key]=true;
@@ -149,8 +158,8 @@ const currDate=new Date();
   const handleSignupInputs = (e,key) => {
     var value=e.target.value;
     const signupState={...signupData};
-    signupState[key]=value;
     inputFormValidation(key,value);
+    signupState[key]=value;
     setsignupData(signupState);
   }
 
@@ -161,53 +170,86 @@ const currDate=new Date();
     setsigninData(signinState);
   }
 
+  const closeAlert=()=>{
+    setshowError(false);
+  }
+  const closeAlert2=()=>{
+    setshowSuccess(false);
+  }
+
+  const displayError=(msg)=>{
+    setshowError(true);
+    seterrMsg(msg);
+    const myTimeout = setTimeout(closeAlert, 5000);
+  }
+
+  const displaySuccess=(msg)=>{
+    setshowSuccess(true);
+    setsuccMsg(msg);
+    const myTimeout = setTimeout(closeAlert2, 5000);
+  }
+
+
   const routeChange = () =>{ 
     navigate('/CastIt');
   }
-
+  // {
+  //   "userEmail":"abc1d@gmail.com",
+  //   "userFirstName":"hvjgj",
+  //   "userLastName":"hvhvj",
+  //   "userDOB":"11/18/2021",
+  //   "userRegistereAs":"Applicant",
+  //   "userPassword":"!Abc1234567"
+  //   }
   const submitSignupForm = (e) => {
+    
+      let dates=(signupData.dob).split("-");
+      let mm=dates[1];
+      let dd=dates[2];
+      let yy=dates[0];
+      let finalDate=mm+"/"+dd+"/"+yy;
+    
+
     let data={
       "userEmail":""+signupData.email,
       "userFirstName":""+signupData.firstName,
       "userLastName":""+signupData.lastName,
-      "userDOB":""+signupData.dob, //"11/18/2021"
+      "userDOB":finalDate, //"11/18/2021"
       "userRegistereAs":asDirector ? "Director":"Applicant",
       "userPassword":""+signupData.password
       }
+
+      // let data={
+      //   "userEmail":"abc1d@gmail.com",
+      //   "userFirstName":"hvjgj",
+      //   "userLastName":"hvhvj",
+      //   "userDOB":"11/18/2021",
+      //   "userRegistereAs":"Applicant",
+      //   "userPassword":"!Abc1234567"
+      //   };
       setlistLoader(true);
-    axios.post("Signup", data).then((res) => {
+
+    axios.post("/userdetails/adduser", data).then((res) => {
       let errorMsg="";
       setlistLoader(false);
-    if(res.data.errorMessage)
-    {
-       errorMsg= res.data.errorMessage ==="" ? "Some error occurred" : res.data.errorMessage;
-    }
-    else
-    {
-      errorMsg= "Some error occurred";
-    }
+      
 
-    // if (res.data.errorMessage === t("INVALID_SESSION") || res.data.Description === "Invalid Session!") {
-    //  let message = t("INVALID_SESSION");
-    //       props.showErrorPage(message, true);
-    //   setErrorMessage(t("INVALID_SESSION"));
-    //   setErrBool(true);
-    // }
-    //   else if (res.data.Status!==0) {
-    //     setErrorMessage(errorMsg);
-    //     setErrBool(true);
-    //     }
-    //    else if (res.data.mbError) {
-    //     setErrorMessage(errorMsg);
-    //     setErrBool(true);
-    //     } else {
-    //       let listData=[];
-    //       let arr=[];
+    if (res.data.error) {
+    //toaster
+    displayError(res.data.error);
+    
+        } else {
+    
+    displaySuccess("User Account created successfully!!");
+    const myTimeout = setTimeout(closeAlert2, 5000);
+
+          let listData=[];
+          let arr=[];
           
           
-    //         props.setJobList1(listData);
-    //         props.setJobNameList(arr);
-    //     }
+            props.setJobList1(listData);
+            props.setJobNameList(arr);
+        }
       })
       .catch((error) => {
         // setErrorMessage(error);
@@ -218,50 +260,30 @@ const currDate=new Date();
 
   const submitSigninForm = (e) => {
     let data=  {
-        "userEmail":""+signinData.email,
-        "userPassword":""+signinData.password
-        }
-        setlistLoader(true);
-        routeChange();
-        axios.post("Signup", data).then((res) => {
-          let errorMsg="";
-          setlistLoader(false);
-          
-        if(res.data.errorMessage)
-        {
-           errorMsg= res.data.errorMessage ==="" ? "Some error occurred" : res.data.errorMessage;
-        }
-        else
-        {
-          errorMsg= "Some error occurred";
-        }
+      "userEmail":""+signinData.email,
+      "userPassword":""+signinData.password
+      }
     
-        // if (res.data.errorMessage === t("INVALID_SESSION") || res.data.Description === "Invalid Session!") {
-        //  let message = t("INVALID_SESSION");
-        //       props.showErrorPage(message, true);
-        //   setErrorMessage(t("INVALID_SESSION"));
-        //   setErrBool(true);
-        // }
-        //   else if (res.data.Status!==0) {
-        //     setErrorMessage(errorMsg);
-        //     setErrBool(true);
-        //     }
-        //    else if (res.data.mbError) {
-        //     setErrorMessage(errorMsg);
-        //     setErrBool(true);
-        //     } else {
-        //       let listData=[];
-        //       let arr=[];
-              
-              
-        //         props.setJobList1(listData);
-        //         props.setJobNameList(arr);
-        //     }
-          })
-          .catch((error) => {
-            // setErrorMessage(error);
-          setlistLoader(false);
-          });
+    setlistLoader(true);
+
+  axios.post("/userdetails/checkuser", data).then((res) => {
+    let errorMsg="";
+    setlistLoader(false);
+  if (res.data.error) {
+  //toaster
+  displayError(res.data.error);
+  
+      } else {
+  
+  displaySuccess("User Account created successfully!!");
+  const myTimeout = setTimeout(closeAlert2, 5000);
+  routeChange();
+      }
+    })
+    .catch((error) => {
+      // setErrorMessage(error);
+    setlistLoader(false);
+    });
   }
 
 
@@ -301,7 +323,8 @@ const currDate=new Date();
                     </MKTypography>
                   </MKBox>
                   <MKBox mt={4} mb={1}>
-                    <MKButton onClick={submitSignupForm} variant="gradient" color="info" fullWidth>
+                    <MKButton disabled={errorState.firstName || errorState.lastName || errorState.dob || errorState.email || errorState.password || errorState.confirmPassword}
+                     onClick={submitSignupForm} variant="gradient" color="info" fullWidth>
                       sign Up
                     </MKButton>
                   </MKBox>
@@ -367,7 +390,7 @@ const currDate=new Date();
                   <MKBox mb={2}>
                     <MKInput onChange={(e)=>handleSignInputs(e,"password")} type="password" value={signinData.password} label="Password" fullWidth />
                   </MKBox>
-                  <MKBox display="flex" alignItems="center" ml={-1}>
+                  {/* <MKBox display="flex" alignItems="center" ml={-1}>
                     <Switch checked={asDirector} onChange={handlesetasDirector} />
                     <MKTypography
                       variant="button"
@@ -378,7 +401,7 @@ const currDate=new Date();
                     >
                       &nbsp;&nbsp;Login as Director
                     </MKTypography>
-                  </MKBox>
+                  </MKBox> */}
                   <MKBox mt={4} mb={1}>
                     <MKButton onClick={submitSigninForm} variant="gradient" color="info" fullWidth>
                       sign in
@@ -387,7 +410,8 @@ const currDate=new Date();
                   <MKBox mt={3} mb={1} textAlign="center">
                     <MKTypography variant="button" color="text">
                       Don&apos;t have an account?{" "}
-                      <div role="button" onClick={handleSignup}><MKTypography
+                      <div role="button"  
+                      onClick={handleSignup}><MKTypography
                         // component={Link}
                         // to="/"
                         variant="button"
@@ -410,6 +434,8 @@ const currDate=new Date();
     <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
+                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
+                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
       {/* <DefaultNavbar
         routes={routes}
         action={{

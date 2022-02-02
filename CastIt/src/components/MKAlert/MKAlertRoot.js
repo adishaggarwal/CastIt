@@ -38,11 +38,15 @@ export default styled(Box)(({ theme, ownerState }) => {
     minHeight: pxToRem(60),
     backgroundImage: backgroundImageValue,
     color: white.main,
-    position: "relative",
+    position: "absolute",
+    right:"20px",
+    top:"5px",
+    minWidth:"350px",
     padding: pxToRem(16),
     marginBottom: pxToRem(16),
     borderRadius: borderRadius.md,
     fontSize: fontSizeRegular,
     fontWeight: fontWeightMedium,
+    zIndex:2
   };
 });
