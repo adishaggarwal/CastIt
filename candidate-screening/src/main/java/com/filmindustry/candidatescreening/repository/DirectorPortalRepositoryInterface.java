@@ -8,5 +8,5 @@ import com.filmindustry.candidatescreening.model.DirectorPortal;
 @Repository
 public interface DirectorPortalRepositoryInterface extends JpaRepository<DirectorPortal, Long> {
 
-
+DirectorPortal findByFormId(long formId);
 }
