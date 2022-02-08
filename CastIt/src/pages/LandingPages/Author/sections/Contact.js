@@ -22,11 +22,38 @@ import MKBox from "components/MKBox";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
+import Dropdown from "../../../../components/Dropdown/Dropdown";
+
+// {
+//   "userRegisteredId":"13",
+//   "movieName":"fantastic 4",
+//   "movieDesc":"it is a very good Movie.",
+//   "movieStatus":"Active", --
+//   "movieGenre":"Comedy",
+//   "role":"Actor",
+//   "roleDescription":"it is a very good role",
+//   "characteristics1":"tall",
+//   "characteristics2":"asian",
+//   "characteristics3":"drama school",
+//   "characteristics4":"acting certificate",
+//   "characteristics5":"60 kg",
+//   "roleStatus":"Active"
+//   }
 
 // Images
 import bgImage from "assets/images/examples/blog2.jpg";
 
-function Contact() {
+function Contact(props) {
+
+  let roleStatusArr = [
+    {
+      value: "Active",
+    },
+    {
+      value: "Closed",
+    },
+  ];
+
   return (
     <MKBox component="section" py={{ xs: 0, lg: 6 }}>
       <Container>
@@ -137,42 +164,91 @@ function Contact() {
               <Grid item xs={12} lg={7}>
                 <MKBox component="form" p={2} method="post">
                   <MKBox px={3} py={{ xs: 2, sm: 6 }}>
-                    <MKTypography variant="h2" mb={1}>
-                      Say Hi!
+                    <MKTypography variant="h2" mb={0}>
+                      Post a new role!
                     </MKTypography>
-                    <MKTypography variant="body1" color="text" mb={2}>
+                    {/* <MKTypography variant="body1" color="text" mb={2}>
                       We&apos;d like to talk with you.
-                    </MKTypography>
+                    </MKTypography> */}
                   </MKBox>
                   <MKBox pt={0.5} pb={3} px={3}>
                     <Grid container>
-                      <Grid item xs={12} pr={1} mb={6}>
+                      <Grid item xs={12} pr={1} mb={3}>
                         <MKInput
                           variant="standard"
-                          label="My name is"
-                          placeholder="Full Name"
+                          label="Name of the movie is"
+                          placeholder="Movie Name"
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                         />
                       </Grid>
-                      <Grid item xs={12} pr={1} mb={6}>
+                      <Grid item xs={12} pr={1} mb={3}>
+                        <MKInput
+                          variant="standard"
+                          label="Movie Description"
+                          placeholder="Horror Comedy movie with ..."
+                          InputLabelProps={{ shrink: true }}
+                          fullWidth
+                          multiline
+                          rows={4}
+                        />
+                      </Grid>
+                      <Grid item xs={12} pr={1} mb={3}>
+                        <MKInput
+                          variant="standard"
+                          label="Movie Genre"
+                          placeholder="Horror Comedy"
+                          InputLabelProps={{ shrink: true }}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12} pr={1} mb={3}>
+                        <MKInput
+                          variant="standard"
+                          label="Movie Role"
+                          placeholder="Actor"
+                          InputLabelProps={{ shrink: true }}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12} pr={1} mb={3}>
+                      <MKInput
+                          variant="standard"
+                          label="Role Description"
+                          placeholder="Need a muscular actor with good sense of humor"
+                          InputLabelProps={{ shrink: true }}
+                          fullWidth
+                          multiline
+                          rows={2}
+                        />
+                      </Grid>
+                      <MKInput
+                          variant="standard"
+                          label="Role Description"
+                          placeholder="Need a muscular actor with good sense of humor"
+                          InputLabelProps={{ shrink: true }}
+                          fullWidth
+                          multiline
+                          rows={2}
+                        />
+                      {/* <Grid item xs={12} pr={1} mb={3}>
+                        <Dropdown
+                          value={props.queue.Type}
+                          name="type"
+                          onChange={(event) =>
+                            props.inputChanged(props.queue.QueueId, "value", event)
+                          }
+                          array={roleStatusArr}
+                          type="value"
+                        />
+                      </Grid> */}
+                      <Grid item xs={12} pr={1} mb={3}>
                         <MKInput
                           variant="standard"
                           label="I'm looking for"
                           placeholder="What you love"
                           InputLabelProps={{ shrink: true }}
                           fullWidth
-                        />
-                      </Grid>
-                      <Grid item xs={12} pr={1} mb={6}>
-                        <MKInput
-                          variant="standard"
-                          label="Your message"
-                          placeholder="I want to say that..."
-                          InputLabelProps={{ shrink: true }}
-                          fullWidth
-                          multiline
-                          rows={6}
                         />
                       </Grid>
                     </Grid>

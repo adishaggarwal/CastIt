@@ -90,7 +90,7 @@ const routes = [
           },
           {
             name: "author",
-            route: "/pages/landing-pages/author",
+            route: "/Director",
             component: <Author />,
           },
         ],
