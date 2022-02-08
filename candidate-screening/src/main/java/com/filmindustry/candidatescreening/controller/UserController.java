@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.filmindustry.candidatescreening.bean.UserDetailsBean;
 import com.filmindustry.candidatescreening.service.UserDetailsServiceInterface;
 
+@CrossOrigin("*")
 @Validated
 @RestController
 @RequestMapping("/api/v1/userdetails/")
