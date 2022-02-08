@@ -1,31 +1,36 @@
 package com.filmindustry.candidatescreening.bean;
 
+import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DirectorPortalBean {
 
 	private long formId;
 	
 	private long userRegisteredId;
-	
+	@NotEmpty
 	private String movieName;
-	
+	@NotEmpty
 	private String movieDesc;
 	
 	private String movieStatus;
-	
+	@NotEmpty
 	private String movieGenre;
-	
+	@NotEmpty
 	private String role;
-	
+	@NotEmpty
 	private String roleDescription;
-	
+	@NotEmpty
 	private String characteristics1;
-	
+	@NotEmpty
 	private String characteristics2;
-	
+	@NotEmpty
 	private String characteristics3;
-	
+	@NotEmpty
 	private String characteristics4;
-	
+	@NotEmpty
 	private String characteristics5;
 	
 	private String roleStatus;
@@ -34,10 +39,19 @@ public class DirectorPortalBean {
 	
 	private long roleGivenToID;
 	
+	String message;
+	String error;
+	
 	public DirectorPortalBean() {
 		// TODO Auto-generated constructor stub
 	}
-
+	public DirectorPortalBean(String error) {
+		this.error=error;
+	}
+	public DirectorPortalBean(String error,String message) {
+		this.error=error;
+		this.message=message;
+	}
 	public DirectorPortalBean(long userRegisteredId, String movieName, String movieDesc, String movieStatus,
 			String movieGenre, String role, String roleDescription, String characteristics1, String characteristics2,
 			String characteristics3, String characteristics4, String characteristics5, String roleStatus,
@@ -186,6 +200,18 @@ public class DirectorPortalBean {
 
 	public void setRoleGivenToID(long roleGivenToID) {
 		this.roleGivenToID = roleGivenToID;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getError() {
+		return error;
+	}
+	public void setError(String error) {
+		this.error = error;
 	}
 
 }
