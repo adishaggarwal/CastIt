@@ -1,5 +1,8 @@
 
 export {
-    setLoggedinUser
+    setLoggedinUser,
+    setshowForm,
+    setdirectorActivePosts,
+    setdirectorUpdateFormId
   } from "./actions/ScreenIt";
   

@@ -16,7 +16,26 @@ export const setLoggedinUser = (userRegisterationId,userEmail,userFirstName,user
   };
 };
 
+export const setshowForm = (value) => {
+  return {
+    type: actionTypes.SET_SHOW_FORM,
+    value: value
+  };
+};
 
+export const setdirectorActivePosts = (value) => {
+  return {
+    type: actionTypes.SET_DIRECTORACTIVE_POSTS,
+    value: value
+  };
+};
+
+export const setdirectorUpdateFormId = (value) => {
+  return {
+    type: actionTypes.SET_DIRECTORUPDATE_FORMID,
+    value: value
+  };
+};
 
 
 // export const fetchRequestParams = (object) => {

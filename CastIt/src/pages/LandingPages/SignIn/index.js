@@ -24,8 +24,6 @@ import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-// react-router-dom components
-import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 // import { Redirect } from 'react-router-dom'
@@ -152,10 +150,7 @@ const headers = {
     }
 
     seterrorState(errorData);
-    // else if(key=="dob" && signupData.dob !== value)
-    // {
-    //   errorData[key]=true;
-    // }
+
 
   }
 
@@ -245,7 +240,6 @@ const headers = {
         } else {
     
     displaySuccess("User Account created successfully!!");
-    const myTimeout = setTimeout(closeAlert2, 5000);
         }
       })
       .catch((error) => {
@@ -276,8 +270,7 @@ const headers = {
   
       } else {
   
-  displaySuccess("User Account created successfully!!");
-  const myTimeout = setTimeout(closeAlert2, 5000);
+  // displaySuccess("User Account created successfully!!");
   routeChange();
   props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs)
       }

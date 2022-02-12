@@ -12,6 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+import React, { useState,useEffect } from "react";
 
 // react-router components
 import { Link } from "react-router-dom";
@@ -27,8 +28,10 @@ import MuiLink from "@mui/material/Link";
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
+import MKButton from "components/MKButton";
 
-function TransparentBlogCard({ image, title, description, action }) {
+
+function TransparentBlogCard({ image, title, description, action,clickedDelete,clickedEdit }) {
   const cardActionStyles = {
     display: "flex",
     alignItems: "center",
@@ -44,6 +47,16 @@ function TransparentBlogCard({ image, title, description, action }) {
         transform: `translateX(6px)`,
       },
   };
+
+  const [displayOptions,setdisplayOptions]=useState(false);
+
+  const showOptions=()=>{
+    setdisplayOptions(true);
+  }
+
+  const hideOptions=()=>{
+    setdisplayOptions(false);
+  }
 
   const imageTemplate = (
     <MKBox position="relative" borderRadius="lg">
@@ -83,13 +96,24 @@ function TransparentBlogCard({ image, title, description, action }) {
         overflow: "visible",
       }}
     >
-      {action.type === "internal" ? (
+      {/* {action.type === "internal" ? (
         <Link to={action.route}>{imageTemplate}</Link>
       ) : (
         <MuiLink href={action.route} target="_blank" rel="noreferrer">
           {imageTemplate}
         </MuiLink>
-      )}
+      )} */}
+      <div onMouseLeave={() => hideOptions()} onMouseOver={() => showOptions()}>
+      {displayOptions  ? <div style={{position:"absolute",top:"5px",right:"5px",zIndex:"2"}}>
+       <MKButton onClick={clickedEdit} style={{marginRight:"5px"}} variant="contained" color="white"  iconOnly>
+        <Icon>edit</Icon>
+      </MKButton> 
+      <MKButton onClick={clickedDelete} variant="contained" color="white" iconOnly>
+        <Icon>delete</Icon>
+      </MKButton>
+      </div>:null}
+      {imageTemplate}
+      </div>
       <MKBox pt={2} pb={3}>
         {action.type === "internal" ? (
           <Link to={action.route} sx={cardActionStyles}>
@@ -104,7 +128,8 @@ function TransparentBlogCard({ image, title, description, action }) {
             </MKTypography>
           </MuiLink>
         )}
-        <MKTypography variant="body2" component="p" color="text" mb={3}>
+        <MKTypography style={{textOverflow: "ellipsis",overflow: "hidden",display: "-webkit-box",WebkitLineClamp: "6",
+    WebkitBoxOrient: "vertical",whitespace: "normal"}} variant="body2" component="p" color="text" mb={3}>
           {description}
         </MKTypography>
         {action.type === "internal" ? (

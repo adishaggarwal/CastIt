@@ -1,44 +1,30 @@
-/*
-=========================================================
-* Material Kit 2 React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import React, { useState,useEffect } from "react";
+import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
+import * as actions from '../../../../store/index';
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
-import Dropdown from "../../../../components/Dropdown/Dropdown";
+import MKAlert from "components/MKAlert"
 
-// {
-//   "userRegisteredId":"13",
-//   "movieName":"fantastic 4",
-//   "movieDesc":"it is a very good Movie.",
-//   "movieStatus":"Active", --
-//   "movieGenre":"Comedy",
-//   "role":"Actor",
-//   "roleDescription":"it is a very good role",
-//   "characteristics1":"tall",
-//   "characteristics2":"asian",
-//   "characteristics3":"drama school",
-//   "characteristics4":"acting certificate",
-//   "characteristics5":"60 kg",
-//   "roleStatus":"Active"
-//   }
+
+import axios from '../../../../axios';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useNavigate } from 'react-router-dom'
+import Dropdown from "../../../../components/Dropdown/Dropdown";
+import {
+  lighten,
+  makeStyles,
+  withStyles,
+  useTheme,
+} from "@material-ui/core/styles";
 
 // Images
 import bgImage from "assets/images/examples/blog2.jpg";
@@ -54,7 +40,335 @@ function Contact(props) {
     },
   ];
 
+  const [showError, setshowError] = useState(false);
+  const [errMsg, seterrMsg] = useState("Some Error Occurred!");
+  const [showSuccess, setshowSuccess] = useState(false);
+  const [succMsg, setsuccMsg] = useState("Success!");
+
+  const [formData,setformData]=useState(
+    {
+      "userRegisteredId":props.userRegisteredId,
+      "movieName":"",
+      "movieDesc":"",
+      "movieGenre":"",
+      "role":"",
+      "roleDescription":"",
+      "characteristic1":"",
+      "characteristic2":"",
+      "characteristic3":"",
+      "characteristic4":"",
+      "characteristic0":"",
+      "roleStatus":"Active"
+      }
+  );
+
+  const [errorState, seterrorState] = useState(
+    {
+      movieName:true,
+      movieDesc:true,
+      movieGenre:true,
+      role:true,
+      roleDescription:true,
+      characteristic1:true,
+      characteristic2:true,
+      characteristic3:true,
+      characteristic4:true,
+      characteristic0:true,
+      value1:true,
+      value2:true,
+      value3:true,
+      value4:true,
+      value0:true
+      }
+  );
+  
+  const [listLoader,setlistLoader]=useState(false);
+
+  const [charData, setcharData] = useState(
+    [
+      {
+        characteristic:"",
+        value:""
+      },
+      {
+        characteristic:"",
+        value:""
+      },
+      {
+        characteristic:"",
+        value:""
+      },
+      {
+        characteristic:"",
+        value:""
+      },
+      {
+        characteristic:"",
+        value:""
+      },
+    ]
+  );
+
+  const useStyles22 = makeStyles((theme) => ({
+    backdropLoader: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#0072C6',
+    },
+  }));
+  const classes22 = useStyles22();
+  
+
+  useEffect(() => {
+    if(props.showForm==="create")
+    {
+     
+      resetForm();
+      resetError(true);
+    }
+  }, [props.showForm]);
+
+
+  useEffect(() => {
+    if(props.showForm==="update")
+    {
+      let result = (props.directorActivePosts).find((obj) => {
+        return obj.formId === props.directorUpdateFormId;
+      });
+      const formDataCopy={...formData};
+      const charDataCopy=[...charData];
+
+      
+      formDataCopy["movieName"]=result.movieName;
+      formDataCopy["movieDesc"]=result.movieDesc;
+      formDataCopy["movieGenre"]=result.movieGenre;
+      formDataCopy["role"]=result.role;
+      formDataCopy["roleDescription"]=result.roleDescription;
+      formDataCopy["roleStatus"]=result.roleStatus;
+      for(let i=0;i<5;i++)
+      {
+        let charArr=(result["characteristics"+(i+1)]).split(",");
+        charDataCopy[i].characteristic=charArr[0];
+        charDataCopy[i].value=charArr[1];
+      }
+      
+      setcharData(charDataCopy);
+      setformData(formDataCopy);
+
+      resetError(false);
+    }
+  }, [props.directorUpdateFormId]);
+
+  const resetError=(val)=>{
+    let resetError1={
+      movieName:val,
+      movieDesc:val,
+      movieGenre:val,
+      role:val,
+      roleDescription:val,
+      characteristic1:val,
+      characteristic2:val,
+      characteristic3:val,
+      characteristic4:val,
+      characteristic0:val,
+      value1:val,
+      value2:val,
+      value3:val,
+      value4:val,
+      value0:val
+      }
+      seterrorState(resetError1);
+  }
+
+  const resetForm=()=>{
+    const formDataCopy={...formData};
+      const charDataCopy=[...charData];
+
+      
+      formDataCopy["movieName"]="";
+      formDataCopy["movieDesc"]="";
+      formDataCopy["movieGenre"]="";
+      formDataCopy["role"]="";
+      formDataCopy["roleDescription"]="";
+      formDataCopy["roleStatus"]="";
+      for(let i=0;i<5;i++)
+      {
+        charDataCopy[i].characteristic="";
+        charDataCopy[i].value="";
+      }
+      
+      setcharData(charDataCopy);
+      setformData(formDataCopy);
+  }
+
+  const setCharacteristic=(e,key,index)=>{
+      const charDataCopy=[...charData];
+      charDataCopy[index][key]=e.target.value;
+    inputFormValidation(key+""+index,e.target.value);
+      setcharData(charDataCopy);
+  }
+
+
+  const enablePost=()=>{
+    let ans=false;
+    for(let i=0;i<5;i++)
+    {
+      if(errorState["characteristic"+i])
+      {
+        ans=true;
+        break;
+      }
+      if(errorState["value"+i])
+      {
+        ans=true;
+        break;
+      }
+    }
+    return (errorState.movieName || errorState.movieDesc || errorState.movieGenre || errorState.role || 
+      errorState.roleDescription || ans);
+    }
+
+  const inputFormValidation=(key,value)=>{
+    const errorData={...errorState};
+    var splformat = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    var numformat= /^([^0-9]*)$/;
+
+    if(key=="movieDesc" && value.trim()=='')
+    {
+      errorData[key]=true;
+    }
+   
+    else if(key=="movieGenre" && (value.trim()=='' || splformat.test(value) || !numformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="role" && (value.trim()=='' || splformat.test(value) || !numformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="roleDescription" && value.trim()=='')
+    {
+      errorData[key]=true;
+    }
+    else if(key=="characteristic1" && (value.trim()=='' || splformat.test(value) || !numformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="characteristic2" && (value.trim()=='' || splformat.test(value) || !numformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="characteristic3" && (value.trim()=='' || splformat.test(value) || !numformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="characteristic4" && (value.trim()=='' || splformat.test(value) || !numformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="characteristic0" && (value.trim()=='' || splformat.test(value) || !numformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="value1" && (value.trim()=='' || splformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="value2" && (value.trim()=='' || splformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="value3" && (value.trim()=='' || splformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="value4" && (value.trim()=='' || splformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="value0" && (value.trim()=='' || splformat.test(value)))
+    {
+      errorData[key]=true;
+    }
+    else
+    {
+      errorData[key]=false;
+    }
+
+    seterrorState(errorData);
+  }
+
+  const handleformData=(e,key)=>{
+    const formCopy={...formData};
+    formCopy[key]=e.target.value;
+    inputFormValidation(key,e.target.value);
+    setformData(formCopy);
+  }
+
+  const closeAlert=()=>{
+    setshowError(false);
+  }
+  const closeAlert2=()=>{
+    setshowSuccess(false);
+  }
+
+  const displayError=(msg)=>{
+    setshowError(true);
+    seterrMsg(msg);
+    const myTimeout = setTimeout(closeAlert, 5000);
+  }
+
+  const displaySuccess=(msg)=>{
+    setshowSuccess(true);
+    setsuccMsg(msg);
+    const myTimeout = setTimeout(closeAlert2, 5000);
+  }
+
+  const postRole=()=>{
+    
+    let data=  {
+      "userRegisteredId":props.userRegisteredId,
+      "movieName":formData.movieName,
+      "movieDesc":formData.movieDesc,
+      "movieStatus":"Active",
+      "movieGenre":formData.movieGenre,
+      "role":formData.role,
+      "roleDescription":formData.roleDescription,
+      "characteristics1":charData[0].characteristic+ ","+charData[0].value,
+      "characteristics2":charData[1].characteristic+ ","+charData[1].value,
+      "characteristics3":charData[2].characteristic+ ","+charData[2].value,
+      "characteristics4":charData[3].characteristic+ ","+charData[3].value,
+      "characteristics5":charData[4].characteristic+ ","+charData[4].value,
+      "roleStatus":formData.roleStatus
+      }
+    
+    setlistLoader(true);
+  axios.post("/directorportal/addposting", data).then((res) => {
+    let errorMsg="";
+    setlistLoader(false);
+  if (res.data.error) {
+  //toaster
+  displayError(res.data.error);
+  
+      } else {
+  props.setshowForm("none");
+  displaySuccess("Role posted successfully!!");
+  props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs)
+      }
+    })
+    .catch((error) => {
+      // setErrorMessage(error);
+    setlistLoader(false);
+    }); 
+
+  }
+
   return (
+    <React.Fragment>
+      <Backdrop className={classes22.backdropLoader} open={listLoader} >
+                <CircularProgress color="inherit" />
+                </Backdrop>
+                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
+                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
     <MKBox component="section" py={{ xs: 0, lg: 6 }}>
       <Container>
         <Grid container item>
@@ -165,7 +479,7 @@ function Contact(props) {
                 <MKBox component="form" p={2} method="post">
                   <MKBox px={3} py={{ xs: 2, sm: 6 }}>
                     <MKTypography variant="h2" mb={0}>
-                      Post a new role!
+                      {props.showForm==="create" ? "Post a new role!":(props.showForm==="update" ? "Update role!":null)}
                     </MKTypography>
                     {/* <MKTypography variant="body1" color="text" mb={2}>
                       We&apos;d like to talk with you.
@@ -178,6 +492,9 @@ function Contact(props) {
                           variant="standard"
                           label="Name of the movie is"
                           placeholder="Movie Name"
+                          error={errorState.movieName}
+                          value={formData.movieName}
+                          onChange={(e)=>handleformData(e,"movieName")}
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                         />
@@ -187,6 +504,9 @@ function Contact(props) {
                           variant="standard"
                           label="Movie Description"
                           placeholder="Horror Comedy movie with ..."
+                          value={formData.movieDesc}
+                          error={errorState.movieDesc}
+                          onChange={(e)=>handleformData(e,"movieDesc")}
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                           multiline
@@ -198,6 +518,9 @@ function Contact(props) {
                           variant="standard"
                           label="Movie Genre"
                           placeholder="Horror Comedy"
+                          value={formData.movieGenre}
+                          error={errorState.movieGenre}
+                          onChange={(e)=>handleformData(e,"movieGenre")}
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                         />
@@ -207,6 +530,9 @@ function Contact(props) {
                           variant="standard"
                           label="Movie Role"
                           placeholder="Actor"
+                          value={formData.role}
+                          error={errorState.role}
+                          onChange={(e)=>handleformData(e,"role")}
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                         />
@@ -216,21 +542,27 @@ function Contact(props) {
                           variant="standard"
                           label="Role Description"
                           placeholder="Need a muscular actor with good sense of humor"
+                          value={formData.roleDescription}
+                          error={errorState.roleDescription}
+                          onChange={(e)=>handleformData(e,"roleDescription")}
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                           multiline
                           rows={2}
                         />
                       </Grid>
+                      <Grid item xs={12} pr={1} mb={3}>
                       <MKInput
                           variant="standard"
-                          label="Role Description"
-                          placeholder="Need a muscular actor with good sense of humor"
+                          label="Role Status"
+                          placeholder="Active"
+                          value={formData.roleStatus}
+                          // onChange={(e)=>handleformData(e,"roleStatus")}
                           InputLabelProps={{ shrink: true }}
                           fullWidth
-                          multiline
-                          rows={2}
+                          disabled={true}
                         />
+                        </Grid>
                       {/* <Grid item xs={12} pr={1} mb={3}>
                         <Dropdown
                           value={props.queue.Type}
@@ -242,15 +574,33 @@ function Contact(props) {
                           type="value"
                         />
                       </Grid> */}
+                      
+                      {charData.map((charItem, index) => {
+                    return (
                       <Grid item xs={12} pr={1} mb={3}>
                         <MKInput
                           variant="standard"
-                          label="I'm looking for"
-                          placeholder="What you love"
+                          placeholder={"Characteristic"+(index+1)}
+                          value={charItem.characteristic}
+                          error={errorState["characteristic"+index]}
                           InputLabelProps={{ shrink: true }}
-                          fullWidth
+                          onChange={(e)=>setCharacteristic(e,'characteristic',index)}
+                          size='small'
+                        />
+                        <MKInput
+                          variant="standard"
+                          placeholder={"Value"+(index+1)}
+                          value={charItem.value}
+                          InputLabelProps={{ shrink: true }}
+                          error={errorState["value"+index]}
+                          onChange={(e)=>setCharacteristic(e,'value',index)}
+                          size='small'
+                          marginLeft="5px"
                         />
                       </Grid>
+                    );
+                  })}
+                      
                     </Grid>
                     <Grid
                       container
@@ -261,8 +611,8 @@ function Contact(props) {
                       textAlign="right"
                       ml="auto"
                     >
-                      <MKButton variant="gradient" color="info">
-                        Send Message
+                      <MKButton disabled={enablePost()} onClick={postRole} variant="gradient" color="info">
+                        {props.showForm==="create" ? "Post":(props.showForm==="update" ? "Update":null)}
                       </MKButton>
                     </Grid>
                   </MKBox>
@@ -273,7 +623,25 @@ function Contact(props) {
         </Grid>
       </Container>
     </MKBox>
+    </React.Fragment>
   );
 }
 
-export default Contact;
+
+const mapStateToProps = (state) => {
+  return {
+    userRegisteredId: state.ScreenIt.userRegisteredId,
+    showForm:state.ScreenIt.showForm,
+    directorUpdateFormId:state.ScreenIt.directorUpdateFormId,
+    directorActivePosts: state.ScreenIt.directorActivePosts
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setshowForm: (value) => dispatch(actions.setshowForm(value)),
+    setLoggedinUser: (userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs) => dispatch(actions.setLoggedinUser(userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);
