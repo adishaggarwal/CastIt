@@ -1,5 +1,9 @@
 package com.filmindustry.candidatescreening.serviceimpl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.filmindustry.candidatescreening.bean.DirectorPortalBean;
 import com.filmindustry.candidatescreening.bean.UserDetailsBean;
 import com.filmindustry.candidatescreening.model.DirectorPortal;
+import com.filmindustry.candidatescreening.model.UserDetails;
 import com.filmindustry.candidatescreening.repository.DirectorPortalRepositoryInterface;
 import com.filmindustry.candidatescreening.service.DirectorPortalServiceInterface;
 
@@ -119,5 +124,19 @@ public class DirectorPortalService implements DirectorPortalServiceInterface{
 			return new DirectorPortalBean("Error at the server end");
 		}
 		return bean;
+	}
+
+	@Override
+	public List<DirectorPortalBean> selectAllPosting(long userRegisteredId) {
+		DirectorPortal entity = new DirectorPortal();
+		entity.setUserRegisteredId(userRegisteredId);
+		List<DirectorPortal> list=DPRInterface.findAllByUserRegisteredId(entity.getUserRegisteredId());
+		List <DirectorPortalBean> finalList=new ArrayList<DirectorPortalBean>(list.size());
+		for (DirectorPortal source: list ) {
+			DirectorPortalBean target= new DirectorPortalBean();
+	        BeanUtils.copyProperties(source , target);
+	        finalList.add(target);
+	     }
+		return finalList;
 	}
 }

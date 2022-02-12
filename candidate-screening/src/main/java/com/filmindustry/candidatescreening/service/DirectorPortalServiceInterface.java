@@ -1,5 +1,7 @@
 package com.filmindustry.candidatescreening.service;
 
+import java.util.List;
+
 import com.filmindustry.candidatescreening.bean.DirectorPortalBean;
 
 public interface DirectorPortalServiceInterface {
@@ -11,5 +13,7 @@ public interface DirectorPortalServiceInterface {
 	DirectorPortalBean deletePosting(long formId);
 
 	DirectorPortalBean updatePosting(long formId,DirectorPortalBean directorForm);
+
+	List<DirectorPortalBean> selectAllPosting(long userRegisteredId);
 
 }
