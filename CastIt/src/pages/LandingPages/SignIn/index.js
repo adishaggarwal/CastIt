@@ -447,7 +447,7 @@ const headers = {
         transparent
         light
       /> */}
-      <MKBox
+      {/* <MKBox
         position="absolute"
         top={0}
         left={0}
@@ -464,19 +464,19 @@ const headers = {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
-      />
+      /> */}
       <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
-          <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
-            <Card>
+          {/* <Grid item xs={11} sm={9} md={5} lg={4} xl={3}> */}
+            <Card style={{ width: '360px' }}>
               {signInState ? SignInJsx : SignUpJsx}
             </Card>
-          </Grid>
+          {/* </Grid> */}
         </Grid>
       </MKBox>
-      <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
+      {/* <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
         <SimpleFooter light />
-      </MKBox>
+      </MKBox> */}
     </>
   );
 }
