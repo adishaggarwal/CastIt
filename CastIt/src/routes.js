@@ -46,6 +46,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import AboutUs from "layouts/pages/landing-pages/about-us";
 import ContactUs from "layouts/pages/landing-pages/contact-us";
 import Author from "layouts/pages/landing-pages/author";
+import Applicant from "layouts/pages/landing-pages/Applicant";
 import SignIn from "layouts/pages/authentication/sign-in";
 
 // Sections
@@ -89,9 +90,14 @@ const routes = [
             component: <ContactUs />,
           },
           {
-            name: "author",
-            route: "/pages/landing-pages/author",
+            name: "Director",
+            route: "/Director",
             component: <Author />,
+          },
+          {
+            name: "Applicant",
+            route: "/Applicant",
+            component: <Applicant />,
           },
         ],
       },
