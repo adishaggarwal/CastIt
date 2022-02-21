@@ -58,6 +58,28 @@ function Places(props) {
     props.setdirectorUpdateFormId(formId);
   }
 
+  // const fetchActiveRoles=()=>{
+  //   let data=  {
+  //     "userRegisteredId":props.userRegisteredId,
+  //     }
+    
+  //   setlistLoader(true);
+  // axios.post("/directorportal/selectallposting", data).then((res) => {
+  //   let errorMsg="";
+  //   setlistLoader(false);
+  // if (res.data.error) {
+  // //toaster
+  // displayError(res.data.error);
+  
+  //     } else {
+  //       props.setdirectorActivePosts(res.data);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     // setErrorMessage(error);
+  //   setlistLoader(false);
+  //   }); 
+  // }
 
   const deletePost=(formId)=>{
 

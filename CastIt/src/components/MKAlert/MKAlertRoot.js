@@ -47,6 +47,6 @@ export default styled(Box)(({ theme, ownerState }) => {
     borderRadius: borderRadius.md,
     fontSize: fontSizeRegular,
     fontWeight: fontWeightMedium,
-    zIndex:2
+    zIndex:5
   };
 });
