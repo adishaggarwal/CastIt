@@ -48,6 +48,7 @@ import ContactUs from "layouts/pages/landing-pages/contact-us";
 import Author from "layouts/pages/landing-pages/author";
 import Applicant from "layouts/pages/landing-pages/Applicant";
 import SignIn from "layouts/pages/authentication/sign-in";
+import HomeScreen from "layouts/pages/landing-pages/HomeScreen";
 
 // Sections
 import PageHeaders from "layouts/sections/page-sections/page-headers";
@@ -88,6 +89,11 @@ const routes = [
             name: "contact us",
             route: "/pages/landing-pages/contact-us",
             component: <ContactUs />,
+          },
+          {
+            name: "HomeScreen",
+            route: "/Home",
+            component: < HomeScreen/>,
           },
           {
             name: "Director",
