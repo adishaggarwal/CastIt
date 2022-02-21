@@ -24,6 +24,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 // Material Kit 2 React themes
 import theme from "assets/theme";
 import SignIn from "pages/LandingPages/SignIn";
+import HomeScreen from "layouts/pages/landing-pages/HomeScreen";
 
 // Material Kit 2 React routes
 import routes from "routes";
@@ -55,8 +56,9 @@ const App=()=> {
       <CssBaseline />
       <Routes>
         {getRoutes(routes)}
+        <Route path="/Home" element={<HomeScreen />} />
         <Route path="/SignIn" element={<SignIn />} />
-        <Route path="*" element={<Navigate to="/SignIn" />} />
+        <Route path="*" element={<Navigate to="/Home" />} />
       </Routes>
     </ThemeProvider>
   );

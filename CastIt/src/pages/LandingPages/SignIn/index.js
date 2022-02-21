@@ -20,13 +20,15 @@ import {
   withStyles,
   useTheme,
 } from "@material-ui/core/styles";
+import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
+
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-// react-router-dom components
-import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 // import { Redirect } from 'react-router-dom'
+
+import * as actions from '../../../store/index';
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -148,10 +150,7 @@ const headers = {
     }
 
     seterrorState(errorData);
-    // else if(key=="dob" && signupData.dob !== value)
-    // {
-    //   errorData[key]=true;
-    // }
+
 
   }
 
@@ -191,7 +190,7 @@ const headers = {
 
 
   const routeChange = () =>{ 
-    navigate('/CastIt');
+    navigate('/Director');
   }
   // {
   //   "userEmail":"abc1d@gmail.com",
@@ -241,18 +240,10 @@ const headers = {
         } else {
     
     displaySuccess("User Account created successfully!!");
-    const myTimeout = setTimeout(closeAlert2, 5000);
-
-          let listData=[];
-          let arr=[];
-          
-          
-            props.setJobList1(listData);
-            props.setJobNameList(arr);
         }
       })
       .catch((error) => {
-        // setErrorMessage(error);
+        displayError(error.message);
       setlistLoader(false);
       });
   }
@@ -263,6 +254,10 @@ const headers = {
       "userEmail":""+signinData.email,
       "userPassword":""+signinData.password
       }
+      // {
+      //   "userEmail":"abc1d@gmail.com",
+      //   "userPassword":"!Abc1234567"
+      //   }
     
     setlistLoader(true);
 
@@ -275,13 +270,13 @@ const headers = {
   
       } else {
   
-  displaySuccess("User Account created successfully!!");
-  const myTimeout = setTimeout(closeAlert2, 5000);
+  // displaySuccess("User Account created successfully!!");
   routeChange();
+  props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs)
       }
     })
     .catch((error) => {
-      // setErrorMessage(error);
+      displayError(error.message);
     setlistLoader(false);
     });
   }
@@ -447,7 +442,7 @@ const headers = {
         transparent
         light
       /> */}
-      <MKBox
+      {/* <MKBox
         position="absolute"
         top={0}
         left={0}
@@ -464,21 +459,41 @@ const headers = {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
-      />
+      /> */}
       <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
-          <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
-            <Card>
+          {/* <Grid item xs={11} sm={9} md={5} lg={4} xl={3}> */}
+            <Card style={{ width: '360px' }}>
               {signInState ? SignInJsx : SignUpJsx}
             </Card>
-          </Grid>
+          {/* </Grid> */}
         </Grid>
       </MKBox>
-      <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
+      {/* <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
         <SimpleFooter light />
-      </MKBox>
+      </MKBox> */}
     </>
   );
 }
 
-export default SignInBasic;
+
+
+// const mapStateToProps = (state) => {
+//   return {
+//     jobList: state.job.scheduleList,
+//     sessionId: state.auth.sessionId,
+//     cabinetName: state.auth.cabinetName,
+//     appServerType: state.auth.appServerType,
+//     serverIP: state.auth.serverIP,
+//     serverPort: state.auth.serverPort,
+//     jobNameList:state.job.jobNameList
+//   };
+// };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setLoggedinUser: (userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs) => dispatch(actions.setLoggedinUser(userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignInBasic);

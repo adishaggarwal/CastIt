@@ -18,7 +18,7 @@ Coded by www.creative-tim.com
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 
-export default styled(Button)(({ theme, ownerState }) => {
+export default styled(Button)(({ theme, ownerState,noBackground }) => {
   const { palette, functions, borders, boxShadows } = theme;
   const { color, variant, size, circular, iconOnly } = ownerState;
 
@@ -102,7 +102,7 @@ export default styled(Button)(({ theme, ownerState }) => {
   // styles for the button with variant="outlined"
   const outliedStyles = () => {
     // background color value
-    const backgroundValue = color === "white" ? rgba(white.main, 0.1) : transparent.main;
+    const backgroundValue =  (color === "white" ? rgba(white.main, 0.1) : transparent.main);
 
     // color value
     const colorValue = palette[color] ? palette[color].main : white.main;
