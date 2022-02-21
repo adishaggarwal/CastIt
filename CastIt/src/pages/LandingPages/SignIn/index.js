@@ -243,7 +243,7 @@ const headers = {
         }
       })
       .catch((error) => {
-        // setErrorMessage(error);
+        displayError(error.message);
       setlistLoader(false);
       });
   }
@@ -276,7 +276,7 @@ const headers = {
       }
     })
     .catch((error) => {
-      // setErrorMessage(error);
+      displayError(error.message);
     setlistLoader(false);
     });
   }

@@ -17,6 +17,9 @@ const initialState = {
   "userRegistereAs": "",
   directorUpdateFormId:"",
   showForm:"none",
+  listLoader:false,
+  showError:false,
+  errormsg:"",
   directorActivePosts:[
     // {
     //   movieName:"Spiderman",
@@ -71,6 +74,17 @@ const ScreenItreducer = (state = initialState, action) => {
             return {
               ...state,
                showForm:action.value
+            };
+            case actionTypes.SET_LIST_LOADER:
+            return {
+              ...state,
+               listLoader:action.value
+            };
+            case actionTypes.DISPLAY_ERROR:
+            return {
+              ...state,
+               showError:action.value,
+               errormsg:action.msg
             };
             case actionTypes.SET_DIRECTORACTIVE_POSTS:
             return {

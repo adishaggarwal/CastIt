@@ -31,7 +31,7 @@ import MKButton from "components/MKButton";
 function CenteredBlogCard({ image, title, description, action,hide,clicked }) {
   return (
     <Card onClick={clicked} style={{height:"93%"}}>
-      <MKBox style={{height:"100%",display:"flex",alignItems:"center"}} position="relative" borderRadius="lg" mx={2} mt={-3}>
+      <MKBox style={{height:"100%",display:"flex",alignItems:"center",padding:"25px",margin:"0"}} position="relative" borderRadius="lg" mx={2} mt={-3}>
         <MKBox
           component="img"
           src={image}

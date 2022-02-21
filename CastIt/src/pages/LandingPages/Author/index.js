@@ -8,6 +8,16 @@ import MKBox from "components/MKBox";
 
 // Material Kit 2 React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+import Backdrop from '@material-ui/core/Backdrop';
+import MKAlert from "components/MKAlert"
+import {
+  lighten,
+  makeStyles,
+  withStyles,
+  useTheme,
+} from "@material-ui/core/styles";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 // Author page sections
 import Profile from "pages/LandingPages/Author/sections/Profile";
@@ -34,28 +44,43 @@ function Author(props) {
   const [succMsg, setsuccMsg] = useState("Success!");
   const [listLoader,setlistLoader]=useState(false);
 
+  const useStyles22 = makeStyles((theme) => ({
+    backdropLoader: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#0072C6',
+    },
+  }));
+  const classes22 = useStyles22();
   useEffect(() => {
-    let data=  {
-      "userRegisteredId":props.userRegisteredId,
-      }
+  //   let data=  {
+  //     "userRegisteredId":props.userRegisteredId,
+  //     }
     
-    setlistLoader(true);
-  axios.post("/directorportal/selectallposting", data).then((res) => {
-    let errorMsg="";
-    setlistLoader(false);
-  if (res.data.error) {
-  //toaster
-  displayError(res.data.error);
+  //   setlistLoader(true);
+  // axios.post("/directorportal/selectallposting", data).then((res) => {
+  //   let errorMsg="";
+  //   setlistLoader(false);
+  // if (res.data.error) {
+  // //toaster
+  // displayError(res.data.error);
   
-      } else {
-        props.setdirectorActivePosts(res.data);
-      }
-    })
-    .catch((error) => {
-      // setErrorMessage(error);
-    setlistLoader(false);
-    }); 
+  //     } else {
+  //       props.setdirectorActivePosts(res.data);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     // setErrorMessage(error);
+  //   setlistLoader(false);
+  //   }); 
+  props.fetchActiveRoles();
+
   }, []);
+
+  useEffect(() => {
+    setshowError(props.showError);
+  seterrMsg(props.errormsg);
+  setlistLoader(props.listLoader);
+    }, [props.showError,props.listLoader,props.errormsg]);
 
   const displayError=(msg)=>{
     setshowError(true);
@@ -79,6 +104,11 @@ function Author(props) {
 
   return (
     <>
+    <Backdrop className={classes22.backdropLoader} open={listLoader} >
+                <CircularProgress color="inherit" />
+                </Backdrop>
+                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
+                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
       <DefaultNavbar
         routes={routes}
         action={{
@@ -131,12 +161,16 @@ const mapStateToProps = (state) => {
   return {
     directorActivePosts: state.ScreenIt.directorActivePosts,
     userRegisteredId: state.ScreenIt.userRegisteredId,
-    showForm:state.ScreenIt.showForm
+    showForm:state.ScreenIt.showForm,
+    listLoader:state.ScreenIt.listLoader,
+    showError:state.ScreenIt.showError,
+    errormsg:state.ScreenIt.errormsg,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
     setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value))
   };

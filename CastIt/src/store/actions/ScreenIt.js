@@ -37,6 +37,44 @@ export const setdirectorUpdateFormId = (value) => {
   };
 };
 
+export const setlistLoader = (value) => {
+  return {
+    type: actionTypes.SET_LIST_LOADER,
+    value: value
+  };
+};
+
+export const displayError = (value,msg) => {
+  return {
+    type: actionTypes.DISPLAY_ERROR,
+    value: value,
+    msg:msg
+  };
+};
+
+export const fetchActiveRoles = () => {
+  let data=  {
+    "userRegisteredId":store.getState().ScreenIt.userRegisteredId,
+    // "userRegisteredId":"abcdas",
+    }
+    // dispatch(setlistLoader(true)); 
+  return (dispatch)=>{ 
+    axios.post("/directorportal/selectallposting", data)
+  .then((res) => {
+    dispatch(setlistLoader(false));
+    if (res.data.error) {
+          dispatch(displayError(true,res.data.error));
+        } else {
+          dispatch(setdirectorActivePosts(res.data));
+        }
+  
+}).catch((err) => {
+  dispatch(setlistLoader(false));
+  dispatch(displayError(true,err.message));
+});
+}   
+};
+
 
 // export const fetchRequestParams = (object) => {
 //   return {
@@ -320,20 +358,4 @@ export const setdirectorUpdateFormId = (value) => {
 //     error:err
 //   };
 // }
-//   export const sendHTMLMailAc = (obj) => {
-//     return (dispatch)=>{ axios
-//     .post("/omsAddRecordInQueue", obj)
-//     .then((res) => {
-//       if(res.data.OMSAddRecordInQueue_Output.Error!==""){
-//         dispatch(setOpenError(res.data.OMSAddRecordInQueue_Output.Error)) ; 
-//       }
-//       else
-//       {
-//         dispatch(setLogoutState(true));
-//       }
-    
-//   }).catch((err) => {
-//     dispatch(setLogoutState(true));
-//   });
-// }   
-// };
+
