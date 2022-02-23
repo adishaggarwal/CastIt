@@ -107,8 +107,8 @@ function Author(props) {
     <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
-                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
-                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
+                {showError || props.showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{showError?errMsg:props.errormsg}</MKAlert>:null}
+                {showSuccess || props.showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{showSuccess?succMsg:props.succmsg}</MKAlert>:null}
       <DefaultNavbar
         routes={routes}
         action={{
@@ -163,8 +163,10 @@ const mapStateToProps = (state) => {
     userRegisteredId: state.ScreenIt.userRegisteredId,
     showForm:state.ScreenIt.showForm,
     listLoader:state.ScreenIt.listLoader,
-    showError:state.ScreenIt.showError,
+    showError: state.ScreenIt.showError,
     errormsg:state.ScreenIt.errormsg,
+    showSuccess:state.ScreenIt.showSuccess,
+    succmsg:state.ScreenIt.succmsg,
   };
 };
 

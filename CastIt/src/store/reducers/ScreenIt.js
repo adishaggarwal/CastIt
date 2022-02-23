@@ -20,6 +20,8 @@ const initialState = {
   listLoader:false,
   showError:false,
   errormsg:"",
+  showSuccess:false,
+  succmsg:"",
   directorActivePosts:[
     // {
     //   movieName:"Spiderman",
@@ -85,6 +87,12 @@ const ScreenItreducer = (state = initialState, action) => {
               ...state,
                showError:action.value,
                errormsg:action.msg
+            };
+            case actionTypes.DISPLAY_SUCCESS:
+            return {
+              ...state,
+               showSuccess:action.value,
+               succmsg:action.msg
             };
             case actionTypes.SET_DIRECTORACTIVE_POSTS:
             return {

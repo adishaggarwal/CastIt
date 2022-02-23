@@ -189,8 +189,8 @@ const headers = {
   }
 
 
-  const routeChange = () =>{ 
-    navigate('/Director');
+  const routeChange = (val) =>{ 
+    navigate('/'+val);
   }
   // {
   //   "userEmail":"abc1d@gmail.com",
@@ -271,7 +271,8 @@ const headers = {
       } else {
   
   // displaySuccess("User Account created successfully!!");
-  routeChange();
+
+  routeChange(res.data.userRegistereAs);
   props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs)
       }
     })
@@ -469,9 +470,9 @@ const headers = {
           {/* </Grid> */}
         </Grid>
       </MKBox>
-      {/* <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
+      <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
         <SimpleFooter light />
-      </MKBox> */}
+      </MKBox>
     </>
   );
 }
