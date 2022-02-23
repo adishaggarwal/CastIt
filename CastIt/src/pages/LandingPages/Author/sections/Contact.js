@@ -126,6 +126,10 @@ function Contact(props) {
     }
   }, [props.showForm]);
 
+  useEffect(() => {
+    
+  }, [props.showError,props.showSuccess]);
+
 
   useEffect(() => {
     if(props.showForm==="update")
@@ -305,20 +309,24 @@ function Contact(props) {
 
   const closeAlert=()=>{
     setshowError(false);
+    props.displayError(false,"");
   }
   const closeAlert2=()=>{
     setshowSuccess(false);
+    props.displaySuccess(false,"");
   }
 
   const displayError=(msg)=>{
-    setshowError(true);
-    seterrMsg(msg);
+    // setshowError(true);
+    props.displayError(true,msg);
+    // seterrMsg(msg);
     const myTimeout = setTimeout(closeAlert, 5000);
   }
 
   const displaySuccess=(msg)=>{
-    setshowSuccess(true);
-    setsuccMsg(msg);
+    // setshowSuccess(true);
+    // setsuccMsg(msg);
+    props.displaySuccess(true,msg);
     const myTimeout = setTimeout(closeAlert2, 5000);
   }
 
@@ -368,14 +376,14 @@ function Contact(props) {
     }); 
 
   }
-
+  
   return (
     <React.Fragment>
       <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
-                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
-                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
+                {/* {props.showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{props.errormsg}</MKAlert>:null}
+                {props.showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{props.succmsg}</MKAlert>:null} */}
     <MKBox component="section" py={{ xs: 0, lg: 6 }}>
       <Container>
         <Grid container item>
@@ -647,6 +655,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
+    displayError: (value,msg) => dispatch(actions.displayError(value,msg)),
+    displaySuccess: (value,msg) => dispatch(actions.displaySuccess(value,msg)),
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setLoggedinUser: (userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs) => dispatch(actions.setLoggedinUser(userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs))
   };

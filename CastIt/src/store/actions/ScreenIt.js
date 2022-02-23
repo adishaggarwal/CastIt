@@ -52,6 +52,14 @@ export const displayError = (value,msg) => {
   };
 };
 
+export const displaySuccess = (value,msg) => {
+  return {
+    type: actionTypes.DISPLAY_SUCCESS,
+    value: value,
+    msg:msg
+  };
+};
+
 export const fetchActiveRoles = () => {
   let data=  {
     "userRegisteredId":store.getState().ScreenIt.userRegisteredId,

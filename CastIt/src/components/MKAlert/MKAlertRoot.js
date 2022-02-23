@@ -38,7 +38,7 @@ export default styled(Box)(({ theme, ownerState }) => {
     minHeight: pxToRem(60),
     backgroundImage: backgroundImageValue,
     color: white.main,
-    position: "absolute",
+    position: "fixed",
     right:"20px",
     top:"5px",
     minWidth:"350px",
@@ -47,6 +47,6 @@ export default styled(Box)(({ theme, ownerState }) => {
     borderRadius: borderRadius.md,
     fontSize: fontSizeRegular,
     fontWeight: fontWeightMedium,
-    zIndex:5
+    zIndex:100
   };
 });
