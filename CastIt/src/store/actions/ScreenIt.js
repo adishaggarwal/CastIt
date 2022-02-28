@@ -30,9 +30,23 @@ export const setdirectorActivePosts = (value) => {
   };
 };
 
+export const setapplicantActivePosts = (value) => {
+  return {
+    type: actionTypes.SET_APPLICANTACTIVE_POSTS,
+    value: value
+  };
+};
+
 export const setdirectorUpdateFormId = (value) => {
   return {
     type: actionTypes.SET_DIRECTORUPDATE_FORMID,
+    value: value
+  };
+};
+
+export const setapplicantUpdateFormId = (value) => {
+  return {
+    type: actionTypes.SET_APPLICANTUPDATE_FORMID,
     value: value
   };
 };
@@ -74,6 +88,26 @@ export const fetchActiveRoles = () => {
           dispatch(displayError(true,res.data.error));
         } else {
           dispatch(setdirectorActivePosts(res.data));
+        }
+  
+}).catch((err) => {
+  dispatch(setlistLoader(false));
+  dispatch(displayError(true,err.message));
+});
+}   
+};
+
+export const fetchApplicantPosting = () => {
+  let data=  {};
+    // dispatch(setlistLoader(true)); 
+  return (dispatch)=>{ 
+    axios.post("/directorportal/applicantselectallposting", data)
+  .then((res) => {
+    dispatch(setlistLoader(false));
+    if (res.data.error) {
+          dispatch(displayError(true,res.data.error));
+        } else {
+          dispatch(setapplicantActivePosts(res.data));
         }
   
 }).catch((err) => {

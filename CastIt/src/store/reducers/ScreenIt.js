@@ -16,12 +16,14 @@ const initialState = {
   "userDOB": "",
   "userRegistereAs": "",
   directorUpdateFormId:"",
+  applicantUpdateFormId:"",
   showForm:"none",
   listLoader:false,
   showError:false,
   errormsg:"",
   showSuccess:false,
   succmsg:"",
+  applicantActivePosts:[],
   directorActivePosts:[
     // {
     //   movieName:"Spiderman",
@@ -99,10 +101,20 @@ const ScreenItreducer = (state = initialState, action) => {
               ...state,
               directorActivePosts:action.value
             };
+            case actionTypes.SET_APPLICANTACTIVE_POSTS:
+            return {
+              ...state,
+              applicantActivePosts:action.value
+            };
             case actionTypes.SET_DIRECTORUPDATE_FORMID:
             return {
               ...state,
               directorUpdateFormId:action.value
+            };
+            case actionTypes.SET_APPLICANTUPDATE_FORMID:
+            return {
+              ...state,
+              applicantUpdateFormId:action.value
             };
      
     default:

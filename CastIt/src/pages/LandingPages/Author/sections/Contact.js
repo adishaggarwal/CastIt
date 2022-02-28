@@ -192,7 +192,7 @@ function Contact(props) {
       formDataCopy["movieGenre"]="";
       formDataCopy["role"]="";
       formDataCopy["roleDescription"]="";
-      formDataCopy["roleStatus"]="";
+      // formDataCopy["roleStatus"]="";
       for(let i=0;i<5;i++)
       {
         charDataCopy[i].characteristic="";

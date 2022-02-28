@@ -64,16 +64,6 @@ function Contact(props) {
 
   const [errorState, seterrorState] = useState(
     {
-      movieName:true,
-      movieDesc:true,
-      movieGenre:true,
-      role:true,
-      roleDescription:true,
-      characteristic1:true,
-      characteristic2:true,
-      characteristic3:true,
-      characteristic4:true,
-      characteristic0:true,
       value1:true,
       value2:true,
       value3:true,
@@ -118,20 +108,20 @@ function Contact(props) {
   const classes22 = useStyles22();
   
 
+  // useEffect(() => {
+    
+  // }, [props.showForm]);
+
   useEffect(() => {
-    if(props.showForm==="create")
-    {
-      resetForm();
-      resetError(true);
-    }
-  }, [props.showForm]);
+    
+  }, [props.showError,props.showSuccess,props.showForm]);
 
 
   useEffect(() => {
-    if(props.showForm==="update")
+    if(props.showForm==="updateApplicant")
     {
-      let result = (props.directorActivePosts).find((obj) => {
-        return obj.formId === props.directorUpdateFormId;
+      let result = (props.applicantActivePosts).find((obj) => {
+        return obj.formId === props.applicantUpdateFormId;
       });
       const formDataCopy={...formData};
       const charDataCopy=[...charData];
@@ -142,7 +132,7 @@ function Contact(props) {
       formDataCopy["movieGenre"]=result.movieGenre;
       formDataCopy["role"]=result.role;
       formDataCopy["roleDescription"]=result.roleDescription;
-      formDataCopy["roleStatus"]=result.roleStatus;
+      // formDataCopy["roleStatus"]=result.roleStatus;   //check
       for(let i=0;i<5;i++)
       {
         let charArr=(result["characteristics"+(i+1)]).split(",");
@@ -155,7 +145,7 @@ function Contact(props) {
 
       resetError(false);
     }
-  }, [props.directorUpdateFormId]);
+  }, [props.applicantUpdateFormId]);
 
   const resetError=(val)=>{
     let resetError1={
@@ -188,7 +178,7 @@ function Contact(props) {
       formDataCopy["movieGenre"]="";
       formDataCopy["role"]="";
       formDataCopy["roleDescription"]="";
-      formDataCopy["roleStatus"]="";
+      // formDataCopy["roleStatus"]="Active";
       for(let i=0;i<5;i++)
       {
         charDataCopy[i].characteristic="";
@@ -202,7 +192,7 @@ function Contact(props) {
   const setCharacteristic=(e,key,index)=>{
       const charDataCopy=[...charData];
       charDataCopy[index][key]=e.target.value;
-    inputFormValidation(key+""+index,e.target.value);
+      inputFormValidation(key+""+index,e.target.value);
       setcharData(charDataCopy);
   }
 
@@ -305,20 +295,24 @@ function Contact(props) {
 
   const closeAlert=()=>{
     setshowError(false);
+    props.displayError(false,"");
   }
   const closeAlert2=()=>{
     setshowSuccess(false);
+    props.displaySuccess(false,"");
   }
 
   const displayError=(msg)=>{
-    setshowError(true);
-    seterrMsg(msg);
+    // setshowError(true);
+    props.displayError(true,msg);
+    // seterrMsg(msg);
     const myTimeout = setTimeout(closeAlert, 5000);
   }
 
   const displaySuccess=(msg)=>{
-    setshowSuccess(true);
-    setsuccMsg(msg);
+    // setshowSuccess(true);
+    // setsuccMsg(msg);
+    props.displaySuccess(true,msg);
     const myTimeout = setTimeout(closeAlert2, 5000);
   }
 
@@ -368,14 +362,14 @@ function Contact(props) {
     }); 
 
   }
-
+  
   return (
     <React.Fragment>
       <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
-                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
-                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
+                {/* {props.showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{props.errormsg}</MKAlert>:null}
+                {props.showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{props.succmsg}</MKAlert>:null} */}
     <MKBox component="section" py={{ xs: 0, lg: 6 }}>
       <Container>
         <Grid container item>
@@ -647,6 +641,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
+    displayError: (value,msg) => dispatch(actions.displayError(value,msg)),
+    displaySuccess: (value,msg) => dispatch(actions.displaySuccess(value,msg)),
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setLoggedinUser: (userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs) => dispatch(actions.setLoggedinUser(userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs))
   };
