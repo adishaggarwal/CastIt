@@ -62,7 +62,25 @@ function loadHomeScreen()
       </div>
       <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',paddingTop: '50px'}}>
       <MKBox zIndex={2} style={{position: 'absolute'}}>
-      <MKTypography variant="h4" color="white">Join Castit today, land auditions tomorrow !</MKTypography>
+      <MKTypography variant="h4" color="white">Join Castit today, land auditions tomorrow!</MKTypography>
+      </MKBox>
+      </div>
+      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',paddingTop: '50px', paddingLeft: '80px'}}>
+      <MKBox zIndex={2} style={{position: 'absolute'}}>
+      <MKTypography variant="h5" color="white">Elevate your career with Castit’s leading job platform, tools and expert resources.
+      </MKTypography>
+      </MKBox>
+      </div>
+      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',paddingTop: '50px', paddingLeft: '90px'}}>
+      <MKBox zIndex={2} style={{position: 'absolute'}}>
+      <MKTypography variant="h5" color="white">
+      Grow with us and gain experience as well as knowledge to take your career to the next level.</MKTypography>
+      </MKBox>
+      </div>
+      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',paddingTop: '50px', paddingLeft: '50px'}}>
+      <MKBox zIndex={2} style={{position: 'absolute'}}>
+      <MKTypography variant="h5" color="white">
+      Join Castit to take control of your acting career by signing up now.</MKTypography>
       </MKBox>
       </div>
       <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
