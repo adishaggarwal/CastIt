@@ -9,20 +9,22 @@ const initialState = {
   // isXmlData:true,
   // users:[],
   // productName: !(window.location.href.includes(":3000"))?'':"DEMAND",
-  "userRegisterationId": -1,
-  "userEmail": "",
-  "userFirstName": "",
-  "userLastName": "",
-  "userDOB": "",
-  "userRegistereAs": "",
+  userRegisterationId: -1,
+  userEmail: "",
+  userFirstName: "",
+  userLastName: "",
+  userDOB: "",
+  userRegistereAs: "",
   directorUpdateFormId:"",
   applicantUpdateFormId:"",
-  showForm:"none",
+  applicantFormId:"",
+  showForm:"none", //none , applyjob , create , update
   listLoader:false,
   showError:false,
   errormsg:"",
   showSuccess:false,
   succmsg:"",
+  applicantAppliedPosts:[],
   applicantActivePosts:[],
   directorActivePosts:[
     // {
@@ -106,6 +108,11 @@ const ScreenItreducer = (state = initialState, action) => {
               ...state,
               applicantActivePosts:action.value
             };
+            case actionTypes.SET_APPLICANTAPPLIED_POSTS:
+              return {
+                ...state,
+                applicantAppliedPosts:action.value
+              };
             case actionTypes.SET_DIRECTORUPDATE_FORMID:
             return {
               ...state,
@@ -115,6 +122,11 @@ const ScreenItreducer = (state = initialState, action) => {
             return {
               ...state,
               applicantUpdateFormId:action.value
+            };
+            case actionTypes.SET_APPLICANT_FORMID:
+            return {
+              ...state,
+              applicantFormId:action.value
             };
      
     default:

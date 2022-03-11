@@ -49,12 +49,65 @@ function Places(props) {
   }));
   const classes22 = useStyles22();
 
-  const updatePost=(formId)=>{
+  const applyPost=(formId)=>{
     props.setshowForm("applyjob");
     props.setapplicantUpdateFormId(formId);
   }
 
+  const editapplyPost=(formId,applicantFormId)=>{
+    props.setshowForm("editapplyjob");
+    props.setapplicantUpdateFormId(formId);
+    props.setapplicantFormId(applicantFormId);
+  }
 
+  const displayError=(msg)=>{
+    // setshowError(true);
+    // seterrMsg(msg);
+    props.displayError(true,msg);
+    const myTimeout = setTimeout(closeAlert, 5000);
+  }
+
+  const displaySuccess=(msg)=>{
+    // setshowSuccess(true);
+    // setsuccMsg(msg);
+    props.displaySuccess(true,msg);
+    const myTimeout = setTimeout(closeAlert2, 5000);
+  }
+
+  const closeAlert=()=>{
+    props.displayError(false,"");
+  }
+  const closeAlert2=()=>{
+    props.displaySuccess(false,"");
+  }
+
+  const deletePost=(applicantFormId)=>{
+
+    let options=  {
+      "data":{
+        "applicantFormId":applicantFormId
+      }
+      }
+
+    setlistLoader(true);
+    axios.delete("/applicantportal/deleteapplication", options).then((res) => {
+    let errorMsg="";
+    setlistLoader(false);
+    if (res.data.error) {
+    //toaster
+    displayError(res.data.error);
+
+      } else {
+        displaySuccess("Application deleted successfully!");
+        props.fetchApplicantPosting();
+        props.fetchApplicantAppliedPosting();
+      }
+    })
+    .catch((error) => {
+      displayError(error.message);
+      setlistLoader(false);
+    }); 
+}
   
 
   // const displayError=(msg)=>{
@@ -112,7 +165,10 @@ function Places(props) {
             <TransparentBlogCard
               // image={post.movieImage}
               image={post3}
-              clickedEdit={()=>updatePost(post.formId)}
+              isApplicant={true}
+              isApplicantOptions={props.isApplicantOptions}
+              clickedDelete={()=>deletePost(post.applicantFormId)}
+              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantFormId) :()=>applyPost(post.formId)}
               title={post.movieName}
               description={post.movieDesc}
               action={{
@@ -145,9 +201,12 @@ const mapDispatchToProps = (dispatch) => {
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
     setapplicantUpdateFormId:(value) => dispatch(actions.setapplicantUpdateFormId(value)),
+    setapplicantFormId:(value) => dispatch(actions.setapplicantFormId(value)),
     // setdirectorActivePosts:(value) => dispatch(actions.setdirectorActivePosts(value)),
     displayError: (value,msg) => dispatch(actions.displayError(value,msg)),
     displaySuccess: (value,msg) => dispatch(actions.displaySuccess(value,msg)),
+    fetchApplicantPosting:()=>dispatch(actions.fetchApplicantPosting()),
+    fetchApplicantAppliedPosting:()=>dispatch(actions.fetchApplicantAppliedPosting())
   };
 };
 

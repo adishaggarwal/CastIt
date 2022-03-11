@@ -73,6 +73,7 @@ function Author(props) {
   //   setlistLoader(false);
   //   }); 
   props.fetchApplicantPosting();
+  props.fetchApplicantAppliedPosting();
 
   }, []);
 
@@ -148,6 +149,7 @@ function Author(props) {
           }}
         >
           <Profile />
+          <Posts isApplicantOptions={true} postArr={props.applicantAppliedPosts}  heading="Applied Roles" />
           <Posts postArr={props.applicantActivePosts}  heading="Open Roles" />
         </Card>
         {props.showForm=="none"? null : <Contact />}
@@ -160,6 +162,7 @@ function Author(props) {
 const mapStateToProps = (state) => {
   return {
     applicantActivePosts: state.ScreenIt.applicantActivePosts,
+    applicantAppliedPosts:state.ScreenIt.applicantAppliedPosts,
     userRegisteredId: state.ScreenIt.userRegisteredId,
     showForm:state.ScreenIt.showForm,
     listLoader:state.ScreenIt.listLoader,
@@ -174,7 +177,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchApplicantPosting:()=>dispatch(actions.fetchApplicantPosting()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
-    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value))
+    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value)),
+    fetchApplicantAppliedPosting:()=>dispatch(actions.fetchApplicantAppliedPosting())
   };
 };
 
