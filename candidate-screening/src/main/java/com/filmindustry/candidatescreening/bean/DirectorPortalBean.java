@@ -39,6 +39,10 @@ public class DirectorPortalBean {
 	
 	private long roleGivenToID;
 	
+	private UserDetailsBean userDetailsBean;
+	
+	private ApplicantPortalBean applicantPortalBean;
+	
 	String message;
 	String error;
 	
@@ -213,5 +217,19 @@ public class DirectorPortalBean {
 	public void setError(String error) {
 		this.error = error;
 	}
+	public UserDetailsBean getUserDetailsBean() {
+		return userDetailsBean;
+	}
+	public void setUserDetailsBean(UserDetailsBean userDetailsBean) {
+		this.userDetailsBean = userDetailsBean;
+	}
+	public ApplicantPortalBean getApplicantPortalBean() {
+		return applicantPortalBean;
+	}
+	public void setApplicantPortalBean(ApplicantPortalBean applicantPortalBean) {
+		this.applicantPortalBean = applicantPortalBean;
+	}
+
+	
 
 }

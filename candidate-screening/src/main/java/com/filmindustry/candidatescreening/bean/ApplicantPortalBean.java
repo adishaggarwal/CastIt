@@ -1,5 +1,7 @@
 package com.filmindustry.candidatescreening.bean;
 
+import java.util.ArrayList;
+
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -24,6 +26,9 @@ public class ApplicantPortalBean {
 		private String characteristics5;
 		String message;
 		String error;
+		private String percentageMatch;
+		private UserDetailsBean userDetailsBean;
+		private DirectorPortalBean directorPortalBeanList;
 		
 		public ApplicantPortalBean() {
 			// TODO Auto-generated constructor stub
@@ -122,5 +127,27 @@ public class ApplicantPortalBean {
 		public void setError(String error) {
 			this.error = error;
 		}
-
+		public UserDetailsBean getUserDetailsBean() {
+			return userDetailsBean;
+		}
+		public void setUserDetailsBean(UserDetailsBean userDetailsBean) {
+			this.userDetailsBean = userDetailsBean;
+		}
+		
+		public String getPercentageMatch() {
+			return percentageMatch;
+		}
+		public void setPercentageMatch(String percentageMatch) {
+			this.percentageMatch = percentageMatch;
+		}
+		public DirectorPortalBean getDirectorPortalBeanList() {
+			return directorPortalBeanList;
+		}
+		public void setDirectorPortalBeanList(DirectorPortalBean directorPortalBeanList) {
+			this.directorPortalBeanList = directorPortalBeanList;
+		}
+		
+		
+		
+		
 	}
