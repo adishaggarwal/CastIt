@@ -22,11 +22,12 @@ import PropTypes from "prop-types";
 import MKButtonRoot from "components/MKButton/MKButtonRoot";
 
 const MKButton = forwardRef(
-  ({ color, variant, size, circular, iconOnly, children, ...rest }, ref) => (
+  ({noBackground, color, variant, size, circular, iconOnly, children, ...rest }, ref) => (
     <MKButtonRoot
       {...rest}
       ref={ref}
       color="primary"
+      noBackground
       variant={variant === "gradient" ? "contained" : variant}
       size={size}
       ownerState={{ color, variant, size, circular, iconOnly }}

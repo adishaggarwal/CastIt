@@ -16,4 +16,10 @@ public interface DirectorPortalServiceInterface {
 
 	List<DirectorPortalBean> selectAllPosting(long userRegisteredId);
 
+	List<DirectorPortalBean> applicantselectallposting();
+
+	List<DirectorPortalBean> NonAppliedPostings(long userRegisteredId);
+
+	List<DirectorPortalBean> AppliedPostings(long userRegisteredId);
+
 }

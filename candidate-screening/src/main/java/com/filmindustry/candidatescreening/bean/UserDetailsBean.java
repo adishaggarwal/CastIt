@@ -28,7 +28,6 @@ public class UserDetailsBean {
 	private	String userFirstName;
 	
 	@NotEmpty
-	@Size(min=3,message="Last Name should be atleast 3 characters long")
 	private String userLastName;
 	
 	@NotEmpty

@@ -1,17 +1,4 @@
-/*
-=========================================================
-* Material Kit 2 React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+import React, { useState,useEffect } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -21,6 +8,16 @@ import MKBox from "components/MKBox";
 
 // Material Kit 2 React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+import Backdrop from '@material-ui/core/Backdrop';
+import MKAlert from "components/MKAlert"
+import {
+  lighten,
+  makeStyles,
+  withStyles,
+  useTheme,
+} from "@material-ui/core/styles";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 // Author page sections
 import Profile from "pages/LandingPages/Author/sections/Profile";
@@ -34,9 +31,84 @@ import routes from "routes";
 // Images
 import bgImage from "assets/images/city-profile.jpg";
 
-function Author() {
+import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
+import * as actions from '../../../store/index';
+import axios from '../../../axios';
+
+
+function Author(props) {
+
+  const [showError, setshowError] = useState(false);
+  const [errMsg, seterrMsg] = useState("Some Error Occurred!");
+  const [showSuccess, setshowSuccess] = useState(false);
+  const [succMsg, setsuccMsg] = useState("Success!");
+  const [listLoader,setlistLoader]=useState(false);
+
+  const useStyles22 = makeStyles((theme) => ({
+    backdropLoader: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#0072C6',
+    },
+  }));
+  const classes22 = useStyles22();
+  useEffect(() => {
+  //   let data=  {
+  //     "userRegisteredId":props.userRegisteredId,
+  //     }
+    
+  //   setlistLoader(true);
+  // axios.post("/directorportal/selectallposting", data).then((res) => {
+  //   let errorMsg="";
+  //   setlistLoader(false);
+  // if (res.data.error) {
+  // //toaster
+  // displayError(res.data.error);
+  
+  //     } else {
+  //       props.setdirectorActivePosts(res.data);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     // setErrorMessage(error);
+  //   setlistLoader(false);
+  //   }); 
+  props.fetchActiveRoles();
+
+  }, []);
+
+  useEffect(() => {
+    setshowError(props.showError);
+  seterrMsg(props.errormsg);
+  setlistLoader(props.listLoader);
+    }, [props.showError,props.listLoader,props.errormsg]);
+
+  const displayError=(msg)=>{
+    setshowError(true);
+    seterrMsg(msg);
+    const myTimeout = setTimeout(closeAlert, 5000);
+  }
+
+  const displaySuccess=(msg)=>{
+    setshowSuccess(true);
+    setsuccMsg(msg);
+    const myTimeout = setTimeout(closeAlert2, 5000);
+  }
+
+  const closeAlert=()=>{
+    setshowError(false);
+  }
+  const closeAlert2=()=>{
+    setshowSuccess(false);
+  }
+
+
   return (
     <>
+    <Backdrop className={classes22.backdropLoader} open={listLoader} >
+                <CircularProgress color="inherit" />
+                </Backdrop>
+                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
+                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
       <DefaultNavbar
         routes={routes}
         action={{
@@ -76,13 +148,33 @@ function Author() {
           }}
         >
           <Profile />
-          <Posts />
+          <Posts postArr={props.directorActivePosts}  heading="Active Roles" />
         </Card>
-        <Contact />
+        {props.showForm=="none"? null : <Contact />}
         <Footer />
       </MKBox>
     </>
   );
 }
 
-export default Author;
+const mapStateToProps = (state) => {
+  return {
+    directorActivePosts: state.ScreenIt.directorActivePosts,
+    userRegisteredId: state.ScreenIt.userRegisteredId,
+    showForm:state.ScreenIt.showForm,
+    listLoader:state.ScreenIt.listLoader,
+    showError:state.ScreenIt.showError,
+    errormsg:state.ScreenIt.errormsg,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
+    setshowForm: (value) => dispatch(actions.setshowForm(value)),
+    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Author);
+

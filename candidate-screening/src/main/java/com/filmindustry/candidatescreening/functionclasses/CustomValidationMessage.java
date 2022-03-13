@@ -25,6 +25,6 @@ public class CustomValidationMessage extends ResponseEntityExceptionHandler {
     			String customMsg=errorMsg.getDefaultMessage();
     			customErrors.put(data,customMsg);
     		});
-    		return new ResponseEntity<Object>(customErrors,HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<Object>(customErrors,HttpStatus.OK);
     }
 }

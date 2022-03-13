@@ -37,7 +37,7 @@ public class DirectorPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(1)
-	public void directorFormPostingTest() {
+	public void Director_FormPosting_Test() {
 		DirectorPortal DirectorPortalEntityTest= new DirectorPortal();
 		BeanUtils.copyProperties(DPB, DirectorPortalEntityTest);
 		DirectorPortal savedDataEntity=DPRInterface.save(DirectorPortalEntityTest);
@@ -49,14 +49,14 @@ public class DirectorPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(2)
-	public void directorFormReadingTest() {
+	public void Director_GettingAllForms_Test() {
 		List<DirectorPortal> list=DPRInterface.findAll();
 		assertThat(list).size().isGreaterThan(0);
 	}
 	
 	@Test
 	@Order(3)
-	public void directorFormReadOneTest() {
+	public void Director_GettingOneForms_Test() {
 		DirectorPortal checkOne=DPRInterface.findByFormId(formId);
 		DirectorPortalBean UD=new DirectorPortalBean();
 		UD.setRole(checkOne.getRole());
@@ -65,7 +65,7 @@ public class DirectorPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(4)
-	public void directorFormUpdateTest() {
+	public void Director_UpdateForms_Test() {
 		DirectorPortal checkOne=DPRInterface.findByFormId(formId);
 		DirectorPortalBean UD=new DirectorPortalBean();
 		BeanUtils.copyProperties(checkOne, UD);
@@ -77,7 +77,7 @@ public class DirectorPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(5)
-	public void directorFormDeleteTest() {
+	public void Director_DeleteForms_Test() {
 		DPRInterface.deleteById(formId);
 		assertThat(DPRInterface.existsById(formId)).isFalse();
 	}

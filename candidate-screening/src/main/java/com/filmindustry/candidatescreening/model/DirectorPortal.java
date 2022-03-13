@@ -1,15 +1,29 @@
 package com.filmindustry.candidatescreening.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
 @Table(name= "CASTIT_DIRECTOR_ROLE_FORM")
+//@NamedStoredProcedureQueries({
+//	  @NamedStoredProcedureQuery(name = "DirectorPortal.getNonAppliedPostings", 
+//      procedureName = "CASTIT_PROC_FIND_NONAPPLIED_POSTINGS",resultClasses = DirectorPortal.class,
+//      parameters = {
+//         @StoredProcedureParameter(mode = ParameterMode.IN, type = Long.class, name="USER_REGISTRATION_ID"),
+//         @StoredProcedureParameter(mode = ParameterMode.OUT, type = DirectorPortal.class, name="OUTPUT_DATA")
+//      })})
 public class DirectorPortal {
 
 	@Id 
@@ -61,6 +75,10 @@ public class DirectorPortal {
 	
 	@Column(name= "ROLE_GIVEN_TO_ID")
 	private long roleGivenToID;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "FORM_ID", referencedColumnName = "FORM_ID")
+	private ApplicantPortal applicantPortal;
 	
 	public DirectorPortal() {
 		// TODO Auto-generated constructor stub
@@ -215,6 +233,16 @@ public class DirectorPortal {
 	public void setRoleGivenToID(long roleGivenToID) {
 		this.roleGivenToID = roleGivenToID;
 	}
+
+	public ApplicantPortal getApplicantPortal() {
+		return applicantPortal;
+	}
+
+	public void setApplicantPortal(ApplicantPortal applicantPortal) {
+		this.applicantPortal = applicantPortal;
+	}
+
+	
 
 	
 	
