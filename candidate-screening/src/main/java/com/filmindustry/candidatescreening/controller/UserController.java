@@ -76,7 +76,7 @@ public class UserController {
 		String host = "smtp.mail.yahoo.com";
 		Properties prop = new Properties();
 		final String username = "castit651project@yahoo.com";
-        final String password = "rnewmrgfwurlxcgv"; //Group@12345
+        final String password = "rnewmrgfwurlxcgv"; //  Group@12345
 		prop.put("mail.smtp.host", "smtp.mail.yahoo.com");
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.auth", "true");
