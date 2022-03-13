@@ -1,5 +1,6 @@
 package com.filmindustry.candidatescreening.bean;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -39,8 +40,8 @@ public class UserDetailsBean {
 	private String error;
 	
 	private String message;
-
-
+	
+	
 	public UserDetailsBean()
 	{
 		
@@ -144,6 +145,4 @@ public class UserDetailsBean {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
 }
