@@ -23,27 +23,54 @@ import MKBox from "components/MKBox";
 import MKAvatar from "components/MKAvatar";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
+import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
+import * as actions from '../../../../store/index';
+import DefaultCounterCard from "examples/Cards/CounterCards/DefaultCounterCard";
+import Account from "pages/LandingPages/Author/sections/Account";
+import InfoCard from "pages/LandingPages/Author/sections/InfoCard";
+import bg6 from "assets/images/bg6.jpg";
 
 // Images
 import profilePicture from "assets/images/bruce-mars.jpg";
 
-function Profile() {
+function Profile(props) {
   return (
     <MKBox component="section" py={{ xs: 6, sm: 12 }}>
       <Container>
         <Grid container item xs={12} justifyContent="center" mx="auto">
-          <MKBox mt={{ xs: -16, md: -20 }} textAlign="center">
+          {/* <MKBox mt={{ xs: -16, md: -20 }} textAlign="center">
             <MKAvatar src={profilePicture} alt="Burce Mars" size="xxl" shadow="xl" />
-          </MKBox>
-          <Grid container justifyContent="center" py={6}>
+          </MKBox> */} 
+          <MKBox style={{position: 'absolute', right: 0, top: 0}}>
+              <Account/>
+            </MKBox>
+          <Grid container py={6}>
             <Grid item xs={12} md={7} mx={{ xs: "auto", sm: 6, md: 1 }}>
-              <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                <MKTypography variant="h3">Michael Roven</MKTypography>
-                <MKButton variant="outlined" color="info" size="small">
+              <MKBox style={{position: 'absolute', right: '200px', top: '50px'}} height="20px" width="350px"><InfoCard/></MKBox>
+              <MKBox display="flex" justifyContent="left" mb={1} >
+                  <MKTypography fontWeight="bold" variant="h3">Welcome {props.userFirstName} {props.userLastName}</MKTypography>
+                </MKBox>
+                <Grid container justifyContent="left" py={4} mb={1}>
+                  <MKTypography variant="h5">Castit - Your's very own hiring manager</MKTypography>
+                </Grid>
+                <Grid container style={{left: '5px', top: '200px'}}>
+                  <DefaultCounterCard
+                    count={props.directorActivePosts.length}
+                    suffix="+"
+                    title="Ongoing Projects"
+                    //description="Mix the sections, change the colors and unleash your creativity"
+                  />
+                  <DefaultCounterCard
+                    count={50}
+                    title="Closed project"
+                    //description="Mix the sections, change the colors and unleash your creativity"
+                  />
+                </Grid>
+                {/* <MKButton variant="outlined" color="info" size="small">
                   Follow
-                </MKButton>
-              </MKBox>
-              <Grid container spacing={3} mb={3}>
+                </MKButton> */}
+              
+              {/* <Grid container spacing={3} mb={3}>
                 <Grid item>
                   <MKTypography component="span" variant="body2" fontWeight="bold">
                     323&nbsp;
@@ -68,8 +95,8 @@ function Profile() {
                     Following
                   </MKTypography>
                 </Grid>
-              </Grid>
-              <MKTypography variant="body1" fontWeight="light" color="text">
+              </Grid> */}
+              {/* <MKTypography variant="body1" fontWeight="light" color="text">
                 Decisions: If you can&apos;t decide, the answer is no. If two equally difficult
                 paths, choose the one more painful in the short term (pain avoidance is creating an
                 illusion of equality). Choose the path that leaves you more equanimous. <br />
@@ -97,7 +124,7 @@ function Profile() {
                 >
                   More about me <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
                 </MKTypography>
-              </MKTypography>
+              </MKTypography> */}
             </Grid>
           </Grid>
         </Grid>
@@ -105,5 +132,12 @@ function Profile() {
     </MKBox>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    userFirstName:state.ScreenIt.userFirstName,
+    userLastName:state.ScreenIt.userLastName,
+    directorActivePosts:state.ScreenIt.directorActivePosts,
+  };
+};
 
-export default Profile;
+export default connect(mapStateToProps, null)(Profile);

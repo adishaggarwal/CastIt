@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect} from "react";
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -21,6 +21,7 @@ import MKTypography from "components/MKTypography";
 // Material Kit 2 React components
 import TransparentBlogCard from "examples/Cards/BlogCards/TransparentBlogCard";
 import CenteredBlogCard  from "examples/Cards/BlogCards/CenteredBlogCard";
+import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 
 import classes from "./posts.module.css";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
@@ -32,6 +33,12 @@ import post1 from "assets/images/examples/testimonial-6-2.jpg";
 import post2 from "assets/images/examples/testimonial-6-3.jpg";
 import post3 from "assets/images/examples/blog-9-4.jpg";
 import post4 from "assets/images/plus.png";
+import add_image from "assets/images/add_image.png";
+//import add_item2 from "assets/images/add-item2.png";
+//import add_item2 from "assets/images/add-item2.png";
+import add_image4 from "assets/images/add_image4.png";
+import Clapperboard from "assets/images/Clapperboard-Transparent.png"
+
 
 function Places(props) {
 
@@ -48,6 +55,8 @@ function Places(props) {
     },
   }));
   const classes22 = useStyles22();
+
+
 
   const openForm=()=>{
     props.setshowForm("create");
@@ -121,10 +130,10 @@ function Places(props) {
             {props.heading}
           </MKTypography>
         </Grid>
-        <div className={classes.RolesBox}  container spacing={3}>
-        <Grid style={{marginLeft:"10px"}} item xs={12} sm={6} lg={3}>
+        <div className={classes.RolesBox}  container spacing={2}>
+        <Grid style={{marginLeft:"10px"}} item xs={11} sm={5} lg={2}>
             <CenteredBlogCard
-              image={post4}
+              image={add_image4}
               hide
               clicked={openForm}
               action={{
@@ -135,12 +144,13 @@ function Places(props) {
             />
            
           </Grid>
+        
           {(props.postArr).map((post, index) => {
                     return (
                       <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
             <TransparentBlogCard
               // image={post.movieImage}
-              image={post3}
+              image={Clapperboard}
               clickedEdit={()=>updatePost(post.formId)}
               clickedDelete={()=>deletePost(post.formId)}
               title={post.movieName}
