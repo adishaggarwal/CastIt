@@ -24,12 +24,21 @@ import Profile from "pages/LandingPages/Author/sections/Profile";
 import Posts from "pages/LandingPages/Author/sections/Posts";
 import Contact from "pages/LandingPages/Author/sections/Contact";
 import Footer from "pages/LandingPages/Author/sections/Footer";
+import SimpleFooter from "examples/Footers/SimpleFooter";
 
 // Routes
 import routes from "routes";
 
 // Images
 import bgImage from "assets/images/city-profile.jpg";
+import dashBoardImage from "assets/images/Director-Dashboard.jpg";
+import bg4 from "assets/images/bg4.jpg";
+import bg5 from "assets/images/bg5.jpg";
+import bg6 from "assets/images/bg6.jpg";
+import bg7 from "assets/images/bg7.jpg";
+import bg8 from "assets/images/bg8.jpg";
+import bg9 from "assets/images/bg9.jpg";
+import bg10 from "assets/images/bg10.jpg";
 
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
 import * as actions from '../../../store/index';
@@ -109,7 +118,7 @@ function Author(props) {
                 </Backdrop>
                 {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
                 {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
-      <DefaultNavbar
+      {/* <DefaultNavbar
         routes={routes}
         action={{
           type: "external",
@@ -119,7 +128,7 @@ function Author(props) {
         }}
         transparent
         light
-      />
+      /> */}
       <MKBox bgColor="white">
         <MKBox
           minHeight="25rem"
@@ -127,15 +136,15 @@ function Author(props) {
           sx={{
             backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
               `${linearGradient(
-                rgba(gradients.dark.main, 0.8),
-                rgba(gradients.dark.state, 0.8)
-              )}, url(${bgImage})`,
+                rgba(gradients.dark.main, 0.1),
+                rgba(gradients.dark.state, 0.1)
+              )}, url(${bg7})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             display: "grid",
             placeItems: "center",
           }}
-        />
+        /> 
         <Card
           sx={{
             p: 2,
@@ -147,11 +156,13 @@ function Author(props) {
             boxShadow: ({ boxShadows: { xxl } }) => xxl,
           }}
         >
-          <Profile />
-          <Posts postArr={props.directorActivePosts}  heading="Active Roles" />
-        </Card>
-        {props.showForm=="none"? null : <Contact />}
-        <Footer />
+         <Profile />
+          <Posts zIndex={2} postArr={props.directorActivePosts}  heading="Active Roles" />
+           {props.showForm=="none"? null : <Contact />}
+          </Card>
+        <MKBox py={2} width="100%" position="absolute">
+        <SimpleFooter/>
+      </MKBox>
       </MKBox>
     </>
   );
