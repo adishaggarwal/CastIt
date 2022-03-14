@@ -105,6 +105,5 @@ public class UserDetails {
 	public void setUserRegistereAs(String userRegistereAs) {
 		this.userRegistereAs = userRegistereAs;
 	}
-
 	
 }

@@ -1,10 +1,15 @@
 package com.filmindustry.candidatescreening.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +42,13 @@ public class ApplicantPortal {
 			@Column(name= "CHARACTERISTICS5")
 			private String characteristics5;
 			
+			@Column(name= "PERCENTAGEMATCH")
+			private String percentageMatch;
+			
+			@OneToOne(mappedBy = "applicantPortal")
+			private DirectorPortal directorPortal;
+//			private List<DirectorPortal> directorPortal ;
+//			
 			public ApplicantPortal() {
 				// TODO Auto-generated constructor stub
 			}
@@ -115,6 +127,22 @@ public class ApplicantPortal {
 
 			public void setApplicantFormId(long applicantFormId) {
 				this.applicantFormId = applicantFormId;
+			}
+
+			public String getPercentageMatch() {
+				return percentageMatch;
+			}
+
+			public void setPercentageMatch(String percentageMatch) {
+				this.percentageMatch = percentageMatch;
+			}
+
+			public DirectorPortal getDirectorPortal() {
+				return directorPortal;
+			}
+
+			public void setDirectorPortal(DirectorPortal directorPortal) {
+				this.directorPortal = directorPortal;
 			}
 
 }

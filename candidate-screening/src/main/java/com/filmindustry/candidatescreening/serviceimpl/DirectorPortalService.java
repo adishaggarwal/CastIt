@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.filmindustry.candidatescreening.bean.ApplicantPortalBean;
 import com.filmindustry.candidatescreening.bean.DirectorPortalBean;
 import com.filmindustry.candidatescreening.bean.UserDetailsBean;
 import com.filmindustry.candidatescreening.model.DirectorPortal;
@@ -134,6 +135,55 @@ public class DirectorPortalService implements DirectorPortalServiceInterface{
 		List <DirectorPortalBean> finalList=new ArrayList<DirectorPortalBean>(list.size());
 		for (DirectorPortal source: list ) {
 			DirectorPortalBean target= new DirectorPortalBean();
+	        BeanUtils.copyProperties(source , target);
+	        finalList.add(target);
+	     }
+		return finalList;
+	}
+
+	@Override
+	public List<DirectorPortalBean> applicantselectallposting() {
+		DirectorPortal entity = new DirectorPortal();
+		entity.setRoleStatus("Active");
+		List<DirectorPortal> list=DPRInterface.findAllByroleStatus(entity.getRoleStatus());
+		List <DirectorPortalBean> finalList=new ArrayList<DirectorPortalBean>(list.size());
+		for (DirectorPortal source: list ) {
+			DirectorPortalBean target= new DirectorPortalBean();
+	        BeanUtils.copyProperties(source , target);
+	        finalList.add(target);
+	     }
+		return finalList;
+	}
+
+	@Override
+	public List<DirectorPortalBean> NonAppliedPostings(long userRegisteredId) {
+		DirectorPortal entity = new DirectorPortal();
+		entity.setUserRegisteredId(userRegisteredId);
+		//List<DirectorPortal> list=DPRInterface.getNonAppliedPostings(entity.getUserRegisteredId());//CASTIT_DIRECTOR_ROLE_FORM
+		//List<DirectorPortal> list1=new ArrayList<DirectorPortal>();
+		List<DirectorPortal> list=DPRInterface.getNonAppliedPostings(entity.getUserRegisteredId());
+		List <DirectorPortalBean> finalList=new ArrayList<DirectorPortalBean>(list.size());
+		for (DirectorPortal source: list ) {
+			DirectorPortalBean target= new DirectorPortalBean();
+	        BeanUtils.copyProperties(source , target);
+	        finalList.add(target);
+	     }
+		return finalList;
+	}
+
+	@Override
+	public List<DirectorPortalBean> AppliedPostings(long userRegisteredId) {
+		DirectorPortal entity = new DirectorPortal();
+		entity.setUserRegisteredId(userRegisteredId);
+		//List<DirectorPortal> list=DPRInterface.getNonAppliedPostings(entity.getUserRegisteredId());//CASTIT_DIRECTOR_ROLE_FORM
+		//List<DirectorPortal> list1=new ArrayList<DirectorPortal>();
+		List<DirectorPortal> list=DPRInterface.getAppliedPostings(entity.getUserRegisteredId());
+		List <DirectorPortalBean> finalList=new ArrayList<DirectorPortalBean>(list.size());
+		for (DirectorPortal source: list ) {
+			DirectorPortalBean target= new DirectorPortalBean();
+			ApplicantPortalBean b=new ApplicantPortalBean();
+			b.setApplicantFormId((source.getApplicantPortal().getApplicantFormId()));
+			target.setApplicantPortalBean(b);
 	        BeanUtils.copyProperties(source , target);
 	        finalList.add(target);
 	     }

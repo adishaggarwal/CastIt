@@ -37,7 +37,7 @@ public class ApplicantPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(1)
-	public void applicantFormApplyingTest() {
+	public void Applicant_ApplyingListing_Test() {
 		ApplicantPortal ApplicantPortalEntityTest= new ApplicantPortal();
 		BeanUtils.copyProperties(DPB, ApplicantPortalEntityTest);
 		ApplicantPortal savedDataEntity=DPRInterface.save(ApplicantPortalEntityTest);
@@ -49,14 +49,14 @@ public class ApplicantPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(2)
-	public void applicantFormReadingTest() {
+	public void Applicant_GettingAllListings_Test() {
 		List<ApplicantPortal> list=DPRInterface.findAll();
 		assertThat(list).size().isGreaterThan(0);
 	}
 	
 	@Test
 	@Order(3)
-	public void applicantFormReadOneTest() {
+	public void Applicant_GettingOneListing_Test() {
 		ApplicantPortal checkOne=DPRInterface.findByApplicantFormId(applicantFormId);
 		ApplicantPortalBean UD=new ApplicantPortalBean();
 		UD.setCharacteristics1(checkOne.getCharacteristics1());
@@ -65,7 +65,7 @@ public class ApplicantPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(4)
-	public void applicantFormUpdateTest() {
+	public void Applicant_UpdateApplication_Test() {
 		ApplicantPortal checkOne=DPRInterface.findByApplicantFormId(applicantFormId);
 		ApplicantPortalBean UD=new ApplicantPortalBean();
 		BeanUtils.copyProperties(checkOne, UD);
@@ -77,7 +77,7 @@ public class ApplicantPortalTest extends CandidateScreeningApplicationTests{
 	
 	@Test
 	@Order(5)
-	public void applicantFormDeleteTest() {
+	public void Applicant_DeleteApplication_Test() {
 		DPRInterface.deleteById(applicantFormId);
 		assertThat(DPRInterface.existsById(applicantFormId)).isFalse();
 	}
