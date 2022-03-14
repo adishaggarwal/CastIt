@@ -43,6 +43,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
+import logo from "assets/images/logo.PNG";
 import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
@@ -189,8 +190,8 @@ const headers = {
   }
 
 
-  const routeChange = () =>{ 
-    navigate('/Director');
+  const routeChange = (val) =>{ 
+    navigate('/'+val);
   }
   // {
   //   "userEmail":"abc1d@gmail.com",
@@ -271,8 +272,8 @@ const headers = {
       } else {
   
   // displaySuccess("User Account created successfully!!");
-  routeChange();
   props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs)
+  routeChange(res.data.userRegistereAs);
       }
     })
     .catch((error) => {
@@ -347,7 +348,7 @@ const headers = {
     <React.Fragment>
     <MKBox
                 variant="gradient"
-                bgColor="info"
+                style={{backgroundColor:"black"}}
                 borderRadius="lg"
                 coloredShadow="info"
                 mx={2}
@@ -361,9 +362,9 @@ const headers = {
                 </MKTypography>
                 <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
                   <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <FacebookIcon color="inherit" />
-                    </MKTypography>
+                    {/* <MKTypography component={MuiLink} href="#" variant="body1" color="white">
+                      <img src={logo} color="inherit" />
+                    </MKTypography> */}
                   </Grid>
                   <Grid item xs={2}>
                     <MKTypography component={MuiLink} href="#" variant="body1" color="white">

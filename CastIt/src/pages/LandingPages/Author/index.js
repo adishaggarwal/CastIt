@@ -174,8 +174,10 @@ const mapStateToProps = (state) => {
     userRegisteredId: state.ScreenIt.userRegisteredId,
     showForm:state.ScreenIt.showForm,
     listLoader:state.ScreenIt.listLoader,
-    showError:state.ScreenIt.showError,
+    showError: state.ScreenIt.showError,
     errormsg:state.ScreenIt.errormsg,
+    showSuccess:state.ScreenIt.showSuccess,
+    succmsg:state.ScreenIt.succmsg,
   };
 };
 

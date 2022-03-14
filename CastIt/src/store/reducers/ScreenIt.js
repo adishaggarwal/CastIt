@@ -9,17 +9,23 @@ const initialState = {
   // isXmlData:true,
   // users:[],
   // productName: !(window.location.href.includes(":3000"))?'':"DEMAND",
-  "userRegisterationId": -1,
-  "userEmail": "",
-  "userFirstName": "",
-  "userLastName": "",
-  "userDOB": "",
-  "userRegistereAs": "",
+  userRegisterationId: -1,
+  userEmail: "",
+  userFirstName: "",
+  userLastName: "",
+  userDOB: "",
+  userRegistereAs: "",
   directorUpdateFormId:"",
-  showForm:"none",
+  applicantUpdateFormId:"",
+  applicantFormId:"",
+  showForm:"none", //none , applyjob , create , update
   listLoader:false,
   showError:false,
   errormsg:"",
+  showSuccess:false,
+  succmsg:"",
+  applicantAppliedPosts:[],
+  applicantActivePosts:[],
   directorActivePosts:[
     // {
     //   movieName:"Spiderman",
@@ -86,15 +92,41 @@ const ScreenItreducer = (state = initialState, action) => {
                showError:action.value,
                errormsg:action.msg
             };
+            case actionTypes.DISPLAY_SUCCESS:
+            return {
+              ...state,
+               showSuccess:action.value,
+               succmsg:action.msg
+            };
             case actionTypes.SET_DIRECTORACTIVE_POSTS:
             return {
               ...state,
               directorActivePosts:action.value
             };
+            case actionTypes.SET_APPLICANTACTIVE_POSTS:
+            return {
+              ...state,
+              applicantActivePosts:action.value
+            };
+            case actionTypes.SET_APPLICANTAPPLIED_POSTS:
+              return {
+                ...state,
+                applicantAppliedPosts:action.value
+              };
             case actionTypes.SET_DIRECTORUPDATE_FORMID:
             return {
               ...state,
               directorUpdateFormId:action.value
+            };
+            case actionTypes.SET_APPLICANTUPDATE_FORMID:
+            return {
+              ...state,
+              applicantUpdateFormId:action.value
+            };
+            case actionTypes.SET_APPLICANT_FORMID:
+            return {
+              ...state,
+              applicantFormId:action.value
             };
      
     default:
