@@ -76,6 +76,7 @@ function Places(props) {
         displayError(res.data.error);
 
           } else {
+            displaySuccess("Role deleted successfully!");
             props.fetchActiveRoles();
           }
         })
@@ -86,22 +87,24 @@ function Places(props) {
   }
 
   const displayError=(msg)=>{
-    setshowError(true);
-    seterrMsg(msg);
+    // setshowError(true);
+    // seterrMsg(msg);
+    props.displayError(true,msg);
     const myTimeout = setTimeout(closeAlert, 5000);
   }
 
   const displaySuccess=(msg)=>{
-    setshowSuccess(true);
-    setsuccMsg(msg);
+    // setshowSuccess(true);
+    // setsuccMsg(msg);
+    props.displaySuccess(true,msg);
     const myTimeout = setTimeout(closeAlert2, 5000);
   }
 
   const closeAlert=()=>{
-    setshowError(false);
+    props.displayError(false,"");
   }
   const closeAlert2=()=>{
-    setshowSuccess(false);
+    props.displaySuccess(false,"");
   }
 
   return (
@@ -109,8 +112,8 @@ function Places(props) {
      <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
-                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
-                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
+                {/* {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
+                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null} */}
     <MKBox component="section" py={2}>
       <Container>
         <Grid container item xs={12} lg={6}>
@@ -172,7 +175,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
     setdirectorUpdateFormId:(value) => dispatch(actions.setdirectorUpdateFormId(value)),
-    setdirectorActivePosts:(value) => dispatch(actions.setdirectorActivePosts(value))
+    setdirectorActivePosts:(value) => dispatch(actions.setdirectorActivePosts(value)),
+    displayError: (value,msg) => dispatch(actions.displayError(value,msg)),
+    displaySuccess: (value,msg) => dispatch(actions.displaySuccess(value,msg)),
   };
 };
 

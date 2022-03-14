@@ -49,100 +49,105 @@ function Places(props) {
   }));
   const classes22 = useStyles22();
 
-  const openForm=()=>{
-    props.setshowForm("create");
+  const applyPost=(formId)=>{
+    props.setshowForm("applyjob");
+    props.setapplicantUpdateFormId(formId);
   }
 
-  const updatePost=(formId)=>{
-    props.setshowForm("update");
-    props.setdirectorUpdateFormId(formId);
-  }
-
-  // const fetchActiveRoles=()=>{
-  //   let data=  {
-  //     "userRegisteredId":props.userRegisteredId,
-  //     }
-    
-  //   setlistLoader(true);
-  // axios.post("/directorportal/selectallposting", data).then((res) => {
-  //   let errorMsg="";
-  //   setlistLoader(false);
-  // if (res.data.error) {
-  // //toaster
-  // displayError(res.data.error);
-  
-  //     } else {
-  //       props.setdirectorActivePosts(res.data);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     // setErrorMessage(error);
-  //   setlistLoader(false);
-  //   }); 
-  // }
-
-  const deletePost=(formId)=>{
-
-        let options=  {
-          "data":{
-            "formId":formId
-          }
-          }
-
-        setlistLoader(true);
-        axios.delete("/directorportal/deleteposting", options).then((res) => {
-        let errorMsg="";
-        setlistLoader(false);
-        if (res.data.error) {
-        //toaster
-        displayError(res.data.error);
-
-          } else {
-            props.fetchActiveRoles();
-          }
-        })
-        .catch((error) => {
-          displayError(error.message);
-        setlistLoader(false);
-        }); 
+  const editapplyPost=(formId,applicantFormId)=>{
+    props.setshowForm("editapplyjob");
+    props.setapplicantUpdateFormId(formId);
+    props.setapplicantFormId(applicantFormId);
   }
 
   const displayError=(msg)=>{
-    setshowError(true);
-    seterrMsg(msg);
+    // setshowError(true);
+    // seterrMsg(msg);
+    props.displayError(true,msg);
     const myTimeout = setTimeout(closeAlert, 5000);
   }
 
   const displaySuccess=(msg)=>{
-    setshowSuccess(true);
-    setsuccMsg(msg);
+    // setshowSuccess(true);
+    // setsuccMsg(msg);
+    props.displaySuccess(true,msg);
     const myTimeout = setTimeout(closeAlert2, 5000);
   }
 
   const closeAlert=()=>{
-    setshowError(false);
+    props.displayError(false,"");
   }
   const closeAlert2=()=>{
-    setshowSuccess(false);
+    props.displaySuccess(false,"");
   }
+
+  const deletePost=(applicantFormId)=>{
+
+    let options=  {
+      "data":{
+        "applicantFormId":applicantFormId
+      }
+      }
+
+    setlistLoader(true);
+    axios.delete("/applicantportal/deleteapplication", options).then((res) => {
+    let errorMsg="";
+    setlistLoader(false);
+    if (res.data.error) {
+    //toaster
+    displayError(res.data.error);
+
+      } else {
+        displaySuccess("Application deleted successfully!");
+        props.fetchApplicantPosting();
+        props.fetchApplicantAppliedPosting();
+      }
+    })
+    .catch((error) => {
+      displayError(error.message);
+      setlistLoader(false);
+    }); 
+}
+  
+
+  // const displayError=(msg)=>{
+  //   // setshowError(true);
+  //   // seterrMsg(msg);
+  //   props.displayError(true,msg);
+  //   const myTimeout = setTimeout(closeAlert, 5000);
+  // }
+
+  // const displaySuccess=(msg)=>{
+  //   // setshowSuccess(true);
+  //   // setsuccMsg(msg);
+  //   props.displaySuccess(true,msg);
+  //   const myTimeout = setTimeout(closeAlert2, 5000);
+  // }
+
+  // const closeAlert=()=>{
+  //   props.displayError(false,"");
+  // }
+  // const closeAlert2=()=>{
+  //   props.displaySuccess(false,"");
+  // }
 
   return (
     <>
      <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
-                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
-                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
+                {/* {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
+                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null} */}
     <MKBox component="section" py={2}>
       <Container>
-        <Grid container item xs={12} lg={6}>
+        {(props.postArr).length>0?<Grid container item xs={12} lg={6}>
           <MKTypography variant="h3" mb={6}>
             {props.heading}
           </MKTypography>
-        </Grid>
+        </Grid>:null}
         <div className={classes.RolesBox}  container spacing={3}>
-        <Grid style={{marginLeft:"10px"}} item xs={12} sm={6} lg={3}>
-            <CenteredBlogCard
+        {/* <Grid style={{marginLeft:"10px"}} item xs={12} sm={6} lg={3}> */}
+            {/* <CenteredBlogCard
               image={post4}
               hide
               clicked={openForm}
@@ -151,17 +156,19 @@ function Places(props) {
                 // route: "/pages/blogs/author",
                 // label: "read more",
               }}
-            />
+            /> */}
            
-          </Grid>
+          {/* </Grid> */}
           {(props.postArr).map((post, index) => {
                     return (
                       <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
             <TransparentBlogCard
               // image={post.movieImage}
               image={post3}
-              clickedEdit={()=>updatePost(post.formId)}
-              clickedDelete={()=>deletePost(post.formId)}
+              isApplicant={true}
+              isApplicantOptions={props.isApplicantOptions}
+              clickedDelete={()=>deletePost(post.applicantFormId)}
+              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantFormId) :()=>applyPost(post.formId)}
               title={post.movieName}
               description={post.movieDesc}
               action={{
@@ -193,8 +200,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
-    setdirectorUpdateFormId:(value) => dispatch(actions.setdirectorUpdateFormId(value)),
-    setdirectorActivePosts:(value) => dispatch(actions.setdirectorActivePosts(value))
+    setapplicantUpdateFormId:(value) => dispatch(actions.setapplicantUpdateFormId(value)),
+    setapplicantFormId:(value) => dispatch(actions.setapplicantFormId(value)),
+    // setdirectorActivePosts:(value) => dispatch(actions.setdirectorActivePosts(value)),
+    displayError: (value,msg) => dispatch(actions.displayError(value,msg)),
+    displaySuccess: (value,msg) => dispatch(actions.displaySuccess(value,msg)),
+    fetchApplicantPosting:()=>dispatch(actions.fetchApplicantPosting()),
+    fetchApplicantAppliedPosting:()=>dispatch(actions.fetchApplicantAppliedPosting())
   };
 };
 

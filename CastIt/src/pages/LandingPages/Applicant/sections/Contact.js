@@ -47,7 +47,7 @@ function Contact(props) {
 
   const [formData,setformData]=useState(
     {
-      "userRegisteredId":props.userRegisteredId,
+      "userRegisteredId":props.userRegisterationId,
       "movieName":"",
       "movieDesc":"",
       "movieGenre":"",
@@ -64,16 +64,6 @@ function Contact(props) {
 
   const [errorState, seterrorState] = useState(
     {
-      movieName:true,
-      movieDesc:true,
-      movieGenre:true,
-      role:true,
-      roleDescription:true,
-      characteristic1:true,
-      characteristic2:true,
-      characteristic3:true,
-      characteristic4:true,
-      characteristic0:true,
       value1:true,
       value2:true,
       value3:true,
@@ -118,21 +108,31 @@ function Contact(props) {
   const classes22 = useStyles22();
   
 
-  useEffect(() => {
-    if(props.showForm==="create")
-    {
-      resetForm();
-      resetError(true);
-    }
-  }, [props.showForm]);
-
+  // useEffect(() => {
+    
+  // }, [props.showForm]);
 
   useEffect(() => {
-    if(props.showForm==="update")
+    
+  }, [props.showError,props.showSuccess,props.showForm]);
+
+  
+  useEffect(() => {
+    let result;
+    if(props.showForm==="applyjob" || props.showForm==="editapplyjob")
     {
-      let result = (props.directorActivePosts).find((obj) => {
-        return obj.formId === props.directorUpdateFormId;
+      if(props.showForm==="applyjob")
+      {
+      result = (props.applicantActivePosts).find((obj) => {
+        return obj.formId === props.applicantUpdateFormId;
       });
+    }
+    else if(props.showForm==="editapplyjob")
+    {
+      result = (props.applicantAppliedPosts).find((obj) => {
+        return obj.formId === props.applicantUpdateFormId;
+      });
+    }
       const formDataCopy={...formData};
       const charDataCopy=[...charData];
 
@@ -142,33 +142,30 @@ function Contact(props) {
       formDataCopy["movieGenre"]=result.movieGenre;
       formDataCopy["role"]=result.role;
       formDataCopy["roleDescription"]=result.roleDescription;
-      formDataCopy["roleStatus"]=result.roleStatus;
+      // formDataCopy["roleStatus"]=result.roleStatus;   //check
       for(let i=0;i<5;i++)
       {
         let charArr=(result["characteristics"+(i+1)]).split(",");
         charDataCopy[i].characteristic=charArr[0];
-        charDataCopy[i].value=charArr[1];
+        if(props.showForm==="applyjob")
+        {
+        charDataCopy[i].value="";
+        }
+        else if(props.showForm==="editapplyjob")
+        {
+          charDataCopy[i].value=charArr[1];
+        }
       }
       
       setcharData(charDataCopy);
       setformData(formDataCopy);
 
-      resetError(false);
+      resetError(true);
     }
-  }, [props.directorUpdateFormId]);
+  }, [props.applicantUpdateFormId]);
 
   const resetError=(val)=>{
     let resetError1={
-      movieName:val,
-      movieDesc:val,
-      movieGenre:val,
-      role:val,
-      roleDescription:val,
-      characteristic1:val,
-      characteristic2:val,
-      characteristic3:val,
-      characteristic4:val,
-      characteristic0:val,
       value1:val,
       value2:val,
       value3:val,
@@ -178,31 +175,31 @@ function Contact(props) {
       seterrorState(resetError1);
   }
 
-  const resetForm=()=>{
-    const formDataCopy={...formData};
-      const charDataCopy=[...charData];
+  // const resetForm=()=>{
+  //   const formDataCopy={...formData};
+  //     const charDataCopy=[...charData];
 
       
-      formDataCopy["movieName"]="";
-      formDataCopy["movieDesc"]="";
-      formDataCopy["movieGenre"]="";
-      formDataCopy["role"]="";
-      formDataCopy["roleDescription"]="";
-      formDataCopy["roleStatus"]="";
-      for(let i=0;i<5;i++)
-      {
-        charDataCopy[i].characteristic="";
-        charDataCopy[i].value="";
-      }
+  //     formDataCopy["movieName"]="";
+  //     formDataCopy["movieDesc"]="";
+  //     formDataCopy["movieGenre"]="";
+  //     formDataCopy["role"]="";
+  //     formDataCopy["roleDescription"]="";
+  //     // formDataCopy["roleStatus"]="Active";
+  //     for(let i=0;i<5;i++)
+  //     {
+  //       charDataCopy[i].characteristic="";
+  //       charDataCopy[i].value="";
+  //     }
       
-      setcharData(charDataCopy);
-      setformData(formDataCopy);
-  }
+  //     setcharData(charDataCopy);
+  //     setformData(formDataCopy);
+  // }
 
   const setCharacteristic=(e,key,index)=>{
       const charDataCopy=[...charData];
       charDataCopy[index][key]=e.target.value;
-    inputFormValidation(key+""+index,e.target.value);
+      inputFormValidation(key+""+index,e.target.value);
       setcharData(charDataCopy);
   }
 
@@ -305,47 +302,48 @@ function Contact(props) {
 
   const closeAlert=()=>{
     setshowError(false);
+    props.displayError(false,"");
   }
   const closeAlert2=()=>{
     setshowSuccess(false);
+    props.displaySuccess(false,"");
   }
 
   const displayError=(msg)=>{
-    setshowError(true);
-    seterrMsg(msg);
+    // setshowError(true);
+    props.displayError(true,msg);
+    // seterrMsg(msg);
     const myTimeout = setTimeout(closeAlert, 5000);
   }
 
   const displaySuccess=(msg)=>{
-    setshowSuccess(true);
-    setsuccMsg(msg);
+    // setshowSuccess(true);
+    // setsuccMsg(msg);
+    props.displaySuccess(true,msg);
     const myTimeout = setTimeout(closeAlert2, 5000);
   }
 
-  const postRole=()=>{
-    
+  const postRole=(key)=>{
+    // applyjob" ? "Apply":(props.showForm==="editapplyjob
     let data=  {
-      "userRegisteredId":props.userRegisteredId,
-      "movieName":formData.movieName,
-      "movieDesc":formData.movieDesc,
-      "movieStatus":"Active",
-      "movieGenre":formData.movieGenre,
-      "role":formData.role,
-      "roleDescription":formData.roleDescription,
+      "userRegisteredId":props.userRegisterationId,
+      "formId":props.applicantUpdateFormId,
       "characteristics1":charData[0].characteristic+ ","+charData[0].value,
       "characteristics2":charData[1].characteristic+ ","+charData[1].value,
       "characteristics3":charData[2].characteristic+ ","+charData[2].value,
       "characteristics4":charData[3].characteristic+ ","+charData[3].value,
       "characteristics5":charData[4].characteristic+ ","+charData[4].value,
-      "roleStatus":formData.roleStatus
       }
 
-      if(props.showForm==="update")
+      let url= "/applicantportal/applyposting";
+
+
+      if (key=="editapplyjob")
       {
-        data.formId=props.directorUpdateFormId;
+        data.applicantFormId=props.applicantFormId;
+        url="/applicantportal/updateapplication";
       }
       
-      let url=props.showForm==="update" ? "/directorportal/updateposting"  : (props.showForm==="create" ? "/directorportal/addposting":null);
     
     setlistLoader(true);
   axios.post(url, data).then((res) => {
@@ -357,9 +355,11 @@ function Contact(props) {
   
       } else {
   props.setshowForm("none");
-  displaySuccess(props.showForm==="update"? "Role updated successfully!!" :"Role posted successfully!!");
+  displaySuccess(key=="editapplyjob"? "Role Updated successfully!!":"Role applied successfully!!");
   // props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs);
-  props.fetchActiveRoles();
+  props.fetchApplicantPosting();
+  props.fetchApplicantAppliedPosting();
+
       }
     })
     .catch((error) => {
@@ -368,14 +368,14 @@ function Contact(props) {
     }); 
 
   }
-
+  
   return (
     <React.Fragment>
       <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
-                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
-                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
+                {/* {props.showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{props.errormsg}</MKAlert>:null}
+                {props.showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{props.succmsg}</MKAlert>:null} */}
     <MKBox component="section" py={{ xs: 0, lg: 6 }}>
       <Container>
         <Grid container item>
@@ -486,7 +486,7 @@ function Contact(props) {
                 <MKBox component="form" p={2} method="post">
                   <MKBox px={3} py={{ xs: 2, sm: 6 }}>
                     <MKTypography variant="h2" mb={0}>
-                      {props.showForm==="create" ? "Post a new role!":(props.showForm==="update" ? "Update role!":null)}
+                      {props.showForm==="applyjob" ? "Apply for new role!":(props.showForm==="editapplyjob" ? "Update Application!":null)}
                     </MKTypography>
                     {/* <MKTypography variant="body1" color="text" mb={2}>
                       We&apos;d like to talk with you.
@@ -499,6 +499,7 @@ function Contact(props) {
                           variant="standard"
                           label="Name of the movie is"
                           placeholder="Movie Name"
+                          disabled 
                           error={errorState.movieName}
                           value={formData.movieName}
                           onChange={(e)=>handleformData(e,"movieName")}
@@ -510,6 +511,7 @@ function Contact(props) {
                         <MKInput
                           variant="standard"
                           label="Movie Description"
+                          disabled 
                           placeholder="Horror Comedy movie with ..."
                           value={formData.movieDesc}
                           error={errorState.movieDesc}
@@ -525,6 +527,7 @@ function Contact(props) {
                           variant="standard"
                           label="Movie Genre"
                           placeholder="Horror Comedy"
+                          disabled 
                           value={formData.movieGenre}
                           error={errorState.movieGenre}
                           onChange={(e)=>handleformData(e,"movieGenre")}
@@ -538,6 +541,7 @@ function Contact(props) {
                           label="Movie Role"
                           placeholder="Actor"
                           value={formData.role}
+                          disabled 
                           error={errorState.role}
                           onChange={(e)=>handleformData(e,"role")}
                           InputLabelProps={{ shrink: true }}
@@ -550,6 +554,7 @@ function Contact(props) {
                           label="Role Description"
                           placeholder="Need a muscular actor with good sense of humor"
                           value={formData.roleDescription}
+                          disabled 
                           error={errorState.roleDescription}
                           onChange={(e)=>handleformData(e,"roleDescription")}
                           InputLabelProps={{ shrink: true }}
@@ -562,12 +567,12 @@ function Contact(props) {
                       <MKInput
                           variant="standard"
                           label="Role Status"
+                          disabled 
                           placeholder="Active"
                           value={formData.roleStatus}
                           // onChange={(e)=>handleformData(e,"roleStatus")}
                           InputLabelProps={{ shrink: true }}
                           fullWidth
-                          disabled={true}
                         />
                         </Grid>
                       {/* <Grid item xs={12} pr={1} mb={3}>
@@ -589,9 +594,10 @@ function Contact(props) {
                           variant="standard"
                           placeholder={"Characteristic"+(index+1)}
                           value={charItem.characteristic}
+                          disabled 
                           error={errorState["characteristic"+index]}
                           InputLabelProps={{ shrink: true }}
-                          onChange={(e)=>setCharacteristic(e,'characteristic',index)}
+                          // onChange={(e)=>setCharacteristic(e,'characteristic',index)}
                           size='small'
                         />
                         <MKInput
@@ -618,8 +624,8 @@ function Contact(props) {
                       textAlign="right"
                       ml="auto"
                     >
-                      <MKButton disabled={enablePost()} onClick={postRole} variant="gradient" color="info">
-                        {props.showForm==="create" ? "Post":(props.showForm==="update" ? "Update":null)}
+                      <MKButton disabled={enablePost()} onClick={()=>postRole(props.showForm)} variant="gradient" color="info">
+                        {props.showForm==="applyjob" ? "Apply":(props.showForm==="editapplyjob" ? "Update" : null )}
                       </MKButton>
                     </Grid>
                   </MKBox>
@@ -637,17 +643,22 @@ function Contact(props) {
 
 const mapStateToProps = (state) => {
   return {
-    userRegisteredId: state.ScreenIt.userRegisteredId,
+    userRegisterationId: state.ScreenIt.userRegisterationId,
     showForm:state.ScreenIt.showForm,
-    directorUpdateFormId:state.ScreenIt.directorUpdateFormId,
-    directorActivePosts: state.ScreenIt.directorActivePosts,
+    applicantUpdateFormId:state.ScreenIt.applicantUpdateFormId,
+    applicantActivePosts: state.ScreenIt.applicantActivePosts,
+    applicantAppliedPosts:state.ScreenIt.applicantAppliedPosts,
+    applicantFormId:state.ScreenIt.applicantFormId
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
-    fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
+    displayError: (value,msg) => dispatch(actions.displayError(value,msg)),
+    displaySuccess: (value,msg) => dispatch(actions.displaySuccess(value,msg)),
+    fetchApplicantPosting:()=>dispatch(actions.fetchApplicantPosting()),
+    fetchApplicantAppliedPosting:()=>dispatch(actions.fetchApplicantAppliedPosting()),
     setLoggedinUser: (userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs) => dispatch(actions.setLoggedinUser(userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs))
   };
 };

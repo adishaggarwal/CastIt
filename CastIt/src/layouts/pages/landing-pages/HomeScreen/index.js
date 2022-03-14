@@ -144,21 +144,21 @@ const SignInButtons = ()=>
         <Modal open={show} onClose={toggleModal} sx={{ display: "grid", placeItems: "center" }}>
           <Slide direction="down" in={show} timeout={500}>
             <MKBox
-              position="relative"
-              width="490px"
-              display="flex"
-              flexDirection="column"
-              borderRadius="xl"
-              bgColor="white"
-              shadow="xl"
-              height="690px"
+              // position="relative"
+              // width="490px"
+              // display="flex"
+              // flexDirection="column"
+              // borderRadius="xl"
+              // bgColor="white"
+              // shadow="xl"
+              // height="690px"
             >
-              <MKBox display="flex" alginItems="center" justifyContent="right" p={2}>
+              {/* <MKBox display="flex" alginItems="center" justifyContent="right" p={2}>
                 <CloseIcon justifyContent="right" fontSize="medium" sx={{ cursor: "pointer" }} onClick={toggleModal} />
-              </MKBox>
-              <Divider sx={{ my: 0 }} />
+              </MKBox> */}
+              {/* <Divider sx={{ my: 0 }} /> */}
                 <SignInBasic/>
-              <Divider sx={{ my: 0 }} />
+              {/* <Divider sx={{ my: 0 }} /> */}
               {/* <MKBox display="flex" justifyContent="space-between" p={1.5}>
                 <MKButton variant="gradient" color="dark" onClick={toggleModal}>
                   close

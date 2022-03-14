@@ -72,7 +72,8 @@ function Author(props) {
   //     // setErrorMessage(error);
   //   setlistLoader(false);
   //   }); 
-  props.fetchActiveRoles();
+  props.fetchApplicantPosting();
+  props.fetchApplicantAppliedPosting();
 
   }, []);
 
@@ -107,8 +108,8 @@ function Author(props) {
     <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
-                {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
-                {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null}
+                {showError || props.showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{showError?errMsg:props.errormsg}</MKAlert>:null}
+                {showSuccess || props.showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{showSuccess?succMsg:props.succmsg}</MKAlert>:null}
       <DefaultNavbar
         routes={routes}
         action={{
@@ -148,7 +149,8 @@ function Author(props) {
           }}
         >
           <Profile />
-          <Posts postArr={props.directorActivePosts}  heading="Active Roles" />
+          <Posts isApplicantOptions={true} postArr={props.applicantAppliedPosts}  heading="Applied Roles" />
+          <Posts postArr={props.applicantActivePosts}  heading="Open Roles" />
         </Card>
         {props.showForm=="none"? null : <Contact />}
         <Footer />
@@ -159,20 +161,24 @@ function Author(props) {
 
 const mapStateToProps = (state) => {
   return {
-    directorActivePosts: state.ScreenIt.directorActivePosts,
+    applicantActivePosts: state.ScreenIt.applicantActivePosts,
+    applicantAppliedPosts:state.ScreenIt.applicantAppliedPosts,
     userRegisteredId: state.ScreenIt.userRegisteredId,
     showForm:state.ScreenIt.showForm,
     listLoader:state.ScreenIt.listLoader,
-    showError:state.ScreenIt.showError,
+    showError: state.ScreenIt.showError,
     errormsg:state.ScreenIt.errormsg,
+    showSuccess:state.ScreenIt.showSuccess,
+    succmsg:state.ScreenIt.succmsg,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
+    fetchApplicantPosting:()=>dispatch(actions.fetchApplicantPosting()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
-    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value))
+    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value)),
+    fetchApplicantAppliedPosting:()=>dispatch(actions.fetchApplicantAppliedPosting())
   };
 };
 
