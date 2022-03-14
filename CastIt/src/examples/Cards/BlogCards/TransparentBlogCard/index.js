@@ -31,7 +31,7 @@ import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
 
 
-function TransparentBlogCard({ image, title, description, action,clickedDelete,clickedEdit }) {
+function TransparentBlogCard({ image, title, description, action,clickedDelete,clickedEdit,isApplicant,isApplicantOptions }) {
   const cardActionStyles = {
     display: "flex",
     alignItems: "center",
@@ -49,14 +49,21 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
   };
 
   const [displayOptions,setdisplayOptions]=useState(false);
+  const [applicantOptions,setapplicantOptions]=useState(false);
+
 
   const showOptions=()=>{
     setdisplayOptions(true);
+    setapplicantOptions(true);
   }
 
   const hideOptions=()=>{
     setdisplayOptions(false);
+    setapplicantOptions(false);
   }
+
+  //applicantOptions
+
 
   const imageTemplate = (
     <MKBox position="relative" borderRadius="lg">
@@ -103,14 +110,28 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
           {imageTemplate}
         </MuiLink>
       )} */}
+      {/* isApplicantOptions */}
       <div onMouseLeave={() => hideOptions()} onMouseOver={() => showOptions()}>
-      {displayOptions  ? <div style={{position:"absolute",top:"5px",right:"5px",zIndex:"2"}}>
+      {displayOptions && !isApplicant  ? <div style={{position:"absolute",top:"5px",right:"5px",zIndex:"2"}}>
        <MKButton onClick={clickedEdit} style={{marginRight:"5px"}} variant="contained" color="white"  iconOnly>
         <Icon>edit</Icon>
       </MKButton> 
       <MKButton onClick={clickedDelete} variant="contained" color="white" iconOnly>
         <Icon>delete</Icon>
       </MKButton>
+      </div>:null}
+      {applicantOptions && isApplicant && !isApplicantOptions  ? <div style={{position:"absolute",top:"5px",right:"5px",zIndex:"2"}}>
+       <MKButton onClick={clickedEdit} style={{marginRight:"5px",padding:"5px 30px"}} variant="contained" color="white"  iconOnly>
+        <p>Apply</p>
+      </MKButton> 
+      </div>:null}
+      {isApplicantOptions && applicantOptions ? <div style={{position:"absolute",top:"5px",right:"5px",zIndex:"2"}}>
+        <MKButton onClick={clickedEdit} style={{marginRight:"5px",padding:"5px 30px"}} variant="contained" color="white"  iconOnly>
+        <Icon>edit</Icon>
+        </MKButton>
+        <MKButton onClick={clickedEdit} style={{marginRight:"5px",padding:"5px 30px"}} variant="contained" color="white"  iconOnly>
+        <Icon>delete</Icon>
+        </MKButton> 
       </div>:null}
       {imageTemplate}
       </div>

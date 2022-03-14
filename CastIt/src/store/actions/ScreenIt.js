@@ -30,9 +30,37 @@ export const setdirectorActivePosts = (value) => {
   };
 };
 
+export const setapplicantActivePosts = (value) => {
+  return {
+    type: actionTypes.SET_APPLICANTACTIVE_POSTS,
+    value: value
+  };
+};
+
+export const setapplicantAppliedPosts = (value) => {
+  return {
+    type: actionTypes.SET_APPLICANTAPPLIED_POSTS,
+    value: value
+  };
+};
+
 export const setdirectorUpdateFormId = (value) => {
   return {
     type: actionTypes.SET_DIRECTORUPDATE_FORMID,
+    value: value
+  };
+};
+
+export const setapplicantUpdateFormId = (value) => {
+  return {
+    type: actionTypes.SET_APPLICANTUPDATE_FORMID,
+    value: value
+  };
+};
+
+export const setapplicantFormId = (value) => {
+  return {
+    type: actionTypes.SET_APPLICANT_FORMID,
     value: value
   };
 };
@@ -62,7 +90,7 @@ export const displaySuccess = (value,msg) => {
 
 export const fetchActiveRoles = () => {
   let data=  {
-    "userRegisteredId":store.getState().ScreenIt.userRegisteredId,
+    "userRegisteredId":store.getState().ScreenIt.userRegisterationId,
     // "userRegisteredId":"abcdas",
     }
     // dispatch(setlistLoader(true)); 
@@ -74,6 +102,51 @@ export const fetchActiveRoles = () => {
           dispatch(displayError(true,res.data.error));
         } else {
           dispatch(setdirectorActivePosts(res.data));
+        }
+  
+}).catch((err) => {
+  dispatch(setlistLoader(false));
+  dispatch(displayError(true,err.message));
+});
+}   
+};
+
+export const fetchApplicantPosting = () => {
+  let data=  {
+    "userRegisteredId":""+store.getState().ScreenIt.userRegisterationId,
+    }
+    // dispatch(setlistLoader(true)); 
+  return (dispatch)=>{ 
+    axios.post("/directorportal/getnonappliedpostings", data)
+  .then((res) => {
+    dispatch(setlistLoader(false));
+    if (res.data.error) {
+          dispatch(displayError(true,res.data.error));
+        } else {
+          dispatch(setapplicantActivePosts(res.data));
+        }
+  
+}).catch((err) => {
+  dispatch(setlistLoader(false));
+  dispatch(displayError(true,err.message));
+});
+}   
+};
+
+
+export const fetchApplicantAppliedPosting = () => {
+  let data=  {
+    "userRegisteredId":""+store.getState().ScreenIt.userRegisterationId,
+    }
+    // dispatch(setlistLoader(true)); 
+  return (dispatch)=>{ 
+    axios.post("/directorportal/getappliedpostings", data)
+  .then((res) => {
+    dispatch(setlistLoader(false));
+    if (res.data.error) {
+          dispatch(displayError(true,res.data.error));
+        } else {
+          dispatch(setapplicantAppliedPosts(res.data));
         }
   
 }).catch((err) => {
