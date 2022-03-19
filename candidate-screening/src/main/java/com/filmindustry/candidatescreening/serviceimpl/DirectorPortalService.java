@@ -129,15 +129,16 @@ public class DirectorPortalService implements DirectorPortalServiceInterface{
 
 	@Override
 	public List<DirectorPortalBean> selectAllPosting(long userRegisteredId) {
-		DirectorPortal entity = new DirectorPortal();
-		entity.setUserRegisteredId(userRegisteredId);
-		List<DirectorPortal> list=DPRInterface.findAllByUserRegisteredId(entity.getUserRegisteredId());
-		List <DirectorPortalBean> finalList=new ArrayList<DirectorPortalBean>(list.size());
-		for (DirectorPortal source: list ) {
-			DirectorPortalBean target= new DirectorPortalBean();
-	        BeanUtils.copyProperties(source , target);
-	        finalList.add(target);
-	     }
+			DirectorPortal entity = new DirectorPortal();
+			entity.setUserRegisteredId(userRegisteredId);
+			List<DirectorPortal> list=DPRInterface.findAllByUserRegisteredId(entity.getUserRegisteredId());
+			List <DirectorPortalBean> finalList=new ArrayList<DirectorPortalBean>(list.size());
+			for (DirectorPortal source: list ) {
+				DirectorPortalBean target= new DirectorPortalBean();
+		        BeanUtils.copyProperties(source , target);
+		        finalList.add(target);
+		     }
+		
 		return finalList;
 	}
 

@@ -5,9 +5,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -45,8 +47,19 @@ public class ApplicantPortal {
 			@Column(name= "PERCENTAGEMATCH")
 			private String percentageMatch;
 			
+			@Column(name= "USER_EMAIL")
+			private String userEmail;
+						
+			@Column(name= "USER_FIRST_NAME")
+			private	String userFirstName;
+			
+			@Column(name= "USER_LAST_NAME")
+			private String userLastName;
+			
 			@OneToOne(mappedBy = "applicantPortal")
 			private DirectorPortal directorPortal;
+			
+			
 //			private List<DirectorPortal> directorPortal ;
 //			
 			public ApplicantPortal() {
@@ -144,5 +157,32 @@ public class ApplicantPortal {
 			public void setDirectorPortal(DirectorPortal directorPortal) {
 				this.directorPortal = directorPortal;
 			}
+
+			public String getUserEmail() {
+				return userEmail;
+			}
+
+			public void setUserEmail(String userEmail) {
+				this.userEmail = userEmail;
+			}
+
+			public String getUserFirstName() {
+				return userFirstName;
+			}
+
+			public void setUserFirstName(String userFirstName) {
+				this.userFirstName = userFirstName;
+			}
+
+			public String getUserLastName() {
+				return userLastName;
+			}
+
+			public void setUserLastName(String userLastName) {
+				this.userLastName = userLastName;
+			}
+
+		
+
 
 }

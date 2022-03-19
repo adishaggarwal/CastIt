@@ -1,10 +1,14 @@
 package com.filmindustry.candidatescreening.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,7 +39,11 @@ public class UserDetails {
 	
 	@Column(name= "REGISTER_AS")
 	private String userRegistereAs;
-
+    
+//	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+//    @JoinColumn(name = "REGISTRATION_ID", referencedColumnName = "REGISTRATION_ID")
+//	private ApplicantPortal applicantPortal1;
+	
 	public UserDetails(String userEmail, String userPassword, String userFirstName, String userLastName, String userDOB,
 			String userRegistereAs) {
 		super();
@@ -105,5 +113,18 @@ public class UserDetails {
 	public void setUserRegistereAs(String userRegistereAs) {
 		this.userRegistereAs = userRegistereAs;
 	}
+
+//	public ApplicantPortal getApplicantPortal1() {
+//		return applicantPortal1;
+//	}
+//
+//	public void setApplicantPortal1(ApplicantPortal applicantPortal1) {
+//		this.applicantPortal1 = applicantPortal1;
+//	}
+
+	
+
+
+
 	
 }

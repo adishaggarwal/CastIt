@@ -9,7 +9,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.filmindustry.candidatescreening.bean.ApplicantPortalBean;
+import com.filmindustry.candidatescreening.bean.UserDetailsBean;
 import com.filmindustry.candidatescreening.model.ApplicantPortal;
 import com.filmindustry.candidatescreening.model.DirectorPortal;
 import com.filmindustry.candidatescreening.repository.ApplicantPortalRepositoryInterface;
@@ -52,7 +57,7 @@ public class ApplicantPortalService implements ApplicantPortalServiceInterface{
 		{
 	        entity=new ApplicantPortal();
 		    entity.setApplicantFormId(appformId);
-		    APRInterface.deleteById(entity.getApplicantFormId());
+		    APRInterface.deleteByCustomId(entity.getApplicantFormId());
 		}
 		catch (Exception e)
 		{
@@ -115,7 +120,8 @@ public class ApplicantPortalService implements ApplicantPortalServiceInterface{
 	public List<ApplicantPortalBean> getFeasableCandidates(long formId,String percentage) {
 		ApplicantPortal entity = new ApplicantPortal();
 		entity.setFormId(formId);
-		List<ApplicantPortal> list=APRInterface.getApplicantListOnPostings(entity.getFormId());
+		List<ApplicantPortal> list=APRInterface.getFeasableCandidates(entity.getFormId());
+
 		List <ApplicantPortalBean> finalList=new ArrayList<ApplicantPortalBean>(list.size());
 		
 		DirectorPortal entityDirector = new DirectorPortal();
@@ -145,6 +151,7 @@ public class ApplicantPortalService implements ApplicantPortalServiceInterface{
 			APRInterface.updatePercentage(source.getApplicantFormId(), Double.toString(avgTotalPer));
 			if (avgTotalPer<Double.parseDouble(percentage))
 				continue;
+			
 	        BeanUtils.copyProperties(source , target);
 	        finalList.add(target);
 	     }
