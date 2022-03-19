@@ -2,7 +2,9 @@ package com.filmindustry.candidatescreening.serviceimpl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.BeanUtils;
@@ -11,8 +13,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.filmindustry.candidatescreening.bean.ApplicantPortalBean;
 import com.filmindustry.candidatescreening.bean.UserDetailsBean;
+import com.filmindustry.candidatescreening.functionclasses.FuzzyLogic;
 import com.filmindustry.candidatescreening.functionclasses.PasswordEncDec;
+import com.filmindustry.candidatescreening.model.ApplicantPortal;
+import com.filmindustry.candidatescreening.model.DirectorPortal;
 import com.filmindustry.candidatescreening.model.UserDetails;
 import com.filmindustry.candidatescreening.repository.UserDetailsRepositoryInterface;
 import com.filmindustry.candidatescreening.service.UserDetailsServiceInterface;
@@ -215,6 +221,51 @@ public class UserDetailsService implements UserDetailsServiceInterface
 		return bean;
 	}
 
+	@Override
+	public List<UserDetailsBean> getFeasableCandidates1(long formId,String percentage) {
+		ApplicantPortal entity = new ApplicantPortal();
+		entity.setFormId(formId);
+		List<UserDetails> list=UDJPArespositoryInter.getFeasableCandidates1(formId);
 
-
+		List <UserDetailsBean> finalList=new ArrayList<UserDetailsBean>(list.size());
+		
+		DirectorPortal entityDirector = new DirectorPortal();
+		FuzzyLogic fuzzy=new FuzzyLogic();
+		entityDirector.setFormId(formId);
+//		DirectorPortal dpGet=DPRInterface.findByFormId(entityDirector.getFormId());
+//		String fixedFormCharac1=dpGet.getCharacteristics1().split(",")[1];
+//		String fixedFormCharac2=dpGet.getCharacteristics2().split(",")[1];
+//		String fixedFormCharac3=dpGet.getCharacteristics3().split(",")[1];
+//		String fixedFormCharac4=dpGet.getCharacteristics4().split(",")[1];
+//		String fixedFormCharac5=dpGet.getCharacteristics5().split(",")[1];
+		
+//		for (ApplicantPortal source: list ) {
+//			ApplicantPortalBean target= new ApplicantPortalBean();
+//			String matchFormCharac1=source.getCharacteristics1().split(",")[1];
+//			String matchFormCharac2=source.getCharacteristics2().split(",")[1];
+//			String matchFormCharac3=source.getCharacteristics3().split(",")[1];
+//			String matchFormCharac4=source.getCharacteristics4().split(",")[1];
+//			String matchFormCharac5=source.getCharacteristics5().split(",")[1];
+//			double perValueMatchCharac1=fuzzy.findSimilarity(fixedFormCharac1, matchFormCharac1);
+//			double perValueMatchCharac2=fuzzy.findSimilarity(fixedFormCharac2, matchFormCharac2);
+//			double perValueMatchCharac3=fuzzy.findSimilarity(fixedFormCharac3, matchFormCharac3);
+//			double perValueMatchCharac4=fuzzy.findSimilarity(fixedFormCharac4, matchFormCharac4);
+//			double perValueMatchCharac5=fuzzy.findSimilarity(fixedFormCharac5, matchFormCharac5);
+//			double avgTotalPer=((perValueMatchCharac1+perValueMatchCharac2+perValueMatchCharac3+perValueMatchCharac4+perValueMatchCharac5)/5)*100;
+//			source.setPercentageMatch(Double.toString(avgTotalPer));
+//			APRInterface.updatePercentage(source.getApplicantFormId(), Double.toString(avgTotalPer));
+//			if (avgTotalPer<Double.parseDouble(percentage))
+//				continue;
+//			UserDetailsBean b=new UserDetailsBean();
+//			b.setUserFirstName((source.getUserDetails().getUserFirstName()));
+//			b.setUserLastName((source.getUserDetails().getUserLastName()));
+//			b.setUserEmail((source.getUserDetails().getUserEmail()));
+//			b.setUserDOB((source.getUserDetails().getUserDOB()));
+//			target.setUserDetailsBean(b);
+//	        BeanUtils.copyProperties(source , target);
+//	        finalList.add(target);
+//	     }
+		
+		return finalList;
+	}
 }
