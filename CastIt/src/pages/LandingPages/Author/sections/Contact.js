@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
 import * as actions from '../../../../store/index';
+import LeftPanel from "pages/LandingPages/Author/sections/LeftPanel";
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
@@ -47,7 +48,7 @@ function Contact(props) {
 
   const [formData,setformData]=useState(
     {
-      "userRegisteredId":props.userRegisteredId,
+      "userRegisteredId":props.userRegisterationId,
       "movieName":"",
       "movieDesc":"",
       "movieGenre":"",
@@ -333,7 +334,7 @@ function Contact(props) {
   const postRole=()=>{
     
     let data=  {
-      "userRegisteredId":props.userRegisteredId,
+      "userRegisteredId":props.userRegisterationId,
       "movieName":formData.movieName,
       "movieDesc":formData.movieDesc,
       "movieStatus":"Active",
@@ -396,7 +397,27 @@ function Contact(props) {
             sx={{ overflow: "hidden" }}
           >
             <Grid container spacing={2}>
-              <Grid
+            <Grid
+                item
+                xs={12}
+                lg={5}
+                position="relative"
+                px={0}
+                sx={{
+                  // backgroundImage: ({
+                  //   palette: { gradients },
+                  //   functions: { rgba, linearGradient },
+                  // }) =>
+                  //   `${linearGradient(
+                  //     rgba(gradients.dark.main, 0.8),
+                  //     rgba(gradients.dark.state, 0.8)
+                  //   )}, url(${bgImage})`,
+                  backgroundSize: "cover",
+                }}
+              >
+                <LeftPanel/>
+                </Grid>
+              {/* <Grid
                 item
                 xs={12}
                 lg={5}
@@ -489,7 +510,7 @@ function Contact(props) {
                     </MKBox>
                   </MKBox>
                 </MKBox>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} lg={7}>
                 <MKBox component="form" p={2} method="post">
                   <MKBox px={3} py={{ xs: 2, sm: 6 }}>
@@ -645,7 +666,7 @@ function Contact(props) {
 
 const mapStateToProps = (state) => {
   return {
-    userRegisteredId: state.ScreenIt.userRegisteredId,
+    userRegisterationId: state.ScreenIt.userRegisterationId,
     showForm:state.ScreenIt.showForm,
     directorUpdateFormId:state.ScreenIt.directorUpdateFormId,
     directorActivePosts: state.ScreenIt.directorActivePosts,

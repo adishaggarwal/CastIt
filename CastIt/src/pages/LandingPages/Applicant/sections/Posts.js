@@ -49,15 +49,24 @@ function Places(props) {
   }));
   const classes22 = useStyles22();
 
+  function scrollToPosts()
+  {
+    const ele= document.getElementById("posts");
+    ele.scrollIntoView({behavior: "smooth"});
+
+  }
+
   const applyPost=(formId)=>{
     props.setshowForm("applyjob");
     props.setapplicantUpdateFormId(formId);
+    const myTimeout = setTimeout(scrollToPosts, 50);
   }
 
   const editapplyPost=(formId,applicantFormId)=>{
     props.setshowForm("editapplyjob");
     props.setapplicantUpdateFormId(formId);
     props.setapplicantFormId(applicantFormId);
+    const myTimeout = setTimeout(scrollToPosts, 50);
   }
 
   const displayError=(msg)=>{

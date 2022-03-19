@@ -38,6 +38,13 @@ import add_image from "assets/images/add_image.png";
 //import add_item2 from "assets/images/add-item2.png";
 import add_image4 from "assets/images/add_image4.png";
 import Clapperboard from "assets/images/Clapperboard-Transparent.png"
+import postImg1 from "assets/images/postImgs/postImg1.png"
+import postImg2 from "assets/images/postImgs/postImg2.png"
+import postImg3 from "assets/images/postImgs/postImg3.png"
+import postImg4 from "assets/images/postImgs/postImg4.jpg"
+import postImg5 from "assets/images/postImgs/postImg5.png"
+import postImg6 from "assets/images/postImgs/postImg6.png"
+
 
 
 function Places(props) {
@@ -56,15 +63,28 @@ function Places(props) {
   }));
   const classes22 = useStyles22();
 
+  function scrollToPosts()
+  {
+    const ele= document.getElementById("posts");
+    ele.scrollIntoView({behavior: "smooth"});
 
+  }
 
   const openForm=()=>{
     props.setshowForm("create");
+    const myTimeout = setTimeout(scrollToPosts, 50);
+
+    // window.scrollTo({
+    //   top: document.documentElement.scroll,
+    //   behavior: "smooth"})
+    // document.getElementById("posts").scrollIntoView();
   }
 
   const updatePost=(formId)=>{
     props.setshowForm("update");
     props.setdirectorUpdateFormId(formId);
+    const myTimeout = setTimeout(scrollToPosts, 50);
+    
   }
 
 
@@ -146,11 +166,13 @@ function Places(props) {
           </Grid>
         
           {(props.postArr).map((post, index) => {
+            const postImgs="postImg"+(index+1)
+            // console.log("image name:",postImgs)
                     return (
                       <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
             <TransparentBlogCard
               // image={post.movieImage}
-              image={Clapperboard}
+              image={postImg1}
               clickedEdit={()=>updatePost(post.formId)}
               clickedDelete={()=>deletePost(post.formId)}
               title={post.movieName}
@@ -162,7 +184,11 @@ function Places(props) {
                 label: "read more",
               }}
             />
+            <div id="try">
+              dsdsd
+            </div>
           </Grid>
+          
                     );
                   })}
         </div>

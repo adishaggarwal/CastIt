@@ -35,6 +35,7 @@ import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
+import classes from "./index.module.css";
 
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -63,6 +64,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 function SignInBasic(props) {
   const [asDirector, setasDirector] = useState(false);
   const [signInState, setsignInState] = useState(true);
+  const [forgotPwdState, setforgotPwdState] = useState(false);
   const [showError, setshowError] = useState(false);
   const [errMsg, seterrMsg] = useState("Some Error Occurred!");
   const [showSuccess, setshowSuccess] = useState(false);
@@ -118,6 +120,8 @@ const headers = {
 
   const handlesetasDirector = () => setasDirector(!asDirector);
   const handleSignup = () => setsignInState(!signInState);
+
+  const handleForgotPwd = () => setforgotPwdState(!forgotPwdState);
 
   const inputFormValidation=(key,value)=>{
     let lastNameFormat=/^[a-zA-Z]+$/;
@@ -285,7 +289,22 @@ const headers = {
 
 
   const SignUpJsx =(
-    
+    <React.Fragment>
+        <MKBox
+                  variant="gradient"
+                  style={{backgroundColor:"#dd864a"}}
+                  borderRadius="lg"
+                  coloredShadow="info"
+                  mx={2}
+                  mt={-4}
+                  p={2}
+                  mb={1}
+                  textAlign="center"
+                >
+                  <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                    Sign Up
+                  </MKTypography>
+              </MKBox>
     <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form">
                 <MKBox mb={2}>
@@ -342,41 +361,25 @@ const headers = {
                   </MKBox>
                 </MKBox>
               </MKBox>
+              </React.Fragment>
   )
 
   const SignInJsx =(
     <React.Fragment>
     <MKBox
                 variant="gradient"
-                style={{backgroundColor:"black"}}
+                style={{backgroundColor:"#dd864a"}}
                 borderRadius="lg"
                 coloredShadow="info"
                 mx={2}
-                mt={-3}
-                p={2}
-                mb={1}
+                mt={-4}
+                p={3}
+                mb={4}
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
                   Sign in
                 </MKTypography>
-                <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-                  <Grid item xs={2}>
-                    {/* <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <img src={logo} color="inherit" />
-                    </MKTypography> */}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <GitHubIcon color="inherit" />
-                    </MKTypography>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <GoogleIcon color="inherit" />
-                    </MKTypography>
-                  </Grid>
-                </Grid>
               </MKBox>
     <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form">
@@ -404,8 +407,14 @@ const headers = {
                     </MKButton>
                   </MKBox>
                   <MKBox mt={3} mb={1} textAlign="center">
-                    <MKTypography variant="button" color="text">
-                      Don&apos;t have an account?{" "}
+                    <div role="button"
+                      className={classes.ForgotBttn}
+                      onClick={handleForgotPwd}>
+                      <MKTypography variant="button" color="text">
+                        Forgot Password?{" "}
+                       </MKTypography> 
+                    </div>
+                    
                       <div role="button"  
                       onClick={handleSignup}><MKTypography
                         // component={Link}
@@ -418,11 +427,50 @@ const headers = {
                         Sign up
                       </MKTypography>
                       </div>
-                    </MKTypography>
+                    {/* </MKTypography> */}
                   </MKBox>
                 </MKBox>
               </MKBox>
               </React.Fragment>
+  )
+
+  const ForgotPwdJsx = (
+    <React.Fragment>
+            <MKBox
+                variant="gradient"
+                style={{backgroundColor:"#dd864a"}}
+                borderRadius="lg"
+                coloredShadow="info"
+                mx={2}
+                mt={-4}
+                p={3}
+                mb={4}
+                textAlign="center"
+              >
+                <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                  Recover Password
+                </MKTypography>
+            </MKBox>
+    <MKBox pt={4} pb={3} px={3}>
+      <MKBox component="form" role="form">
+        <MKBox mb={2}>
+          <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth />
+        </MKBox>
+        {/* <MKBox mb={2}>
+          <MKInput error={errorState.password} success={!errorState.password} onChange={(e)=>handleSignupInputs(e,"password")} type="password" label="New Password" value={signupData.password} fullWidth />
+        </MKBox>
+        <MKBox mb={2}>
+          <MKInput error={errorState.confirmPassword} success={!errorState.confirmPassword} onChange={(e)=>handleSignupInputs(e,"confirmPassword")} type="password" label="Confirm Password" value={signupData.confirmPassword} fullWidth />
+        </MKBox> */}
+        <MKBox mt={4} mb={1}>
+          <MKButton disabled={errorState.firstName || errorState.lastName || errorState.dob || errorState.email || errorState.password || errorState.confirmPassword}
+            onClick={submitSignupForm} variant="gradient" color="info" fullWidth>
+            Send password
+          </MKButton>
+        </MKBox>
+      </MKBox>
+  </MKBox>
+  </React.Fragment>
   )
 
   return (
@@ -465,7 +513,8 @@ const headers = {
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
           {/* <Grid item xs={11} sm={9} md={5} lg={4} xl={3}> */}
             <Card style={{ width: '360px' }}>
-              {signInState ? SignInJsx : SignUpJsx}
+              {forgotPwdState? ForgotPwdJsx : (signInState ? SignInJsx : SignUpJsx) }
+              {/* {signInState ? SignInJsx : ForgotPwdJsx} */}
             </Card>
           {/* </Grid> */}
         </Grid>

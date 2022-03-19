@@ -110,6 +110,7 @@ function Author(props) {
     setshowSuccess(false);
   }
 
+  
 
   return (
     <>
@@ -158,7 +159,10 @@ function Author(props) {
         >
          <Profile />
           <Posts zIndex={2} postArr={props.directorActivePosts}  heading="Active Roles" />
-           {props.showForm=="none"? null : <Contact />}
+           {props.showForm=="none"? null : 
+            <div id="posts">
+              <Contact />
+            </div>}
           </Card>
         <MKBox py={2} width="100%" position="absolute">
         <SimpleFooter/>

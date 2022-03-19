@@ -24,12 +24,14 @@ import Profile from "pages/LandingPages/Applicant/sections/Profile";
 import Posts from "pages/LandingPages/Applicant/sections/Posts";
 import Contact from "pages/LandingPages/Applicant/sections/Contact";
 import Footer from "pages/LandingPages/Applicant/sections/Footer";
+import SimpleFooter from "examples/Footers/SimpleFooter";
 
 // Routes
 import routes from "routes";
 
 // Images
 import bgImage from "assets/images/city-profile.jpg";
+import bg7 from "assets/images/bg7.jpg";
 
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
 import * as actions from '../../../store/index';
@@ -110,7 +112,7 @@ function Author(props) {
                 </Backdrop>
                 {showError || props.showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{showError?errMsg:props.errormsg}</MKAlert>:null}
                 {showSuccess || props.showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{showSuccess?succMsg:props.succmsg}</MKAlert>:null}
-      <DefaultNavbar
+      {/* <DefaultNavbar
         routes={routes}
         action={{
           type: "external",
@@ -120,7 +122,7 @@ function Author(props) {
         }}
         transparent
         light
-      />
+      /> */}
       <MKBox bgColor="white">
         <MKBox
           minHeight="25rem"
@@ -128,9 +130,9 @@ function Author(props) {
           sx={{
             backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
               `${linearGradient(
-                rgba(gradients.dark.main, 0.8),
-                rgba(gradients.dark.state, 0.8)
-              )}, url(${bgImage})`,
+                rgba(gradients.dark.main, 0.1),
+                rgba(gradients.dark.state, 0.1)
+              )}, url(${bg7})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             display: "grid",
@@ -149,11 +151,21 @@ function Author(props) {
           }}
         >
           <Profile />
-          <Posts isApplicantOptions={true} postArr={props.applicantAppliedPosts}  heading="Applied Roles" />
-          <Posts postArr={props.applicantActivePosts}  heading="Open Roles" />
+          {props.applicantAppliedPosts.length>0?
+          <Posts isApplicantOptions={true} postArr={props.applicantAppliedPosts}  heading="Applied Roles" />:null}
+          
+          {props.applicantActivePosts.length>0?
+          <Posts postArr={props.applicantActivePosts}  heading="Open Roles" />:null}
+        
+        {props.showForm=="none"? null : 
+          <div id="posts">
+            <Contact />
+          </div>
+          }
         </Card>
-        {props.showForm=="none"? null : <Contact />}
-        <Footer />
+        <MKBox py={2} width="100%" position="absolute">
+          <SimpleFooter/>
+        </MKBox>
       </MKBox>
     </>
   );
