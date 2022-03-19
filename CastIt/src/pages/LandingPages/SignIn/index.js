@@ -272,8 +272,17 @@ const headers = {
       } else {
   
   // displaySuccess("User Account created successfully!!");
-  props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs)
-  routeChange(res.data.userRegistereAs);
+  props.setLoggedinUser(res.data.userRegisterationId,res.data.userEmail,res.data.userFirstName,res.data.userLastName,res.data.userDOB,res.data.userRegistereAs);
+  if(res.data.userRegistereAs=="Applicant")
+  {
+  props.setloginApplicant(true);
+  }
+  if(res.data.userRegistereAs=="Director")
+  {
+  props.setloginDirector(true);
+  }
+  const myTimeout = setTimeout(routeChange(res.data.userRegistereAs), 500);
+  
       }
     })
     .catch((error) => {
@@ -493,7 +502,9 @@ const headers = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setLoggedinUser: (userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs) => dispatch(actions.setLoggedinUser(userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs))
+    setLoggedinUser: (userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs) => dispatch(actions.setLoggedinUser(userRegisterationId,userEmail,userFirstName,userLastName,userDOB,userRegistereAs)),
+    setloginApplicant: (value) => dispatch(actions.setloginApplicant(value)),
+    setloginDirector: (value) => dispatch(actions.setloginDirector(value))
   };
 };
 

@@ -14,6 +14,8 @@ const initialState = {
   userFirstName: "",
   userLastName: "",
   userDOB: "",
+  isLoggedInDir:false,
+  isLoggedInApp:false,
   userRegistereAs: "",
   directorUpdateFormId:"",
   applicantUpdateFormId:"",
@@ -117,6 +119,16 @@ const ScreenItreducer = (state = initialState, action) => {
             return {
               ...state,
               directorUpdateFormId:action.value
+            };
+            case actionTypes.SET_LOGIN_DIRECTOR:
+            return {
+              ...state,
+              isLoggedInDir:action.value
+            };
+            case actionTypes.SET_LOGIN_APPLICANT:
+            return {
+              ...state,
+              isLoggedInApp:action.value
             };
             case actionTypes.SET_APPLICANTUPDATE_FORMID:
             return {

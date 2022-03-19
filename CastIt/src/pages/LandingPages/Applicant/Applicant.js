@@ -74,7 +74,7 @@ function Author(props) {
   //   }); 
   props.fetchApplicantPosting();
   props.fetchApplicantAppliedPosting();
-
+  props.setloginDirector(false);
   }, []);
 
   useEffect(() => {
@@ -178,7 +178,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchApplicantPosting:()=>dispatch(actions.fetchApplicantPosting()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
     setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value)),
-    fetchApplicantAppliedPosting:()=>dispatch(actions.fetchApplicantAppliedPosting())
+    fetchApplicantAppliedPosting:()=>dispatch(actions.fetchApplicantAppliedPosting()),
+    setloginDirector: (value) => dispatch(actions.setloginDirector(value))
   };
 };
 
