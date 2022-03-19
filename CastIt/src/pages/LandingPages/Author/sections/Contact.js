@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
 import * as actions from '../../../../store/index';
+import LeftPanel from "pages/LandingPages/Author/sections/LeftPanel";
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
