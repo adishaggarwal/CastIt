@@ -2,6 +2,7 @@ package com.filmindustry.candidatescreening.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.filmindustry.candidatescreening.bean.ApplicantPortalBean;
@@ -14,5 +15,7 @@ public interface ApplicantPortalServiceInterface {
 	ApplicantPortalBean updatePosting(long applicantFormId, @Valid ApplicantPortalBean applicantForm);
 	List<ApplicantPortalBean> getApplicantListOnPostings(long formId);
 	List<ApplicantPortalBean> getFeasableCandidates(long formId, String string);
+	List<ApplicantPortalBean> getrightswipe(long applicantFormId);
+	ApplicantPortalBean getfinalSelection(List<ApplicantPortalBean> applicantForm, HttpServletRequest request);
 
 }
