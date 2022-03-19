@@ -47,7 +47,7 @@ function Contact(props) {
 
   const [formData,setformData]=useState(
     {
-      "userRegisteredId":props.userRegisteredId,
+      "userRegisteredId":props.userRegisterationId,
       "movieName":"",
       "movieDesc":"",
       "movieGenre":"",
@@ -333,7 +333,7 @@ function Contact(props) {
   const postRole=()=>{
     
     let data=  {
-      "userRegisteredId":props.userRegisteredId,
+      "userRegisteredId":props.userRegisterationId,
       "movieName":formData.movieName,
       "movieDesc":formData.movieDesc,
       "movieStatus":"Active",
@@ -396,7 +396,7 @@ function Contact(props) {
             sx={{ overflow: "hidden" }}
           >
             <Grid container spacing={2}>
-              <Grid
+              {!props.shortlist ?<Grid
                 item
                 xs={12}
                 lg={5}
@@ -489,7 +489,7 @@ function Contact(props) {
                     </MKBox>
                   </MKBox>
                 </MKBox>
-              </Grid>
+              </Grid>:null}
               <Grid item xs={12} lg={7}>
                 <MKBox component="form" p={2} method="post">
                   <MKBox px={3} py={{ xs: 2, sm: 6 }}>
@@ -645,7 +645,7 @@ function Contact(props) {
 
 const mapStateToProps = (state) => {
   return {
-    userRegisteredId: state.ScreenIt.userRegisteredId,
+    userRegisterationId: state.ScreenIt.userRegisterationId,
     showForm:state.ScreenIt.showForm,
     directorUpdateFormId:state.ScreenIt.directorUpdateFormId,
     directorActivePosts: state.ScreenIt.directorActivePosts,

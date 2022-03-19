@@ -31,7 +31,7 @@ import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
 
 
-function TransparentBlogCard({ image, title, description, action,clickedDelete,clickedEdit,isApplicant,isApplicantOptions }) {
+function TransparentBlogCard({ image, title, description, action,clickedDelete,clickedEdit,shortlistPage,isApplicant,isApplicantOptions }) {
   const cardActionStyles = {
     display: "flex",
     alignItems: "center",
@@ -129,14 +129,14 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
         <MKButton onClick={clickedEdit} style={{marginRight:"5px",padding:"5px 30px"}} variant="contained" color="white"  iconOnly>
         <Icon>edit</Icon>
         </MKButton>
-        <MKButton onClick={clickedEdit} style={{marginRight:"5px",padding:"5px 30px"}} variant="contained" color="white"  iconOnly>
+        <MKButton onClick={clickedDelete} style={{marginRight:"5px",padding:"5px 30px"}} variant="contained" color="white"  iconOnly>
         <Icon>delete</Icon>
         </MKButton> 
       </div>:null}
       {imageTemplate}
       </div>
       <MKBox pt={2} pb={3}>
-        {action.type === "internal" ? (
+        {/* {action.type === "internal" ? (
           <Link to={action.route} sx={cardActionStyles}>
             <MKTypography variant="h5" gutterBottom>
               {title}
@@ -148,12 +148,12 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
               {title}
             </MKTypography>
           </MuiLink>
-        )}
+        )} */}
         <MKTypography style={{textOverflow: "ellipsis",overflow: "hidden",display: "-webkit-box",WebkitLineClamp: "6",
     WebkitBoxOrient: "vertical",whitespace: "normal"}} variant="body2" component="p" color="text" mb={3}>
           {description}
         </MKTypography>
-        {action.type === "internal" ? (
+        {/* {action.type === "internal" ? (
           <MKTypography
             component={Link}
             to={action.route}
@@ -162,6 +162,7 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
             color={action.color}
             textTransform="capitalize"
             sx={cardActionStyles}
+            onClick={shortlistPage}
           >
             {action.label}
             <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
@@ -177,11 +178,23 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
             color={action.color}
             textTransform="capitalize"
             sx={cardActionStyles}
+            onClick={shortlistPage}
           >
             {action.label}
             <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
           </MKTypography>
-        )}
+        )} */}
+        <MKTypography
+            variant="body2"
+            fontWeight="regular"
+            color={action.color}
+            textTransform="capitalize"
+            sx={cardActionStyles}
+            onClick={shortlistPage}
+          >
+            {action.label}
+            <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
+          </MKTypography>
       </MKBox>
     </Card>
   );

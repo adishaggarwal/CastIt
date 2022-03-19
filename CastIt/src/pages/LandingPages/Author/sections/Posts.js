@@ -12,6 +12,8 @@ import {
   withStyles,
   useTheme,
 } from "@material-ui/core/styles";
+import { useNavigate } from 'react-router-dom';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Material Kit 2 React components
@@ -47,6 +49,7 @@ function Places(props) {
   const [showSuccess, setshowSuccess] = useState(false);
   const [succMsg, setsuccMsg] = useState("Success!");
   const [listLoader,setlistLoader]=useState(false);
+  const navigate = useNavigate();
 
   const useStyles22 = makeStyles((theme) => ({
     backdropLoader: {
@@ -102,6 +105,12 @@ function Places(props) {
     const myTimeout = setTimeout(closeAlert, 5000);
   }
 
+  const openShortlistPage=(formId)=>{
+    // navigate('/Shortlist');
+    props.setshowForm("shortlistPage");
+    props.setdirectorUpdateFormId(formId);
+  }
+
   const displaySuccess=(msg)=>{
     // setshowSuccess(true);
     // setsuccMsg(msg);
@@ -153,13 +162,14 @@ function Places(props) {
               image={Clapperboard}
               clickedEdit={()=>updatePost(post.formId)}
               clickedDelete={()=>deletePost(post.formId)}
+              shortlistPage={()=>openShortlistPage(post.formId)}
               title={post.movieName}
               description={post.movieDesc}
               action={{
                 type: "internal",
-                route: "/pages/blogs/author",
+                route: "/Shortlist",
                 color: "info",
-                label: "read more",
+                label: "Shortlist Applicant",
               }}
             />
           </Grid>

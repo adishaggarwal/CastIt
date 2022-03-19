@@ -82,7 +82,7 @@ function Author(props) {
   //   setlistLoader(false);
   //   }); 
   props.fetchActiveRoles();
-
+  props.setloginApplicant(false);
   }, []);
 
   useEffect(() => {
@@ -185,7 +185,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
-    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value))
+    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value)),
+    setloginApplicant: (value) => dispatch(actions.setloginApplicant(value)),
   };
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
@@ -17,7 +17,9 @@ import Modal from "@mui/material/Modal";
 import Divider from "@mui/material/Divider";
 import Slide from "@mui/material/Slide";
 import MKTypography from "components/MKTypography";
-
+import React, { useState,useEffect } from "react";
+import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
+import * as actions from '../../../../store/index';
 
 import Paper from '@mui/material/Paper';
 
@@ -28,8 +30,14 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function loadHomeScreen()
+const LoadHomeScreen=(props)=>
 {
+
+  useEffect(() => {
+    props.setloginDirector(false);
+    props.setloginApplicant(false);
+  }, []);
+
   return(
     <section>
       <MKBox
@@ -127,8 +135,6 @@ function loadHomeScreen()
       </MKBox>
        */}
     </section>
-    
-    
   );
 };
 
@@ -174,4 +180,18 @@ const SignInButtons = ()=>
   );
 }
 
-export default loadHomeScreen;
+const mapStateToProps = (state) => {
+  return {
+    isLoggedInDir: state.ScreenIt.isLoggedInDir,
+    isLoggedInApp:state.ScreenIt.isLoggedInApp,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setloginApplicant: (value) => dispatch(actions.setloginApplicant(value)),
+    setloginDirector: (value) => dispatch(actions.setloginDirector(value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoadHomeScreen);

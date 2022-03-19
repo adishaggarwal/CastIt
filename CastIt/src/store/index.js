@@ -7,6 +7,8 @@ export {
     setapplicantAppliedPosts,
     setdirectorUpdateFormId,
     setapplicantUpdateFormId,
+    setloginDirector,
+    setloginApplicant,
     setapplicantFormId,
     setlistLoader,
     fetchActiveRoles,
