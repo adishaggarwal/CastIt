@@ -397,27 +397,7 @@ function Contact(props) {
             sx={{ overflow: "hidden" }}
           >
             <Grid container spacing={2}>
-            <Grid
-                item
-                xs={12}
-                lg={5}
-                position="relative"
-                px={0}
-                sx={{
-                  // backgroundImage: ({
-                  //   palette: { gradients },
-                  //   functions: { rgba, linearGradient },
-                  // }) =>
-                  //   `${linearGradient(
-                  //     rgba(gradients.dark.main, 0.8),
-                  //     rgba(gradients.dark.state, 0.8)
-                  //   )}, url(${bgImage})`,
-                  backgroundSize: "cover",
-                }}
-              >
-                <LeftPanel/>
-                </Grid>
-              {/* <Grid
+              <Grid
                 item
                 xs={12}
                 lg={5}
@@ -510,7 +490,7 @@ function Contact(props) {
                     </MKBox>
                   </MKBox>
                 </MKBox>
-              </Grid> */}
+              </Grid>
               <Grid item xs={12} lg={7}>
                 <MKBox component="form" p={2} method="post">
                   <MKBox px={3} py={{ xs: 2, sm: 6 }}>
