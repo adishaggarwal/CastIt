@@ -127,8 +127,9 @@ function Places(props) {
 
   const openShortlistPage=(formId)=>{
     // navigate('/Shortlist');
-    props.setshowForm("shortlistPage");
     props.setdirectorUpdateFormId(formId);
+    props.setshowForm("shortlistPage");
+
   }
 
   const displaySuccess=(msg)=>{
@@ -177,6 +178,8 @@ function Places(props) {
           {(props.postArr).map((post, index) => {
             const postImgs="postImg"+(index+1)
             // console.log("image name:",postImgs)
+            if((!props.closed && post.roleStatus!="CLOSE") || (props.closed && post.roleStatus=="CLOSE"))
+            {
                     return (
                       <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
             <TransparentBlogCard
@@ -194,12 +197,17 @@ function Places(props) {
                 label: "Shortlist Applicant",
               }}
             />
-            <div id="try">
+            {/* <div id="try">
               dsdsd
-            </div>
+            </div> */}
           </Grid>
           
                     );
+          }
+          // else
+          // {
+          //   return null;
+          // }
                   })}
         </div>
       </Container>

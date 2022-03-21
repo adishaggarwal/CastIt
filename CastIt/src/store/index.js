@@ -15,6 +15,16 @@ export {
     fetchApplicantPosting,
     fetchApplicantAppliedPosting,
     displayError,
-    displaySuccess
+    displaySuccess,
+    setmatchedCandidates,
+    getmatchedCandidates,
+    setpercentage,
+    setshowAccordian,
+    setshowAccordian2,
+    getShortlistedCandidates,
+    setShortlistedCandidates,
+    finaliseCandidates,
+    getcurrentAccordianAppId,
+    getcurrentAccordianAppId2
   } from "./actions/ScreenIt";
   

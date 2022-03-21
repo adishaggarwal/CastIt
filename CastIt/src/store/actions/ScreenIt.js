@@ -30,6 +30,21 @@ export const setdirectorActivePosts = (value) => {
   };
 };
 
+export const getcurrentAccordianAppId = (value) => {
+  return {
+    type: actionTypes.GET_CURRENT_ACCORDIANAPP_ID,
+    value: value
+  };
+};
+
+
+export const getcurrentAccordianAppId2 = (value) => {
+  return {
+    type: actionTypes.GET_CURRENT_ACCORDIANAPP_ID2,
+    value: value
+  };
+};
+
 export const setapplicantActivePosts = (value) => {
   return {
     type: actionTypes.SET_APPLICANTACTIVE_POSTS,
@@ -44,9 +59,23 @@ export const setloginApplicant = (value) => {
   };
 };
 
+export const setmatchedCandidates = (value) => {
+  return {
+    type: actionTypes.SET_MATCHED_CANDIDATES,
+    value: value
+  };
+};
+
 export const setloginDirector = (value) => {
   return {
     type: actionTypes.SET_LOGIN_DIRECTOR,
+    value: value
+  };
+};
+
+export const setpercentage = (value) => {
+  return {
+    type: actionTypes.SET_PERCENTAGE,
     value: value
   };
 };
@@ -68,6 +97,27 @@ export const setdirectorUpdateFormId = (value) => {
 export const setapplicantUpdateFormId = (value) => {
   return {
     type: actionTypes.SET_APPLICANTUPDATE_FORMID,
+    value: value
+  };
+};
+
+export const setshowAccordian = (value) => {
+  return {
+    type: actionTypes.SET_SHOW_ACCORDIAN,
+    value: value
+  };
+};
+
+export const setshowAccordian2 = (value) => {
+  return {
+    type: actionTypes.SET_SHOW_ACCORDIAN2,
+    value: value
+  };
+};
+
+export const setShortlistedCandidates = (value) => {
+  return {
+    type: actionTypes.SET_SHORTLISTED_CANDIDATES,
     value: value
   };
 };
@@ -101,6 +151,97 @@ export const displaySuccess = (value,msg) => {
     msg:msg
   };
 };
+
+export const finaliseCandidates=()=>{
+  let arr=store.getState().ScreenIt.shortlistedCandidates;
+  let n=(arr).length;
+  let data=[];
+  let count=0;
+  for(let i=0;i<n;i++)
+  {
+    if(arr[i].checked)
+    {
+    data[count]=arr[i];
+    count++;
+    }
+  }
+    
+  
+          return (dispatch)=>{ 
+          dispatch(setlistLoader(true)); 
+    axios.post("/applicantportal/finalselection", data).then((res) => {
+      let errorMsg="";
+      dispatch(setlistLoader(false)); 
+    if (res.data.error) {
+    //toaster
+    dispatch(displayError(true,res.data.error));
+        } else {
+          // dispatch(getShortlistedCandidates());
+    displaySuccess(res.data.message);
+    dispatch(setshowForm("none"));
+        }
+      })
+      .catch((error) => {
+        dispatch(displayError(true,error.message));
+        dispatch(setlistLoader(false)); 
+      });
+    }
+  
+  
+}
+
+export const getShortlistedCandidates=()=>{
+  let data={
+    "formId":store.getState().ScreenIt.directorUpdateFormId,
+    }
+
+        return (dispatch)=>{ 
+        dispatch(setlistLoader(true)); 
+  axios.post("/applicantportal/getrightswipedcandidates1", data).then((res) => {
+    let errorMsg="";
+    dispatch(setlistLoader(false)); 
+  if (res.data.error) {
+  //toaster
+  dispatch(displayError(true,res.data.error));
+      } else {
+        dispatch(setShortlistedCandidates(res.data));
+  // displaySuccess(res.data.message);
+      }
+    })
+    .catch((error) => {
+      dispatch(displayError(true,error.message));
+      dispatch(setlistLoader(false)); 
+    });
+  }
+
+}
+
+export const getmatchedCandidates=()=>{
+  let data={
+    "formId":store.getState().ScreenIt.directorUpdateFormId,
+    "percentageMatch":store.getState().ScreenIt.percentage
+    }
+
+        return (dispatch)=>{ 
+        dispatch(setlistLoader(true)); 
+  axios.post("/applicantportal/getfeasablecandidates", data).then((res) => {
+    let errorMsg="";
+    dispatch(setlistLoader(false)); 
+  if (res.data.error) {
+  //toaster
+  dispatch(displayError(true,res.data.error));
+      } else {
+        dispatch(setmatchedCandidates(res.data));
+  // displaySuccess(res.data.message);
+      }
+    })
+    .catch((error) => {
+      dispatch(displayError(true,error.message));
+      dispatch(setlistLoader(false)); 
+    });
+  }
+
+}
 
 export const fetchActiveRoles = () => {
   let data=  {
