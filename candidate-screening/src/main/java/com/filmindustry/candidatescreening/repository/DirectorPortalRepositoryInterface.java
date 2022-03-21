@@ -35,7 +35,6 @@ List<DirectorPortal> getNonAppliedPostings(@Param("userRegisteredId") long userR
 //@Query(nativeQuery = true,value = "SELECT b.* FROM castit_DIRECTOR_role_form b WHERE b.ROLE_STATUS='Active' and b.FORM_ID IN"
 //		+ "(SELECT a.FORM_ID FROM castit_applicant_role_form a WHERE a.registration_id= :userRegisteredId)")
 //List<DirectorPortal> getAppliedPostings(@Param("userRegisteredId") long userRegisteredId);
-
 @Modifying
 @Query(nativeQuery = true,value = "SELECT a.applicant_form_id,b.*"
 		+ "FROM castit_DIRECTOR_role_form b,castit_applicant_role_form a "

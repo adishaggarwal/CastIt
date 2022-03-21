@@ -17,7 +17,7 @@ Coded by www.creative-tim.com
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
-export default styled(TextField)(({ theme, ownerState,marginLeft }) => {
+export default styled(TextField)(({ theme, ownerState,marginLeft,width }) => {
   const { palette, functions } = theme;
   const { error, success, disabled } = ownerState;
 
@@ -66,6 +66,7 @@ export default styled(TextField)(({ theme, ownerState,marginLeft }) => {
     backgroundColor: disabled ? `${grey[200]} !important` : transparent.main,
     pointerEvents: disabled ? "none" : "auto",
     marginLeft:marginLeft,
+    width:width,
     ...(error && errorStyles()),
     ...(success && successStyles()),
   };

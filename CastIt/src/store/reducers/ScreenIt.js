@@ -14,6 +14,8 @@ const initialState = {
   userFirstName: "",
   userLastName: "",
   userDOB: "",
+  currentAccordianAppId:"",
+  currentAccordianAppId2:"",
   isLoggedInDir:false,
   isLoggedInApp:false,
   userRegistereAs: "",
@@ -22,10 +24,15 @@ const initialState = {
   applicantFormId:"",
   showForm:"none", //none , applyjob , create , update
   listLoader:false,
+  showAccordian:"",
+  showAccordian2:"",
+  percentage:0,
   showError:false,
   errormsg:"",
+  matchedCandidates:[],
   showSuccess:false,
   succmsg:"",
+  shortlistedCandidates:[],
   applicantAppliedPosts:[],
   applicantActivePosts:[],
   directorActivePosts:[
@@ -83,6 +90,36 @@ const ScreenItreducer = (state = initialState, action) => {
               ...state,
                showForm:action.value
             };
+            case actionTypes.SET_SHORTLISTED_CANDIDATES:
+            return {
+              ...state,
+               shortlistedCandidates:action.value
+            };
+            case actionTypes.SET_SHOW_ACCORDIAN:
+            return {
+              ...state,
+               showAccordian:action.value
+            };
+            case actionTypes.SET_SHOW_ACCORDIAN2:
+            return {
+              ...state,
+               showAccordian2:action.value
+            };
+            case actionTypes.SET_MATCHED_CANDIDATES:
+            return {
+              ...state,
+              matchedCandidates:action.value
+            };
+            case actionTypes.GET_CURRENT_ACCORDIANAPP_ID:
+            return {
+              ...state,
+              currentAccordianAppId:action.value
+            };
+            case actionTypes.GET_CURRENT_ACCORDIANAPP_ID2:
+            return {
+              ...state,
+              currentAccordianAppId2:action.value
+            };
             case actionTypes.SET_LIST_LOADER:
             return {
               ...state,
@@ -104,6 +141,11 @@ const ScreenItreducer = (state = initialState, action) => {
             return {
               ...state,
               directorActivePosts:action.value
+            };
+            case actionTypes.SET_PERCENTAGE:
+            return {
+              ...state,
+              percentage:action.value
             };
             case actionTypes.SET_APPLICANTACTIVE_POSTS:
             return {

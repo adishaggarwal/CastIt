@@ -10,11 +10,18 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import MKButton from "components/MKButton";
 
 // Material Kit 2 React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import Backdrop from '@material-ui/core/Backdrop';
-import MKAlert from "components/MKAlert"
+import MKAlert from "components/MKAlert";
+import MKInput from "components/MKInput";
+
+
+import Accordian from "components/Accordian/Accordian";
+import Accordian2 from "components/Accordian/Accordian2";
+
 import {
   lighten,
   makeStyles,
@@ -29,7 +36,7 @@ import Profile from "pages/LandingPages/Author/sections/Profile";
 import Posts from "pages/LandingPages/Author/sections/Posts";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 import SimpleFooter from "examples/Footers/SimpleFooter";
-import Contact from "pages/LandingPages/Author/sections/Contact2";
+import Contact2 from "pages/LandingPages/Author/sections/Contact2";
 
 // Routes
 import routes from "routes";
@@ -57,6 +64,21 @@ function Shortlist(props) {
   const [showSuccess, setshowSuccess] = useState(false);
   const [succMsg, setsuccMsg] = useState("Success!");
   const [listLoader,setlistLoader]=useState(false);
+  const [accordianArray,setaccordianArray]=useState(
+    []
+  );
+
+  const [formData,setformData]=useState(
+    {
+      percentage:0
+      }
+  );
+
+  const [errorState, seterrorState] = useState(
+    {
+      percentage:false
+      }
+  );
 
   const useStyles22 = makeStyles((theme) => ({
     backdropLoader: {
@@ -66,35 +88,18 @@ function Shortlist(props) {
   }));
   const classes22 = useStyles22();
   useEffect(() => {
-  //   let data=  {
-  //     "userRegisteredId":props.userRegisteredId,
-  //     }
-    
-  //   setlistLoader(true);
-  // axios.post("/directorportal/selectallposting", data).then((res) => {
-  //   let errorMsg="";
-  //   setlistLoader(false);
-  // if (res.data.error) {
-  // //toaster
-  // displayError(res.data.error);
-  
-  //     } else {
-  //       props.setdirectorActivePosts(res.data);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     // setErrorMessage(error);
-  //   setlistLoader(false);
-  //   }); 
-  props.fetchActiveRoles();
-
+  props.getmatchedCandidates();
+  props.getShortlistedCandidates();
   }, []);
 
   useEffect(() => {
-    setshowError(props.showError);
-  seterrMsg(props.errormsg);
-  setlistLoader(props.listLoader);
-    }, [props.showError,props.listLoader,props.errormsg]);
+    
+    }, [props.matchedCandidates,props.shortlistedCandidates]);
+  // useEffect(() => {
+  //   setshowError(props.showError);
+  // seterrMsg(props.errormsg);
+  // setlistLoader(props.listLoader);
+  //   }, [props.showError,props.listLoader,props.errormsg]);
 
   const displayError=(msg)=>{
     setshowError(true);
@@ -102,6 +107,33 @@ function Shortlist(props) {
     const myTimeout = setTimeout(closeAlert, 5000);
   }
 
+  const inputFormValidation=(key,value)=>{
+    const errorData={...errorState};
+    var splformat = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    var numformat= /^([^0-9]*)$/;
+    let perc=value.trim();
+
+    if(key=="percentage" && (numformat.test(perc) || (perc<0 || perc>100) ))
+    {
+      errorData[key]=true;
+    }
+    else
+    {
+      errorData[key]=false;
+    }
+
+    seterrorState(errorData);
+  }
+
+  
+
+  const handleformData=(e,key)=>{
+    const formCopy={...formData};
+    formCopy[key]=e.target.value;
+    inputFormValidation(key,e.target.value);
+    setformData(formCopy);
+    props.setpercentage(e.target.value);
+  }
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(2),
@@ -132,6 +164,7 @@ function Shortlist(props) {
                 {showSuccess || props.showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{showSuccess?succMsg:props.succmsg}</MKAlert>:null}
          
 
+                
 
 
         <MKBox bgColor="white">
@@ -163,18 +196,33 @@ function Shortlist(props) {
         >
          <Profile />
          
+         <div style={{display:"flex",flexDirection:"row",alignContent:"center",justifyContent:"center",margin:"30px auto"}}>
+                      <MKInput
+                                variant="standard"
+                                label="Percentage Match"
+                                placeholder="0"
+                                error={errorState.percentage}
+                                value={formData.percentage}
+                                onChange={(e)=>handleformData(e,"percentage")}
+                                InputLabelProps={{ shrink: true }}
+                                style={{width:"250px",margin:"0 25px"}}
+                              />
+                      <MKButton disabled={errorState.percentage} onClick={props.getmatchedCandidates} variant="gradient" color="info">
+                              Get Candidates
+                            </MKButton>
+                      </div>
 
 
-         <Box sx={{ flexGrow: 1 }}>
+         <Box style={{marginTop:"10px"}} sx={{ flexGrow: 1 }}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
           <Grid item xs={2} sm={4} md={4} >
-            <Item><Contact shortlist /></Item>
+            <Item><Contact2 charWidth="45%" shortlist /></Item>
           </Grid>
           <Grid item xs={2} sm={4} md={4}>
-          <Item>xs=2</Item>
+          <Item><Accordian accordianArray={props.matchedCandidates} /></Item>
           </Grid>
           <Grid item xs={2} sm={4} md={4}>
-          <Item>xs=2</Item>
+          <Item><Accordian2 accordianArray={props.shortlistedCandidates} /></Item>
           </Grid>
       </Grid>
     </Box>
@@ -197,6 +245,9 @@ const mapStateToProps = (state) => {
     errormsg:state.ScreenIt.errormsg,
     showSuccess:state.ScreenIt.showSuccess,
     succmsg:state.ScreenIt.succmsg,
+    directorUpdateFormId:state.ScreenIt.directorUpdateFormId,
+    shortlistedCandidates:state.ScreenIt.shortlistedCandidates,
+    matchedCandidates:state.ScreenIt.matchedCandidates,
   };
 };
 
@@ -204,7 +255,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
-    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value))
+    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value)),
+    getmatchedCandidates:()=>dispatch(actions.getmatchedCandidates()),
+    getShortlistedCandidates:()=>dispatch(actions.getShortlistedCandidates()),
+    setpercentage:(value)=>dispatch(actions.setpercentage(value))
   };
 };
 

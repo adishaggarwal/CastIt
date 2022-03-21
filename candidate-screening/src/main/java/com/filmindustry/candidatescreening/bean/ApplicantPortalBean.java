@@ -3,8 +3,11 @@ package com.filmindustry.candidatescreening.bean;
 import java.util.ArrayList;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApplicantPortalBean {
@@ -24,6 +27,14 @@ public class ApplicantPortalBean {
 		private String characteristics4;
 		@NotEmpty
 		private String characteristics5;
+		private String userEmail;
+		
+		private String userPassword;
+		 
+		private	String userFirstName;
+		
+		private String userLastName;
+		
 		String message;
 		String error;
 		private String percentageMatch;
@@ -145,6 +156,30 @@ public class ApplicantPortalBean {
 		}
 		public void setDirectorPortalBeanList(DirectorPortalBean directorPortalBeanList) {
 			this.directorPortalBeanList = directorPortalBeanList;
+		}
+		public String getUserEmail() {
+			return userEmail;
+		}
+		public void setUserEmail(String userEmail) {
+			this.userEmail = userEmail;
+		}
+		public String getUserPassword() {
+			return userPassword;
+		}
+		public void setUserPassword(String userPassword) {
+			this.userPassword = userPassword;
+		}
+		public String getUserFirstName() {
+			return userFirstName;
+		}
+		public void setUserFirstName(String userFirstName) {
+			this.userFirstName = userFirstName;
+		}
+		public String getUserLastName() {
+			return userLastName;
+		}
+		public void setUserLastName(String userLastName) {
+			this.userLastName = userLastName;
 		}
 		
 		
