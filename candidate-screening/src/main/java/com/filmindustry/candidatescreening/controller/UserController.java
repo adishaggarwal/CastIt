@@ -69,7 +69,7 @@ public class UserController {
 	}
 	
 	@PostMapping("forgot")
-	public UserDetailsBean  processForgotPasswordForm(@RequestBody UserDetailsBean user, HttpServletRequest request) {
+	public UserDetailsBean processForgotPasswordForm(@RequestBody UserDetailsBean user, HttpServletRequest request) {
 		UserDetailsBean bean=null;
 		UserDetails entity=null;
 		UserDetailsBean beanreturn=null;
