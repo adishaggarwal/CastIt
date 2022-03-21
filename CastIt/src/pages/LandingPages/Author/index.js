@@ -82,7 +82,7 @@ function Author(props) {
   //   setlistLoader(false);
   //   }); 
   props.fetchActiveRoles();
-
+  props.setloginApplicant(false);
   }, []);
 
   useEffect(() => {
@@ -110,6 +110,7 @@ function Author(props) {
     setshowSuccess(false);
   }
 
+  
 
   return (
     <>
@@ -158,7 +159,10 @@ function Author(props) {
         >
          <Profile />
           <Posts zIndex={2} postArr={props.directorActivePosts}  heading="Active Roles" />
-           {props.showForm=="none"? null : <Contact />}
+           {props.showForm=="none"? null : 
+            <div id="posts">
+              <Contact />
+            </div>}
           </Card>
         <MKBox py={2} width="100%" position="absolute">
         <SimpleFooter/>
@@ -185,7 +189,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchActiveRoles:()=>dispatch(actions.fetchActiveRoles()),
     setshowForm: (value) => dispatch(actions.setshowForm(value)),
-    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value))
+    setdirectorActivePosts: (value) => dispatch(actions.setdirectorActivePosts(value)),
+    setloginApplicant: (value) => dispatch(actions.setloginApplicant(value)),
   };
 };
 

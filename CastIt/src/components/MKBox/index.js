@@ -22,11 +22,11 @@ import PropTypes from "prop-types";
 import MKBoxRoot from "components/MKBox/MKBoxRoot";
 
 const MKBox = forwardRef(
-  ({ variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow, ...rest }, ref) => (
+  ({ variant,width,background, bgColor, color, opacity, borderRadius, shadow, coloredShadow, ...rest }, ref) => (
     <MKBoxRoot
       {...rest}
       ref={ref}
-      ownerState={{ variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow }}
+      ownerState={{width,background, variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow }}
     />
   )
 );

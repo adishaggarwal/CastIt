@@ -37,6 +37,20 @@ export const setapplicantActivePosts = (value) => {
   };
 };
 
+export const setloginApplicant = (value) => {
+  return {
+    type: actionTypes.SET_LOGIN_APPLICANT,
+    value: value
+  };
+};
+
+export const setloginDirector = (value) => {
+  return {
+    type: actionTypes.SET_LOGIN_DIRECTOR,
+    value: value
+  };
+};
+
 export const setapplicantAppliedPosts = (value) => {
   return {
     type: actionTypes.SET_APPLICANTAPPLIED_POSTS,
