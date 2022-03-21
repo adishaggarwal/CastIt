@@ -21,6 +21,9 @@ import {
   useTheme,
 } from "@material-ui/core/styles";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -75,6 +78,27 @@ const theme = useTheme();
 const navigate = useNavigate();
 const dateform=['month','day','year'];
 const currDate=new Date();
+
+const CustomWidthTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 500,
+  },
+});
+
+const NoMaxWidthTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 'none',
+  },
+});
+
+const pwdFormat = `
+Must contain 1 digit, 1 special character, 1 upper case and , 1 lower case alphabet
+and must be minimum 8 and maximum 15 characters long
+`;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -192,34 +216,6 @@ const headers = {
     setsuccMsg(msg);
     const myTimeout = setTimeout(closeAlert2, 5000);
   }
-
-
-  const submitForgotPassword = (e) => {
-  let data={
-    "userEmail":""+signupData.email,
-    }
-
-    setlistLoader(true);
-
-  axios.post("/userdetails/forgot", data).then((res) => {
-    let errorMsg="";
-    setlistLoader(false);
-    
-
-  if (res.data.error) {
-  //toaster
-  displayError(res.data.error);
-  
-      } else {
-  
-  displaySuccess(res.data.message);
-      }
-    })
-    .catch((error) => {
-      displayError(error.message);
-    setlistLoader(false);
-    });
-}
 
 
   const routeChange = (val) =>{ 
@@ -357,10 +353,14 @@ const headers = {
                     <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth />
                   </MKBox>
                   <MKBox mb={2}>
+                  <Tooltip title={pwdFormat}>
                     <MKInput error={errorState.password} success={!errorState.password} onChange={(e)=>handleSignupInputs(e,"password")} type="password" label="Password" value={signupData.password} fullWidth />
+                  </Tooltip>
                   </MKBox>
                   <MKBox mb={2}>
+                  <Tooltip title={pwdFormat}>
                     <MKInput error={errorState.confirmPassword} success={!errorState.confirmPassword} onChange={(e)=>handleSignupInputs(e,"confirmPassword")} type="password" label="Confirm Password" value={signupData.confirmPassword} fullWidth />
+                  </Tooltip>
                   </MKBox>
                   <MKBox display="flex" alignItems="center" ml={-1}>
                     <Switch checked={asDirector} onChange={handlesetasDirector} />
@@ -491,7 +491,7 @@ const headers = {
     <MKBox pt={4} pb={3} px={3}>
       <MKBox component="form" role="form">
         <MKBox mb={2}>
-          <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth={true} />
+          <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth />
         </MKBox>
         {/* <MKBox mb={2}>
           <MKInput error={errorState.password} success={!errorState.password} onChange={(e)=>handleSignupInputs(e,"password")} type="password" label="New Password" value={signupData.password} fullWidth />
@@ -500,8 +500,8 @@ const headers = {
           <MKInput error={errorState.confirmPassword} success={!errorState.confirmPassword} onChange={(e)=>handleSignupInputs(e,"confirmPassword")} type="password" label="Confirm Password" value={signupData.confirmPassword} fullWidth />
         </MKBox> */}
         <MKBox mt={4} mb={1}>
-          <MKButton disabled={ errorState.email}
-            onClick={submitForgotPassword} variant="gradient" color="info" fullWidth>
+          <MKButton disabled={errorState.firstName || errorState.lastName || errorState.dob || errorState.email || errorState.password || errorState.confirmPassword}
+            onClick={submitSignupForm} variant="gradient" color="info" fullWidth>
             Send password
           </MKButton>
         </MKBox>
@@ -565,11 +565,17 @@ const headers = {
 
 
 
-const mapStateToProps = (state) => {
-  return {
-    userEmail:  state.ScreenIt.userEmail
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     jobList: state.job.scheduleList,
+//     sessionId: state.auth.sessionId,
+//     cabinetName: state.auth.cabinetName,
+//     appServerType: state.auth.appServerType,
+//     serverIP: state.auth.serverIP,
+//     serverPort: state.auth.serverPort,
+//     jobNameList:state.job.jobNameList
+//   };
+// };
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -579,4 +585,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInBasic);
+export default connect(null, mapDispatchToProps)(SignInBasic);

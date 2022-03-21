@@ -14,6 +14,18 @@ import {
 } from "@material-ui/core/styles";
 import { useNavigate } from 'react-router-dom';
 
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Box,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
+// import { Close } from '@material-ui/icons';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Material Kit 2 React components
@@ -24,6 +36,8 @@ import MKTypography from "components/MKTypography";
 import TransparentBlogCard from "examples/Cards/BlogCards/TransparentBlogCard";
 import CenteredBlogCard  from "examples/Cards/BlogCards/CenteredBlogCard";
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
+// import {confirmDialog} from "pages/LandingPages/Author/sections/ConfirmationDialog";
+import ConfirmDialog from "pages/LandingPages/Author/sections/ConfirmDiag2";
 
 import classes from "./posts.module.css";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
@@ -54,6 +68,8 @@ function Places(props) {
   const [showError, setshowError] = useState(false);
   const [errMsg, seterrMsg] = useState("Some Error Occurred!");
   const [showSuccess, setshowSuccess] = useState(false);
+  const [ConfirmDialogState, setshowConfirmDiag] = useState (false);
+  const [deleteFormID, setDeleteFormID] = useState ();
   const [succMsg, setsuccMsg] = useState("Success!");
   const [listLoader,setlistLoader]=useState(false);
   const navigate = useNavigate();
@@ -77,10 +93,6 @@ function Places(props) {
     props.setshowForm("create");
     const myTimeout = setTimeout(scrollToPosts, 50);
 
-    // window.scrollTo({
-    //   top: document.documentElement.scroll,
-    //   behavior: "smooth"})
-    // document.getElementById("posts").scrollIntoView();
   }
 
   const updatePost=(formId)=>{
@@ -89,18 +101,23 @@ function Places(props) {
     const myTimeout = setTimeout(scrollToPosts, 50);
     
   }
+  const handleConfirmDiag = (formId) => {
+    setshowConfirmDiag(!ConfirmDialogState);
+    setDeleteFormID(formId);
+  }
 
 
-  const deletePost=(formId)=>{
+  const deletePost=()=>{
 
         let options=  {
           "data":{
-            "formId":formId
+            "formId":deleteFormID
           }
           }
 
         setlistLoader(true);
         axios.delete("/directorportal/deleteposting", options).then((res) => {
+        setshowConfirmDiag(false);
         let errorMsg="";
         setlistLoader(false);
         if (res.data.error) {
@@ -127,9 +144,8 @@ function Places(props) {
 
   const openShortlistPage=(formId)=>{
     // navigate('/Shortlist');
-    props.setdirectorUpdateFormId(formId);
     props.setshowForm("shortlistPage");
-
+    props.setdirectorUpdateFormId(formId);
   }
 
   const displaySuccess=(msg)=>{
@@ -151,6 +167,9 @@ function Places(props) {
      <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
+                {ConfirmDialogState ? <ConfirmDialog  
+                  confirmDelete={()=>deletePost()} 
+                  cancelConfirmDiag={()=>setshowConfirmDiag(false)}/> : null}
                 {/* {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
                 {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null} */}
     <MKBox component="section" py={2}>
@@ -174,19 +193,23 @@ function Places(props) {
             />
            
           </Grid>
+          {/* <Button
+              onClick={handleConfirmDiag}
+            >
+              Delete All The Data
+            </Button> */}
         
           {(props.postArr).map((post, index) => {
             const postImgs="postImg"+(index+1)
             // console.log("image name:",postImgs)
-            if((!props.closed && post.roleStatus!="CLOSE") || (props.closed && post.roleStatus=="CLOSE"))
-            {
                     return (
                       <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
             <TransparentBlogCard
               // image={post.movieImage}
               image={postImg1}
               clickedEdit={()=>updatePost(post.formId)}
-              clickedDelete={()=>deletePost(post.formId)}
+              // clickedDelete={()=>deletePost(post.formId)}
+              clickedDelete={()=>handleConfirmDiag(post.formId)}
               shortlistPage={()=>openShortlistPage(post.formId)}
               title={post.movieName}
               description={post.movieDesc}
@@ -197,17 +220,9 @@ function Places(props) {
                 label: "Shortlist Applicant",
               }}
             />
-            {/* <div id="try">
-              dsdsd
-            </div> */}
           </Grid>
           
                     );
-          }
-          // else
-          // {
-          //   return null;
-          // }
                   })}
         </div>
       </Container>

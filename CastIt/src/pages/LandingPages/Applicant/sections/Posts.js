@@ -21,6 +21,7 @@ import MKTypography from "components/MKTypography";
 // Material Kit 2 React components
 import TransparentBlogCard from "examples/Cards/BlogCards/TransparentBlogCard";
 import CenteredBlogCard  from "examples/Cards/BlogCards/CenteredBlogCard";
+import ConfirmDialog from "pages/LandingPages/Applicant/sections/ConfirmDiag2";
 
 import classes from "./posts.module.css";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
@@ -40,6 +41,8 @@ function Places(props) {
   const [showSuccess, setshowSuccess] = useState(false);
   const [succMsg, setsuccMsg] = useState("Success!");
   const [listLoader,setlistLoader]=useState(false);
+  const [ConfirmDialogState, setshowConfirmDiag] = useState (false);
+  const [deleteFormID, setDeleteFormID] = useState ();
 
   const useStyles22 = makeStyles((theme) => ({
     backdropLoader: {
@@ -67,6 +70,11 @@ function Places(props) {
     props.setapplicantUpdateFormId(formId);
     props.setapplicantFormId(applicantFormId);
     const myTimeout = setTimeout(scrollToPosts, 50);
+  }
+
+  const handleConfirmDiag = (formId) => {
+    setshowConfirmDiag(!ConfirmDialogState);
+    setDeleteFormID(formId);
   }
 
   const displayError=(msg)=>{
@@ -100,6 +108,7 @@ function Places(props) {
 
     setlistLoader(true);
     axios.delete("/applicantportal/deleteapplication", options).then((res) => {
+    setshowConfirmDiag(false);
     let errorMsg="";
     setlistLoader(false);
     if (res.data.error) {
@@ -145,6 +154,9 @@ function Places(props) {
      <Backdrop className={classes22.backdropLoader} open={listLoader} >
                 <CircularProgress color="inherit" />
                 </Backdrop>
+                {ConfirmDialogState ? <ConfirmDialog  
+                  confirmDelete={()=>deletePost()} 
+                  cancelConfirmDiag={()=>setshowConfirmDiag(false)}/> : null}
                 {/* {showError ?<MKAlert closeFun={closeAlert} color="error" dismissible>{errMsg}</MKAlert>:null}
                 {showSuccess ?<MKAlert closeFun={closeAlert2} color="success" dismissible>{succMsg}</MKAlert>:null} */}
     <MKBox component="section" py={2}>
@@ -176,8 +188,9 @@ function Places(props) {
               image={post3}
               isApplicant={true}
               isApplicantOptions={props.isApplicantOptions}
-              clickedDelete={()=>deletePost(post.applicantPortalBean.applicantFormId)}
-              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantPortalBean.applicantFormId) :()=>applyPost(post.formId)}
+              // clickedDelete={()=>deletePost(post.applicantPortalBean.applicantFormId)}
+              clickedDelete={()=>handleConfirmDiag(post.applicantPortalBean.applicantFormId)}
+              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantFormId) :()=>applyPost(post.formId)}
               title={post.movieName}
               description={post.movieDesc}
               action={{
