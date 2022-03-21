@@ -194,6 +194,34 @@ const headers = {
   }
 
 
+  const submitForgotPassword = (e) => {
+  let data={
+    "userEmail":""+signupData.email,
+    }
+
+    setlistLoader(true);
+
+  axios.post("/userdetails/forgot", data).then((res) => {
+    let errorMsg="";
+    setlistLoader(false);
+    
+
+  if (res.data.error) {
+  //toaster
+  displayError(res.data.error);
+  
+      } else {
+  
+  displaySuccess(res.data.message);
+      }
+    })
+    .catch((error) => {
+      displayError(error.message);
+    setlistLoader(false);
+    });
+}
+
+
   const routeChange = (val) =>{ 
     navigate('/'+val);
   }
@@ -463,7 +491,7 @@ const headers = {
     <MKBox pt={4} pb={3} px={3}>
       <MKBox component="form" role="form">
         <MKBox mb={2}>
-          <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth />
+          <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth={true} />
         </MKBox>
         {/* <MKBox mb={2}>
           <MKInput error={errorState.password} success={!errorState.password} onChange={(e)=>handleSignupInputs(e,"password")} type="password" label="New Password" value={signupData.password} fullWidth />
@@ -472,8 +500,8 @@ const headers = {
           <MKInput error={errorState.confirmPassword} success={!errorState.confirmPassword} onChange={(e)=>handleSignupInputs(e,"confirmPassword")} type="password" label="Confirm Password" value={signupData.confirmPassword} fullWidth />
         </MKBox> */}
         <MKBox mt={4} mb={1}>
-          <MKButton disabled={errorState.firstName || errorState.lastName || errorState.dob || errorState.email || errorState.password || errorState.confirmPassword}
-            onClick={submitSignupForm} variant="gradient" color="info" fullWidth>
+          <MKButton disabled={ errorState.email}
+            onClick={submitForgotPassword} variant="gradient" color="info" fullWidth>
             Send password
           </MKButton>
         </MKBox>
@@ -537,17 +565,11 @@ const headers = {
 
 
 
-// const mapStateToProps = (state) => {
-//   return {
-//     jobList: state.job.scheduleList,
-//     sessionId: state.auth.sessionId,
-//     cabinetName: state.auth.cabinetName,
-//     appServerType: state.auth.appServerType,
-//     serverIP: state.auth.serverIP,
-//     serverPort: state.auth.serverPort,
-//     jobNameList:state.job.jobNameList
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    userEmail:  state.ScreenIt.userEmail
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -557,4 +579,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignInBasic);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInBasic);

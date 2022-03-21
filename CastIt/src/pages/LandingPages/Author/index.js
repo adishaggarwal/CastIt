@@ -158,7 +158,9 @@ function Author(props) {
           }}
         >
          <Profile />
-          <Posts zIndex={2} postArr={props.directorActivePosts}  heading="Active Roles" />
+         <Posts zIndex={2} postArr={props.directorActivePosts} closed heading="Closed Roles" />
+
+          <Posts zIndex={2} closed={false} postArr={props.directorActivePosts}  heading="Active Roles" />
            {props.showForm=="none"? null : 
             <div id="posts">
               <Contact />

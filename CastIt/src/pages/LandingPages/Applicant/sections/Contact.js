@@ -323,6 +323,10 @@ function Contact(props) {
     const myTimeout = setTimeout(closeAlert2, 5000);
   }
 
+//   {     "formId":"1", "userRegisteredId":"2", "characteristics1":"height in feet,5", "characteristics2":"weight in kg,56", "characteristics3":"nationality,indian", "characteristics4":"age,24", "characteristics5":"color,dark",
+
+// "userEmail":"adivashishth15@gmail.com",  "userFirstName":"Adi",  "userLastName":"Vashishth" }
+
   const postRole=(key)=>{
     // applyjob" ? "Apply":(props.showForm==="editapplyjob
     let data=  {
@@ -333,6 +337,9 @@ function Contact(props) {
       "characteristics3":charData[2].characteristic+ ","+charData[2].value,
       "characteristics4":charData[3].characteristic+ ","+charData[3].value,
       "characteristics5":charData[4].characteristic+ ","+charData[4].value,
+      "userEmail":props.userEmail,
+      "userFirstName":props.userFirstName,
+      "userLastName":props.userLastName
       }
 
       let url= "/applicantportal/applyposting";
@@ -648,7 +655,10 @@ const mapStateToProps = (state) => {
     applicantUpdateFormId:state.ScreenIt.applicantUpdateFormId,
     applicantActivePosts: state.ScreenIt.applicantActivePosts,
     applicantAppliedPosts:state.ScreenIt.applicantAppliedPosts,
-    applicantFormId:state.ScreenIt.applicantFormId
+    applicantFormId:state.ScreenIt.applicantFormId,
+    userEmail: state.ScreenIt.userEmail,
+    userFirstName: state.ScreenIt.userFirstName,
+    userLastName: state.ScreenIt.userLastName,
   };
 };
 
