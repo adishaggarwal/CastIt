@@ -146,6 +146,7 @@ function Author(props) {
             placeItems: "center",
           }}
         /> 
+
         <Card
           sx={{
             p: 2,
@@ -157,6 +158,7 @@ function Author(props) {
             boxShadow: ({ boxShadows: { xxl } }) => xxl,
           }}
         >
+
          <Profile />
          <Posts zIndex={2} postArr={props.directorActivePosts} closed heading="Closed Roles" />
 
