@@ -159,8 +159,14 @@ function Contact(props) {
       
       setcharData(charDataCopy);
       setformData(formDataCopy);
-
+      if(props.showForm==="applyjob")
+      {
       resetError(true);
+      }
+      if(props.showForm==="editapplyjob")
+      {
+      resetError(false);
+      }
     }
   }, [props.applicantUpdateFormId]);
 
