@@ -235,8 +235,8 @@ function Places(props) {
               isApplicant={true}
               isApplicantOptions={props.isApplicantOptions}
               // clickedDelete={()=>deletePost(post.applicantPortalBean.applicantFormId)}
-              clickedDelete={()=>handleConfirmDiag(post.applicantPortalBean.applicantFormId)}
-              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantFormId) :()=>applyPost(post.formId)}
+              clickedDelete={props.isApplicantOptions?()=>handleConfirmDiag(post.applicantPortalBean.applicantFormId):()=>handleConfirmDiag(post.applicantFormId)}
+              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantPortalBean.applicantFormId) :()=>applyPost(post.formId)}
               title={post.movieName}
               description={post.movieDesc}
               action={{
