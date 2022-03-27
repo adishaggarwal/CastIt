@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.filmindustry.candidatescreening.model.ApplicantPortal;
 import com.filmindustry.candidatescreening.model.DirectorPortal;
 
 @Repository
@@ -36,9 +37,18 @@ List<DirectorPortal> getNonAppliedPostings(@Param("userRegisteredId") long userR
 //		+ "(SELECT a.FORM_ID FROM castit_applicant_role_form a WHERE a.registration_id= :userRegisteredId)")
 //List<DirectorPortal> getAppliedPostings(@Param("userRegisteredId") long userRegisteredId);
 @Modifying
-@Query(nativeQuery = true,value = "SELECT a.applicant_form_id,b.*"
-		+ "FROM castit_DIRECTOR_role_form b,castit_applicant_role_form a "
-		+ "WHERE a.form_id=b.form_id and b.ROLE_STATUS='Active' and a.registration_id= :userRegisteredId")
+@Query(nativeQuery = true,value = "SELECT b.* FROM castit_DIRECTOR_role_form b WHERE b.ROLE_STATUS='Active' and b.FORM_ID IN"
+		+ "(SELECT a.FORM_ID FROM castit_applicant_role_form a WHERE a.registration_id= :userRegisteredId)")
 List<DirectorPortal> getAppliedPostings(@Param("userRegisteredId") long userRegisteredId);
+
+@Modifying
+@Query(nativeQuery = true,value = "select a.* from castit_applicant_role_form a"
+		+ " where a.form_id=:formId and a.registration_id=:userRegisteredId")
+List<DirectorPortal> getAppliAppliedPostings(@Param("userRegisteredId") long userRegisteredId, @Param("formId")long formId);
+
+@Modifying
+@Query(nativeQuery = true,value = "select a.applicant_form_id from castit_applicant_role_form a"
+		+ " where a.form_id=:formId and a.registration_id=:userRegisteredId")
+int getAppliidAppliedPostings(@Param("userRegisteredId") long userRegisteredId, @Param("formId")long formId);
 
 }

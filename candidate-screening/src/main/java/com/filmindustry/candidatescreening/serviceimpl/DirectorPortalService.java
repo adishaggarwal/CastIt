@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.filmindustry.candidatescreening.bean.ApplicantPortalBean;
 import com.filmindustry.candidatescreening.bean.DirectorPortalBean;
 import com.filmindustry.candidatescreening.bean.UserDetailsBean;
+import com.filmindustry.candidatescreening.model.ApplicantPortal;
 import com.filmindustry.candidatescreening.model.DirectorPortal;
 import com.filmindustry.candidatescreening.model.UserDetails;
 import com.filmindustry.candidatescreening.repository.DirectorPortalRepositoryInterface;
@@ -183,7 +184,16 @@ public class DirectorPortalService implements DirectorPortalServiceInterface{
 		for (DirectorPortal source: list ) {
 			DirectorPortalBean target= new DirectorPortalBean();
 			ApplicantPortalBean b=new ApplicantPortalBean();
-			b.setApplicantFormId((source.getApplicantPortal().getApplicantFormId()));
+			List<DirectorPortal> apList=DPRInterface.getAppliAppliedPostings(userRegisteredId,source.getFormId());
+			//int ap=DPRInterface.getAppliidAppliedPostings(userRegisteredId,source.getFormId());
+			for (DirectorPortal source1: apList ) {
+				b.setApplicantFormId(source1.getApplicantPortal().getApplicantFormId());
+				source.setCharacteristics1(source1.getApplicantPortal().getCharacteristics1());
+				source.setCharacteristics2(source1.getApplicantPortal().getCharacteristics2());
+				source.setCharacteristics3(source1.getApplicantPortal().getCharacteristics3());
+				source.setCharacteristics4(source1.getApplicantPortal().getCharacteristics4());
+				source.setCharacteristics5(source1.getApplicantPortal().getCharacteristics5());
+			}
 			target.setApplicantPortalBean(b);
 	        BeanUtils.copyProperties(source , target);
 	        finalList.add(target);

@@ -25,7 +25,7 @@ public interface ApplicantPortalRepositoryInterface extends JpaRepository<Applic
 //	List<ApplicantPortal> getFeasableCandidates(@Param("formId") long formId);
 	
 	@Modifying
-	@Query(nativeQuery = true,value = "SELECT b.* FROM castit_applicant_role_form b WHERE b.FORM_ID =:formId")
+	@Query(nativeQuery = true,value = "SELECT b.* FROM castit_applicant_role_form b WHERE b.FORM_ID =:formId and b.SHORTLISTING_STATUS is null")
 	List<ApplicantPortal> getFeasableCandidates(@Param("formId") long formId);
 	
 //	@Modifying
@@ -75,6 +75,10 @@ public interface ApplicantPortalRepositoryInterface extends JpaRepository<Applic
 	@Modifying
 	@Query(nativeQuery = true,value = "Update castit_director_role_form b set b.ROLE_GIVEN_TO=:rolesGivenTo,ROLE_STATUS='CLOSE' WHERE b.FORM_ID =:formId")
 	void closeRole(@Param("rolesGivenTo") String rolesGivenTo, @Param("formId") long formId);
+
+	@Modifying
+	@Query(nativeQuery = true,value = "SELECT b.* FROM castit_applicant_role_form b WHERE b.SHORTLISTING_STATUS='Y' and b.FORM_ID =:formId")
+	List<ApplicantPortal> getrightswipedCandidates1(@Param("formId") long formId);
 
 //	@Modifying
 //	@Query(nativeQuery = true,value = "SELECT b.* FROM castit_applicant_role_form b.PERCENTAGEMATCH=:percentageMatch")

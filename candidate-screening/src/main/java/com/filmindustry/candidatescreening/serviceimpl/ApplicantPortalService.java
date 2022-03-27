@@ -155,8 +155,9 @@ public class ApplicantPortalService implements ApplicantPortalServiceInterface{
 			APRInterface.updatePercentage(source.getApplicantFormId(), Double.toString(avgTotalPer));
 			if (avgTotalPer<Double.parseDouble(percentage))
 				continue;
-			
+			source.setShortlistingStatus("N");
 	        BeanUtils.copyProperties(source , target);
+	        target.setChecked(false);
 	        finalList.add(target);
 	     }
 		
@@ -220,5 +221,24 @@ public class ApplicantPortalService implements ApplicantPortalServiceInterface{
 		
 		return new ApplicantPortalBean(null,"Candidates Selected and Role Closed");
 		
+	}
+	@Override
+	public List<ApplicantPortalBean> getRightSwipedCandidates1(long FormId) {
+		ApplicantPortal entity = new ApplicantPortal();
+		List<ApplicantPortalBean> finalList = null;		
+		try {
+		List<ApplicantPortal> getData=APRInterface.getrightswipedCandidates1(FormId);
+		finalList=new ArrayList<ApplicantPortalBean>(getData.size());
+		for (ApplicantPortal source: getData ) {
+			ApplicantPortalBean target= new ApplicantPortalBean();
+	        BeanUtils.copyProperties(source , target);
+	        finalList.add(target);
+	     }
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return finalList;
 	}
 }

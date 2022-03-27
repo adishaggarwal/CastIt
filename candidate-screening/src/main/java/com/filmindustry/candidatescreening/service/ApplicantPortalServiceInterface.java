@@ -17,5 +17,6 @@ public interface ApplicantPortalServiceInterface {
 	List<ApplicantPortalBean> getFeasableCandidates(long formId, String string);
 	List<ApplicantPortalBean> getrightswipe(long applicantFormId);
 	ApplicantPortalBean getfinalSelection(List<ApplicantPortalBean> applicantForm, HttpServletRequest request);
+	List<ApplicantPortalBean> getRightSwipedCandidates1(long formId);
 
 }

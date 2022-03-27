@@ -39,6 +39,7 @@ public class ApplicantPortalBean {
 		
 		private String profilePic;
 		
+		private boolean checked;
 		String message;
 		String error;
 		private String percentageMatch;
@@ -196,6 +197,12 @@ public class ApplicantPortalBean {
 		}
 		public void setProfilePic(String profilePic) {
 			this.profilePic = profilePic;
+		}
+		public boolean isChecked() {
+			return checked;
+		}
+		public void setChecked(boolean checked) {
+			this.checked = checked;
 		}
 		
 		
