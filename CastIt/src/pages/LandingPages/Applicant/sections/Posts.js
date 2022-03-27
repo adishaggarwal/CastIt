@@ -33,6 +33,19 @@ import post1 from "assets/images/examples/testimonial-6-2.jpg";
 import post2 from "assets/images/examples/testimonial-6-3.jpg";
 import post3 from "assets/images/examples/blog-9-4.jpg";
 import post4 from "assets/images/plus.png";
+//import postImg4 from "assets/images/postImgs/postImg4.jpg"
+
+
+import postImg1 from "assets/images/postImgs/ApplicantPost/postImg1.jpg"
+import postImg2 from "assets/images/postImgs/ApplicantPost/postImg2.jpg"
+import postImg3 from "assets/images/postImgs/ApplicantPost/postImg3.jpg"
+import postImg4 from "assets/images/postImgs/ApplicantPost/postImg4.jpg"
+import postImg5 from "assets/images/postImgs/ApplicantPost/postImg5.jpg"
+import postImg6 from "assets/images/postImgs/ApplicantPost/postImg6.jpg"
+import postImg7 from "assets/images/postImgs/ApplicantPost/postImg7.jpg"
+import postImg8 from "assets/images/postImgs/ApplicantPost/postImg8.jpg"
+import postImg9 from "assets/images/postImgs/ApplicantPost/postImg9.jpg"
+import postImg10 from "assets/images/postImgs/ApplicantPost/postImg10.jpg"
 
 function Places(props) {
 
@@ -50,6 +63,39 @@ function Places(props) {
       color: '#0072C6',
     },
   }));
+
+  const projects = [
+    {
+      photo:postImg1
+    },
+    {
+      photo:postImg2
+    },
+    {
+      photo:postImg3
+    },
+    {
+      photo:postImg4
+    },
+    {
+      photo:postImg5
+    },
+    {
+      photo:postImg6
+    },
+    {
+      photo:postImg7
+    },
+    {
+      photo:postImg8
+    },
+    {
+      photo:postImg9
+    },
+    {
+      photo:postImg10
+    },
+    ];
   const classes22 = useStyles22();
 
   function scrollToPosts()
@@ -185,7 +231,7 @@ function Places(props) {
                       <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
             <TransparentBlogCard
               // image={post.movieImage}
-              image={post3}
+              image={projects[index].photo}
               isApplicant={true}
               isApplicantOptions={props.isApplicantOptions}
               // clickedDelete={()=>deletePost(post.applicantPortalBean.applicantFormId)}
