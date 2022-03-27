@@ -23,6 +23,9 @@ import MKBox from "components/MKBox";
 import MKAvatar from "components/MKAvatar";
 import MKButton from "components/MKButton";
 import axios from '../../../../axios';
+import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
+
 
 import MKTypography from "components/MKTypography";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
@@ -39,10 +42,14 @@ function Profile(props) {
   return (
     <MKBox component="section" py={{ xs: 6, sm: 12 }}>
       <Container>
+      <MKBox style={{position: 'absolute', left: 0, top: 0}}>
+              <KeyboardBackspaceRoundedIcon fontSize="large" color="info" style={{marginLeft: "25px", marginTop:"-600px", borderStyle: "outset", borderRadius: "6px"}}/>
+          </MKBox>
         <Grid container item xs={12} justifyContent="center" mx="auto">
           {/* <MKBox mt={{ xs: -16, md: -20 }} textAlign="center">
             <MKAvatar src={profilePicture} alt="Burce Mars" size="xxl" shadow="xl" />
           </MKBox> */} 
+         
           <MKBox style={{position: 'absolute', right: 0, top: 0}}>
               <Account/>
             </MKBox>
@@ -53,7 +60,10 @@ function Profile(props) {
                   <MKTypography fontWeight="bold" variant="h3">Welcome {props.userFirstName} {props.userLastName}</MKTypography>
                 </MKBox>
                 <Grid container justifyContent="left" py={4} mb={1}>
-                  <MKTypography variant="h5">Castit - Your's very own hiring manager</MKTypography>
+                  <MKTypography variant="h5" style={{marginRight: "150px"}}>Post a job on Castit and you’ll begin receiving applications from qualified candidates straight away.
+                    Join our community of actors, film, TV and theatre professionals, voice over artists, extras, dancers, singers, musicians & child actors.
+                  </MKTypography >
+                  <MKTypography variant="h5" style={{marginTop: "30px"}}>START HIRING TODAY!</MKTypography>
                 </Grid>
                 <Grid container style={{left: '5px', top: '200px'}}>
                   <DefaultCounterCard

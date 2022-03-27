@@ -53,14 +53,26 @@ import add_image from "assets/images/add_image.png";
 //import add_item2 from "assets/images/add-item2.png";
 //import add_item2 from "assets/images/add-item2.png";
 import add_image4 from "assets/images/add_image4.png";
+import Plus_blue from "assets/images/Plus_blue.png";
 import Clapperboard from "assets/images/Clapperboard-Transparent.png"
-import postImg1 from "assets/images/postImgs/postImg1.png"
-import postImg2 from "assets/images/postImgs/postImg2.png"
-import postImg3 from "assets/images/postImgs/postImg3.png"
-import postImg4 from "assets/images/postImgs/postImg4.jpg"
-import postImg5 from "assets/images/postImgs/postImg5.png"
-import postImg6 from "assets/images/postImgs/postImg6.png"
+// import postImg1 from "assets/images/postImgs/postImg1.png"
+// import postImg2 from "assets/images/postImgs/postImg2.png"
+// import postImg3 from "assets/images/postImgs/postImg3.png"
+// import postImg4 from "assets/images/postImgs/postImg4.jpg"
+// import postImg5 from "assets/images/postImgs/postImg5.png"
+// import postImg6 from "assets/images/postImgs/postImg6.png"
 
+
+import postImg1 from "assets/images/postImgs/DirectorPost/postImg1.jpg"
+import postImg2 from "assets/images/postImgs/DirectorPost/postImg2.jpg"
+import postImg3 from "assets/images/postImgs/DirectorPost/postImg3.jpg"
+import postImg4 from "assets/images/postImgs/DirectorPost/postImg4.jpg"
+import postImg5 from "assets/images/postImgs/DirectorPost/postImg5.jpg"
+import postImg6 from "assets/images/postImgs/DirectorPost/postImg6.jpg"
+import postImg7 from "assets/images/postImgs/DirectorPost/postImg7.jpg"
+import postImg8 from "assets/images/postImgs/DirectorPost/postImg8.jpg"
+import postImg9 from "assets/images/postImgs/DirectorPost/postImg9.jpg"
+import postImg10 from "assets/images/postImgs/DirectorPost/postImg10.jpg"
 
 
 function Places(props) {
@@ -70,9 +82,47 @@ function Places(props) {
   const [showSuccess, setshowSuccess] = useState(false);
   const [ConfirmDialogState, setshowConfirmDiag] = useState (false);
   const [deleteFormID, setDeleteFormID] = useState ();
+  const [isNewPost, setIsNewPost] = useState (false);
   const [succMsg, setsuccMsg] = useState("Success!");
   const [listLoader,setlistLoader]=useState(false);
   const navigate = useNavigate();
+
+  const isClosed=props.closed;
+  const postLabel=isClosed==false? "Shortlist Applicant" : "View Application";
+  
+
+  const projects = [
+    {
+      photo:postImg10
+    },
+    {
+      photo:postImg2
+    },
+    {
+      photo:postImg3
+    },
+    {
+      photo:postImg4
+    },
+    {
+      photo:postImg5
+    },
+    {
+      photo:postImg6
+    },
+    {
+      photo:postImg7
+    },
+    {
+      photo:postImg8
+    },
+    {
+      photo:postImg9
+    },
+    {
+      photo:postImg10
+    },
+    ];
 
   const useStyles22 = makeStyles((theme) => ({
     backdropLoader: {
@@ -146,6 +196,8 @@ function Places(props) {
     // navigate('/Shortlist');
     props.setshowForm("shortlistPage");
     props.setdirectorUpdateFormId(formId);
+    //props.setIsNewPost(isClosed==false?"true":"false");
+    
   }
 
   const displaySuccess=(msg)=>{
@@ -161,7 +213,8 @@ function Places(props) {
   const closeAlert2=()=>{
     props.displaySuccess(false,"");
   }
-
+   
+  
   return (
     <>
      <Backdrop className={classes22.backdropLoader} open={listLoader} >
@@ -180,47 +233,64 @@ function Places(props) {
           </MKTypography>
         </Grid>
         <div className={classes.RolesBox}  container spacing={2}>
-        <Grid style={{marginLeft:"10px"}} item xs={11} sm={5} lg={2}>
-            <CenteredBlogCard
-              image={add_image4}
-              hide
-              clicked={openForm}
-              action={{
-                type: "none",
-                // route: "/pages/blogs/author",
-                // label: "read more",
-              }}
-            />
-           
-          </Grid>
+          {isClosed==false?
+            <Grid style={{marginLeft:"20px"}} item xs={12} sm={4} lg={2}>
+                <CenteredBlogCard
+                  image={Plus_blue}
+                  hide
+                  clicked={openForm}
+                  action={{
+                    type: "none",
+                    // route: "/pages/blogs/author",
+                    // label: "read more",
+                  }}
+                />
+              
+              </Grid>:null}
           {/* <Button
               onClick={handleConfirmDiag}
             >
               Delete All The Data
             </Button> */}
+
+          
         
           {(props.postArr).map((post, index) => {
-            const postImgs="postImg"+(index+1)
-            // console.log("image name:",postImgs)
+             
                     return (
-                      <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
-            <TransparentBlogCard
-              // image={post.movieImage}
-              image={postImg1}
-              clickedEdit={()=>updatePost(post.formId)}
-              // clickedDelete={()=>deletePost(post.formId)}
-              clickedDelete={()=>handleConfirmDiag(post.formId)}
-              shortlistPage={()=>openShortlistPage(post.formId)}
-              title={post.movieName}
-              description={post.movieDesc}
-              action={{
-                type: "internal",
-                route: "/Shortlist",
-                color: "info",
-                label: "Shortlist Applicant",
-              }}
-            />
-          </Grid>
+                      
+                      <Grid style={{marginLeft:"20px"}} item xs={12} sm={5} lg={2} >  
+                        {isClosed==false?
+                          <TransparentBlogCard
+                            // image={post.movieImage}
+                            image={projects[index].photo}
+                            clickedEdit={()=>updatePost(post.formId)}
+                            // clickedDelete={()=>deletePost(post.formId)}
+                            clickedDelete={()=>handleConfirmDiag(post.formId)}
+                            shortlistPage={()=>openShortlistPage(post.formId)}
+                            title={post.movieName}
+                            description={post.movieDesc}
+                            action={{
+                              type: "internal",
+                              route: "/Shortlist",
+                              color: "info",
+                              label: postLabel,
+                            }}
+                          />:
+                            <TransparentBlogCard
+                            // image={post.movieImage}
+                            image={projects[index].photo}
+                            shortlistPage={()=>openShortlistPage(post.formId)}
+                            title={post.movieName}
+                            description={post.movieDesc}
+                            action={{
+                              type: "internal",
+                              route: "/Shortlist",
+                              color: "info",
+                              label: postLabel,
+                            }}
+                          />}
+                        </Grid>
           
                     );
                   })}

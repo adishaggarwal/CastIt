@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Icon from "@mui/material/Icon";
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
@@ -34,6 +35,12 @@ function AccountMenu(props) {
   const routeChange = () =>{ 
     navigate('/Home');
   }
+
+  const deleteUser=()=>{
+    let options=  {
+        "userRegisterationId":props.userRegisterationId
+      }
+    }
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -97,6 +104,12 @@ function AccountMenu(props) {
           </ListItemIcon>
           Edit details
         </MenuItem>
+        <MenuItem onClick={deleteUser}>
+          <ListItemIcon>
+          <Icon>delete</Icon>
+          </ListItemIcon>
+          Delete User
+        </MenuItem>
         {/* <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
@@ -118,6 +131,7 @@ const mapStateToProps = (state) => {
     return {
       userFirstName:state.ScreenIt.userFirstName,
       userLastName:state.ScreenIt.userLastName,
+      userRegisterationId:state.ScreenIt.userRegisterationId,
       userInitials:(state.ScreenIt.userFirstName.charAt(0)).concat(state.ScreenIt.userLastName.charAt(0)),
     };
   };
