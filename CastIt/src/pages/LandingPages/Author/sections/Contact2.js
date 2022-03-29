@@ -131,7 +131,7 @@ function Contact(props) {
 
 
   useEffect(() => {
-    if(props.showForm==="shortlistPage")
+    if(props.showForm==="shortlistPage" || props.showForm==="shortlistClosedPage")
     {
       let result = (props.directorActivePosts).find((obj) => {
         return obj.formId === props.directorUpdateFormId;
@@ -613,7 +613,7 @@ function Contact(props) {
                       textAlign="right"
                       ml="auto"
                     >
-                      {props.showForm==="shortlistPage"?null:<MKButton variant="gradient" color="info">
+                      {(props.showForm==="shortlistPage" || props.showForm==="shortlistClosedPage")?null:<MKButton variant="gradient" color="info">
                         {props.showForm==="create" ? "Post":(props.showForm==="update" ? "Update":null)}
                       </MKButton>}
                     </Grid>

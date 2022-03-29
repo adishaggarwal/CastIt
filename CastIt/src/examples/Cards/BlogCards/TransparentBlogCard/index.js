@@ -184,7 +184,7 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
             <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
           </MKTypography>
         )} */}
-        <MKTypography
+       {isApplicant?null: <MKTypography
             variant="body2"
             fontWeight="regular"
             color={action.color}
@@ -194,7 +194,7 @@ function TransparentBlogCard({ image, title, description, action,clickedDelete,c
           >
             {action.label}
             <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
-          </MKTypography>
+          </MKTypography>}
       </MKBox>
     </Card>
   );

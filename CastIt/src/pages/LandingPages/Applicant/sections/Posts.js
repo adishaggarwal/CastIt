@@ -148,7 +148,7 @@ function Places(props) {
 
     let options=  {
       "data":{
-        "applicantFormId":applicantFormId
+        "applicantFormId":deleteFormID
       }
       }
 
