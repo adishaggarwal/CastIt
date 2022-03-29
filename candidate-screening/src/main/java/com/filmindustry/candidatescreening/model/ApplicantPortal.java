@@ -56,6 +56,12 @@ public class ApplicantPortal {
 			@Column(name= "USER_LAST_NAME")
 			private String userLastName;
 			
+			@Column(name= "SHORTLISTING_STATUS")
+			private String shortlistingStatus;
+			
+			@Column(name= "PROFILEPIC")
+			private String profilePic;
+			
 			@OneToOne(mappedBy = "applicantPortal")
 			private DirectorPortal directorPortal;
 			
@@ -182,7 +188,21 @@ public class ApplicantPortal {
 				this.userLastName = userLastName;
 			}
 
-		
+			public String getShortlistingStatus() {
+				return shortlistingStatus;
+			}
 
+			public void setShortlistingStatus(String shortlistingStatus) {
+				this.shortlistingStatus = shortlistingStatus;
+			}
+
+		
+			public String getProfilePic() {
+				return profilePic;
+			}
+
+			public void setProfilePic(String profilePic) {
+				this.profilePic = profilePic;
+			}
 
 }

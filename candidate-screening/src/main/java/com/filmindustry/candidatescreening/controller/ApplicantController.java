@@ -2,6 +2,7 @@ package com.filmindustry.candidatescreening.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class ApplicantController {
 		return new ResponseEntity<ApplicantPortalBean>(APSInterface.deletePosting(applicantForm.getApplicantFormId()),HttpStatus.OK);
 	}
 	
-	@PutMapping("updateapplication")
+	@PostMapping("updateapplication")
 	public ResponseEntity<ApplicantPortalBean> updatePosting(@Valid @RequestBody ApplicantPortalBean applicantForm) {
 		return new ResponseEntity<ApplicantPortalBean>(APSInterface.updatePosting(applicantForm.getApplicantFormId(),applicantForm),HttpStatus.OK);
 	}
@@ -53,6 +54,24 @@ public class ApplicantController {
 	@Transactional(readOnly = true)
 	public ResponseEntity<List<ApplicantPortalBean>> getFeasableCandidates(@RequestBody ApplicantPortalBean applicantForm) {
 		return  new ResponseEntity<List<ApplicantPortalBean>>(APSInterface.getFeasableCandidates(applicantForm.getFormId(), applicantForm.getPercentageMatch()),HttpStatus.OK);
+	}
+	
+	@PostMapping("rightswipe")
+	@Transactional(readOnly = true)
+	public ResponseEntity<List<ApplicantPortalBean>> getrightswipe(@RequestBody ApplicantPortalBean applicantForm) {
+		return  new ResponseEntity<List<ApplicantPortalBean>>(APSInterface.getrightswipe(applicantForm.getApplicantFormId()),HttpStatus.OK);
+	}
+	
+	@PostMapping("finalselection")
+	@Transactional(readOnly = true)
+	public ResponseEntity<ApplicantPortalBean> getfinalSelection(@RequestBody List<ApplicantPortalBean> applicantForm,HttpServletRequest request) {
+		return  new ResponseEntity<ApplicantPortalBean>(APSInterface.getfinalSelection(applicantForm, request),HttpStatus.OK);
+	}
+	
+	@PostMapping("getrightswipedcandidates1")
+	@Transactional(readOnly = true)
+	public ResponseEntity<List<ApplicantPortalBean>> getRightSwipedCandidates1(@RequestBody ApplicantPortalBean applicantForm) {
+		return  new ResponseEntity<List<ApplicantPortalBean>>(APSInterface.getRightSwipedCandidates1(applicantForm.getFormId()),HttpStatus.OK);
 	}
 	
 	

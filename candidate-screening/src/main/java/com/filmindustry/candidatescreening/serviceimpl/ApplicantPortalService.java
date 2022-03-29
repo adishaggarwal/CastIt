@@ -2,7 +2,11 @@ package com.filmindustry.candidatescreening.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.filmindustry.candidatescreening.functionclasses.Email;
 import com.filmindustry.candidatescreening.functionclasses.FuzzyLogic;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -151,11 +155,90 @@ public class ApplicantPortalService implements ApplicantPortalServiceInterface{
 			APRInterface.updatePercentage(source.getApplicantFormId(), Double.toString(avgTotalPer));
 			if (avgTotalPer<Double.parseDouble(percentage))
 				continue;
-			
+			source.setShortlistingStatus("N");
 	        BeanUtils.copyProperties(source , target);
+	        target.setChecked(false);
 	        finalList.add(target);
 	     }
 		
+		return finalList;
+	}
+	@Override
+	public List<ApplicantPortalBean> getrightswipe(long applicantFormId) {
+		ApplicantPortal entity = new ApplicantPortal();
+		List <ApplicantPortalBean> finalList = null;		
+		try {
+		entity.setApplicantFormId(applicantFormId);
+		entity.setShortlistingStatus("Y");
+		APRInterface.getrightswipe(entity.getApplicantFormId(),entity.getShortlistingStatus());
+		List<ApplicantPortal> getData=APRInterface.getrightswipedCandidates(entity.getApplicantFormId());
+		finalList=new ArrayList<ApplicantPortalBean>(getData.size());
+		for (ApplicantPortal source: getData ) {
+			ApplicantPortalBean target= new ApplicantPortalBean();
+	        BeanUtils.copyProperties(source , target);
+	        finalList.add(target);
+	     }
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return finalList;
+	}
+	@Override
+	public ApplicantPortalBean getfinalSelection(List<ApplicantPortalBean> applicantForm,HttpServletRequest request) {
+		List <ApplicantPortal> applicantPortalList=new ArrayList<ApplicantPortal>(applicantForm.size());
+		List <ApplicantPortalBean> applicantPortalBeanList=new ArrayList<ApplicantPortalBean>(applicantForm.size());
+		String rolesGivenTo="";
+		long formId=0;
+		try 
+		{
+			for (ApplicantPortalBean source: applicantForm ) {
+				ApplicantPortal target= new ApplicantPortal();
+				DirectorPortal dp=DPRInterface.findByFormId(source.getFormId());
+				Email e=new Email();
+				e.sendSelectedEmail(dp,source, request);
+		        BeanUtils.copyProperties(source , target);
+		        applicantPortalList.add(target);
+		     }	
+			for (ApplicantPortal source: applicantPortalList ) {
+				ApplicantPortalBean target= new ApplicantPortalBean();
+				APRInterface.getFinalSelection(source.getApplicantFormId(),source.getShortlistingStatus());
+				rolesGivenTo=rolesGivenTo+","+source.getApplicantFormId();
+				if (formId==0)
+					formId=source.getFormId();
+		        BeanUtils.copyProperties(source , target);
+		        applicantPortalBeanList.add(target);
+		     }
+			
+			APRInterface.closeRole(rolesGivenTo,formId);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return new ApplicantPortalBean("Error at the server end");
+		}
+		
+		return new ApplicantPortalBean(null,"Candidates Selected and Role Closed");
+		
+	}
+	@Override
+	public List<ApplicantPortalBean> getRightSwipedCandidates1(long FormId) {
+		ApplicantPortal entity = new ApplicantPortal();
+		List<ApplicantPortalBean> finalList = null;		
+		try {
+		List<ApplicantPortal> getData=APRInterface.getrightswipedCandidates1(FormId);
+		finalList=new ArrayList<ApplicantPortalBean>(getData.size());
+		for (ApplicantPortal source: getData ) {
+			ApplicantPortalBean target= new ApplicantPortalBean();
+	        BeanUtils.copyProperties(source , target);
+	        finalList.add(target);
+	     }
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		return finalList;
 	}
 }

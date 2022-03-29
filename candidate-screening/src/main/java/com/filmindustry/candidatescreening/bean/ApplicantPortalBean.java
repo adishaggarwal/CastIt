@@ -35,6 +35,11 @@ public class ApplicantPortalBean {
 		
 		private String userLastName;
 		
+		private String shortlistingStatus;
+		
+		private String profilePic;
+		
+		private boolean checked;
 		String message;
 		String error;
 		private String percentageMatch;
@@ -180,6 +185,24 @@ public class ApplicantPortalBean {
 		}
 		public void setUserLastName(String userLastName) {
 			this.userLastName = userLastName;
+		}
+		public String getShortlistingStatus() {
+			return shortlistingStatus;
+		}
+		public void setShortlistingStatus(String shortlistingStatus) {
+			this.shortlistingStatus = shortlistingStatus;
+		}
+		public String getProfilePic() {
+			return profilePic;
+		}
+		public void setProfilePic(String profilePic) {
+			this.profilePic = profilePic;
+		}
+		public boolean isChecked() {
+			return checked;
+		}
+		public void setChecked(boolean checked) {
+			this.checked = checked;
 		}
 		
 		
