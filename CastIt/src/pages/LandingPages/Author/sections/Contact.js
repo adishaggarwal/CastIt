@@ -424,12 +424,23 @@ function Contact(props) {
                 >
                   <MKBox py={6} pr={6} pl={{ xs: 6, sm: 12 }} my="auto">
                     <MKTypography variant="h3" color="white" mb={1}>
-                      Contact Information
+                      Hire proficient candidates by 3 easy steps
+                    </MKTypography>
+                    <div style={{marginTop: "50px"}}>
+                    <MKTypography variant="body2" color="white" opacity={0.8} mb={3}>
+                      <div style={{fontWeight: "bold"}}>1. Create your profile <br/></div>
+                      Create your profile by signing up on the website and post roles to search for talented actors.
                     </MKTypography>
                     <MKTypography variant="body2" color="white" opacity={0.8} mb={3}>
-                      Fill up the form and our Team will get back to you within 24 hours.
+                    <div style={{fontWeight: "bold"}}>2. Post a vacancy <br/></div>
+                     Post the role vacancy to immediately broadcast your project to thousands of potential actors and performers.
                     </MKTypography>
-                    <MKBox display="flex" p={1}>
+                    <MKTypography variant="body2" color="white" opacity={0.8} mb={3}>
+                    <div style={{fontWeight: "bold"}}>3. Find talent <br/></div>
+                      Quickly review the shortlisted candidates matched by your posted requirement and hire candidates for your next project.
+                    </MKTypography>
+                    </div>
+                    {/* <MKBox display="flex" p={1}>
                       <MKTypography variant="button" color="white">
                         <i className="fas fa-phone" />
                       </MKTypography>
@@ -443,8 +454,8 @@ function Contact(props) {
                       >
                         (+40) 772 100 200
                       </MKTypography>
-                    </MKBox>
-                    <MKBox display="flex" color="white" p={1}>
+                    </MKBox> */}
+                    {/* <MKBox display="flex" color="white" p={1}>
                       <MKTypography variant="button" color="white">
                         <i className="fas fa-envelope" />
                       </MKTypography>
@@ -473,8 +484,8 @@ function Contact(props) {
                       >
                         Dyonisie Wolf Bucharest, RO 010458
                       </MKTypography>
-                    </MKBox>
-                    <MKBox mt={3}>
+                    </MKBox> */}
+                    {/* <MKBox mt={3}>
                       <MKButton variant="text" color="white" size="large" iconOnly>
                         <i className="fab fa-facebook" style={{ fontSize: "1.25rem" }} />
                       </MKButton>
@@ -487,7 +498,7 @@ function Contact(props) {
                       <MKButton variant="text" color="white" size="large" iconOnly>
                         <i className="fab fa-instagram" style={{ fontSize: "1.25rem" }} />
                       </MKButton>
-                    </MKBox>
+                    </MKBox> */}
                   </MKBox>
                 </MKBox>
               </Grid>:null}

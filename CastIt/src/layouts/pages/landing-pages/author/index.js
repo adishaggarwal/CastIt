@@ -13,7 +13,7 @@ function AuthorPage(props) {
    
   }, [props.showForm]);
 
-  return props.showForm==="shortlistPage" ? <Shortlist/> : <Author />;
+  return (props.showForm==="shortlistPage" || props.showForm==="shortlistClosedPage") ? <Shortlist/> : <Author />;
 }
 
 const mapStateToProps = (state) => {

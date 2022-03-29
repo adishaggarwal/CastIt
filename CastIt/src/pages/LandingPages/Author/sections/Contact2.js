@@ -12,6 +12,8 @@ import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
 import MKAlert from "components/MKAlert"
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 
 import axios from '../../../../axios';
@@ -129,7 +131,7 @@ function Contact(props) {
 
 
   useEffect(() => {
-    if(props.showForm==="shortlistPage")
+    if(props.showForm==="shortlistPage" || props.showForm==="shortlistClosedPage")
     {
       let result = (props.directorActivePosts).find((obj) => {
         return obj.formId === props.directorUpdateFormId;
@@ -399,8 +401,8 @@ function Contact(props) {
           > */}
             {/* <Grid container spacing={2}> */}
               {/* <Grid item xs={12} lg={7}> */}
-                <MKBox background="#eef0f3" component="form" p={2} method="post">
-                  <MKBox px={3} py={{ xs: 2, sm: 6 }}>
+                <MKBox background="#eef0f3" component="form" method="post">
+                  <MKBox px={1} py={2}>
                     <MKTypography variant="h2" mb={0}>
                       {props.showForm==="create" ? "Post a new role!":(props.showForm==="update" ? "Update role!":null)}
                     </MKTypography>
@@ -408,9 +410,9 @@ function Contact(props) {
                       We&apos;d like to talk with you.
                     </MKTypography> */}
                   </MKBox>
-                  <MKBox pt={0.5} pb={3} px={3}>
+                  <MKBox pt={-10} px={2}>
                     <Grid container>
-                      <Grid item xs={12} pr={1} mb={3}>
+                      <Grid item xs={12} pr={1} mb={2}>
                         <MKInput
                           variant="standard"
                           label="Name of the movie is"
@@ -422,7 +424,7 @@ function Contact(props) {
                           fullWidth
                         />
                       </Grid>
-                      <Grid item xs={12} pr={1} mb={3}>
+                      <Grid item xs={12} pr={1} mb={2}>
                         <MKInput
                           variant="standard"
                           label="Movie Description"
@@ -436,7 +438,33 @@ function Contact(props) {
                           rows={4}
                         />
                       </Grid>
-                      <Grid item xs={12} pr={1} mb={3}>
+                      <Grid container mb={2} spacing={2} columns={16}>
+                        <Grid item xs={10}>
+                            <MKInput
+                              variant="standard"
+                              label="Movie Genre"
+                              placeholder="Horror Comedy"
+                              value={formData.movieGenre}
+                              // error={errorState.movieGenre}
+                              // onChange={(e)=>handleformData(e,"movieGenre")}
+                              InputLabelProps={{ shrink: true }}
+                              fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <MKInput
+                              variant="standard"
+                              label="Movie Role"
+                              placeholder="Actor"
+                              value={formData.role}
+                              // error={errorState.role}
+                              // onChange={(e)=>handleformData(e,"role")}
+                              InputLabelProps={{ shrink: true }}
+                              fullWidth
+                            />
+                        </Grid>
+                      </Grid>
+                      {/* <Grid item xs={12} pr={1} mb={3}>
                         <MKInput
                           variant="standard"
                           label="Movie Genre"
@@ -447,8 +475,8 @@ function Contact(props) {
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                         />
-                      </Grid>
-                      <Grid item xs={12} pr={1} mb={3}>
+                      </Grid> */}
+                      {/* <Grid item xs={12} pr={1} mb={3}>
                         <MKInput
                           variant="standard"
                           label="Movie Role"
@@ -459,9 +487,38 @@ function Contact(props) {
                           InputLabelProps={{ shrink: true }}
                           fullWidth
                         />
+                      </Grid> */}
+                      <Grid container mb={2} spacing={2} columns={16}>
+                        <Grid item xs={10}>
+                          <MKInput
+                            variant="standard"
+                            label="Role Description"
+                            placeholder="Need a muscular actor with good sense of humor"
+                            value={formData.roleDescription}
+                            // error={errorState.roleDescription}
+                            // onChange={(e)=>handleformData(e,"roleDescription")}
+                            InputLabelProps={{ shrink: true }}
+                            fullWidth
+                            multiline
+                            rows={2}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <MKInput
+                            variant="standard"
+                            label="Role Status"
+                            placeholder="Active"
+                            value={formData.roleStatus}
+                            // onChange={(e)=>handleformData(e,"roleStatus")}
+                            InputLabelProps={{ shrink: true }}
+                            fullWidth
+                            disabled={true}
+                            multiline
+                            rows={2}
+                          />
+                        </Grid>
                       </Grid>
-                      <Grid item xs={12} pr={1} mb={3}>
-                      <MKInput
+                      {/* <MKInput
                           variant="standard"
                           label="Role Description"
                           placeholder="Need a muscular actor with good sense of humor"
@@ -473,8 +530,8 @@ function Contact(props) {
                           multiline
                           rows={2}
                         />
-                      </Grid>
-                      <Grid item xs={12} pr={1} mb={3}>
+                      </Grid> */}
+                      {/* <Grid item xs={12} pr={1} mb={3}>
                       <MKInput
                           variant="standard"
                           label="Role Status"
@@ -485,7 +542,7 @@ function Contact(props) {
                           fullWidth
                           disabled={true}
                         />
-                        </Grid>
+                        </Grid> */}
                       {/* <Grid item xs={12} pr={1} mb={3}>
                         <Dropdown
                           value={props.queue.Type}
@@ -498,30 +555,50 @@ function Contact(props) {
                         />
                       </Grid> */}
                       
+                      <Grid container mb={2} spacing={2} columns={16}>
+                        <Grid item xs={10} sx={{textAlign:"left"}}>
+                          <Typography variant="body2" gutterBottom>
+                            Characteristic
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sx={{textAlign:"left"}}>
+                          <Typography variant="body2" gutterBottom>
+                            Values
+                          </Typography>
+                        </Grid>
+                      </Grid>
                       {charData.map((charItem, index) => {
                     return (
-                      <Grid item xs={12} pr={1} mb={3}>
-                        <MKInput
-                          style={{width:props.charWidth}}
-                          variant="standard"
-                          placeholder={"Characteristic"+(index+1)}
-                          value={charItem.characteristic}
-                          // error={errorState["characteristic"+index]}
-                          InputLabelProps={{ shrink: true }}
-                          // onChange={(e)=>setCharacteristic(e,'characteristic',index)}
-                          // size='small'
-                        />
-                        <MKInput
-                          style={{width:props.charWidth}}
-                          variant="standard"
-                          placeholder={"Value"+(index+1)}
-                          value={charItem.value}
-                          InputLabelProps={{ shrink: true }}
-                          // error={errorState["value"+index]}
-                          // onChange={(e)=>setCharacteristic(e,'value',index)}
-                          // size='small'
-                          marginLeft="5px"
-                        />
+                      // <Grid item xs={12} pr={1} mb={3}>
+                      <Grid container mb={2} spacing={2} columns={16}>
+                        <Grid item xs={10} sx={{textAlign:"left"}}>
+                          <MKInput
+                            //style={{width:props.charWidth}}
+                            variant="standard"
+                            placeholder={"Characteristic"+(index+1)}
+                            value={charItem.characteristic}
+                            // error={errorState["characteristic"+index]}
+                            InputLabelProps={{ shrink: true }}
+                            fullWidth
+                            // onChange={(e)=>setCharacteristic(e,'characteristic',index)}
+                            // size='small'
+                          />
+                        </Grid>
+                        <Grid item xs={6} sx={{textAlign:"left"}}>
+                          <MKInput
+                            //style={{width:props.charWidth}}
+                            variant="standard"
+                            placeholder={"Value"+(index+1)}
+                            value={charItem.value}
+                            InputLabelProps={{ shrink: true }}
+                            fullWidth
+                            // error={errorState["value"+index]}
+                            // onChange={(e)=>setCharacteristic(e,'value',index)}
+                            // size='small'
+                            //marginLeft="5px"
+                          />
+                        </Grid>
+                        
                       </Grid>
                     );
                   })}
@@ -536,7 +613,7 @@ function Contact(props) {
                       textAlign="right"
                       ml="auto"
                     >
-                      {props.showForm==="shortlistPage"?null:<MKButton variant="gradient" color="info">
+                      {(props.showForm==="shortlistPage" || props.showForm==="shortlistClosedPage")?null:<MKButton variant="gradient" color="info">
                         {props.showForm==="create" ? "Post":(props.showForm==="update" ? "Update":null)}
                       </MKButton>}
                     </Grid>

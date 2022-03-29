@@ -22,6 +22,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // Author page sections
 import Profile from "pages/LandingPages/Author/sections/Profile";
 import Posts from "pages/LandingPages/Author/sections/Posts";
+import Posts2 from "pages/LandingPages/Author/sections/Posts2";
 import Contact from "pages/LandingPages/Author/sections/Contact";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 import SimpleFooter from "examples/Footers/SimpleFooter";
@@ -146,6 +147,7 @@ function Author(props) {
             placeItems: "center",
           }}
         /> 
+
         <Card
           sx={{
             p: 2,
@@ -157,8 +159,9 @@ function Author(props) {
             boxShadow: ({ boxShadows: { xxl } }) => xxl,
           }}
         >
+
          <Profile />
-         <Posts zIndex={2} postArr={props.directorActivePosts} closed heading="Closed Roles" />
+         <Posts2 zIndex={2} closed={true} postArr={props.directorActivePosts} heading="Closed Roles" />
 
           <Posts zIndex={2} closed={false} postArr={props.directorActivePosts}  heading="Active Roles" />
            {props.showForm=="none"? null : 

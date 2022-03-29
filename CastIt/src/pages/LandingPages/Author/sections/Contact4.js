@@ -11,7 +11,8 @@ import MKBox from "components/MKBox";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
-import MKAlert from "components/MKAlert"
+import MKAlert from "components/MKAlert";
+import Typography from '@mui/material/Typography';
 
 
 import axios from '../../../../axios';
@@ -219,7 +220,7 @@ function Contact(props) {
             {/* <Grid container spacing={2}> */}
               {/* <Grid item xs={12} lg={7}> */}
                 <MKBox background="#eef0f3" component="form" p={2} method="post">
-                  <MKBox px={3} py={{ xs: 2, sm: 6 }}>
+                  <MKBox px={1} py={2}>
                     <MKTypography variant="h2" mb={0}>
                       {props.showForm==="create" ? "Post a new role!":(props.showForm==="update" ? "Update role!":null)}
                     </MKTypography>
@@ -259,7 +260,7 @@ function Contact(props) {
                           fullWidth
                         />
                       </Grid>
-                      <Grid item xs={12} pr={1} mb={3}>
+                      {/* <Grid item xs={12} pr={1} mb={3}>
                         <MKInput
                           variant="standard"
                           label="Name of the movie is"
@@ -322,7 +323,7 @@ function Contact(props) {
                           fullWidth
                           disabled={true}
                         />
-                        </Grid>
+                        </Grid> */}
                       {/* <Grid item xs={12} pr={1} mb={3}>
                         <Dropdown
                           value={props.queue.Type}
@@ -334,33 +335,71 @@ function Contact(props) {
                           type="value"
                         />
                       </Grid> */}
+                      <Grid container mb={2} spacing={2} columns={16}>
+                        <Grid item xs={10} sx={{textAlign:"left"}}>
+                          <Typography variant="body2" gutterBottom>
+                            Characteristic
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sx={{textAlign:"left"}}>
+                          <Typography variant="body2" gutterBottom>
+                            Values
+                          </Typography>
+                        </Grid>
+                      </Grid>
                       
                       {charData.map((charItem, index) => {
                     return (
-                      <Grid item xs={12} pr={1} mb={3}>
-                        <MKInput
-                          style={{width:props.charWidth}}
-                          variant="standard"
-                          value={charItem.characteristic}
-                          InputLabelProps={{ shrink: true }}
-                          // size='small'
-                          disabled
-                        />
-                        <MKInput
-                          style={{width:props.charWidth}}
-                          variant="standard"
-                          value={charItem.value}
-                          InputLabelProps={{ shrink: true }}
-                          // size='small'
-                          disabled
-                          marginLeft="5px"
-                        />
+
+                      <Grid container mb={2} spacing={2} columns={16}>
+                        <Grid item xs={10} sx={{textAlign:"left"}}>
+                          <MKInput
+                            //style={{width:props.charWidth}}
+                            variant="standard"
+                            value={charItem.characteristic}
+                            InputLabelProps={{ shrink: true }}
+                            // size='small'
+                            disabled
+                            fullWidth
+                          />
+                        </Grid>
+                          <Grid item xs={6} sx={{textAlign:"left"}}>
+                            <MKInput
+                            //style={{width:props.charWidth}}
+                            variant="standard"
+                            value={charItem.value}
+                            InputLabelProps={{ shrink: true }}
+                            // size='small'
+                            disabled
+                            fullWidth
+                            //marginLeft="5px"
+                          />
+                          </Grid>
                       </Grid>
+                      // <Grid item xs={12} pr={1} mb={3}>
+                      //   <MKInput
+                      //     style={{width:props.charWidth}}
+                      //     variant="standard"
+                      //     value={charItem.characteristic}
+                      //     InputLabelProps={{ shrink: true }}
+                      //     // size='small'
+                      //     disabled
+                      //   />
+                      //   <MKInput
+                      //     style={{width:props.charWidth}}
+                      //     variant="standard"
+                      //     value={charItem.value}
+                      //     InputLabelProps={{ shrink: true }}
+                      //     // size='small'
+                      //     disabled
+                      //     marginLeft="5px"
+                      //   />
+                      // </Grid>
                     );
                   })}
                       
                     </Grid>
-                    <Grid
+                    {/* <Grid
                       container
                       item
                       xs={12}
@@ -372,7 +411,7 @@ function Contact(props) {
                       <MKButton  variant="gradient" color="info">
                         Shortlist
                       </MKButton>
-                    </Grid>
+                    </Grid> */}
                   </MKBox>
                 </MKBox>
               {/* </Grid> */}

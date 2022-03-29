@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import MKButton from "components/MKButton";
+//import { withStyles} from "@material-ui/core/styles";
 
 // Material Kit 2 React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
@@ -29,7 +30,6 @@ import {
   useTheme,
 } from "@material-ui/core/styles";
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 
 // Author page sections
 import Profile from "pages/LandingPages/Author/sections/Profile";
@@ -55,6 +55,11 @@ import bg10 from "assets/images/bg10.jpg";
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
 import * as actions from '../../../store/index';
 import axios from '../../../axios';
+import MKTypography from "components/MKTypography";
+import classes from "./shortlist.module.css";
+import { textAlign } from "@mui/system";
+import boxShadow from "assets/theme/functions/boxShadow";
+import { NoEncryption } from "@mui/icons-material";
 
 
 function Shortlist(props) {
@@ -195,10 +200,9 @@ function Shortlist(props) {
           }}
         >
          <Profile />
-         
          <div style={{display:"flex",flexDirection:"row",alignContent:"center",justifyContent:"center",margin:"30px auto"}}>
                       <MKInput
-                                variant="standard"
+                                variant="outlined"
                                 label="Percentage Match"
                                 placeholder="0"
                                 error={errorState.percentage}
@@ -213,17 +217,38 @@ function Shortlist(props) {
                       </div>
 
 
-         <Box style={{marginTop:"10px"}} sx={{ flexGrow: 1 }}>
+    <Box style={{marginTop:"10px"}} sx={{ flexGrow: 1 }}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
           <Grid item xs={2} sm={4} md={4} >
-            <Item><Contact2 charWidth="45%" shortlist /></Item>
-          </Grid>
-          <Grid item xs={2} sm={4} md={4}>
-          <Item><Accordian accordianArray={props.matchedCandidates} /></Item>
-          </Grid>
-          <Grid item xs={2} sm={4} md={4}>
-          <Item><Accordian2 accordianArray={props.shortlistedCandidates} /></Item>
-          </Grid>
+            <Item>
+              <div style={{height: "90vh"}}>
+                <MKTypography sx={{textAlign:"left"}}>Movie Posted</MKTypography>
+                  <Contact2 shortlist />
+              </div>
+            </Item>
+            </Grid>
+            
+              <Grid item xs={2} sm={4} md={4}>
+              <Item>
+              <div className={classes.MatchedCandidateSection}>
+                <MKTypography sx={{textAlign:"left"}}>Shortlisted Candidates</MKTypography>
+                {props.matchedCandidates.length>0?
+                <Accordian accordianArray={props.matchedCandidates} />
+                :null}
+              </div>
+              </Item>
+              </Grid>
+            
+              <Grid item xs={2} sm={4} md={4}>
+              <Item>
+              <div className={classes.MatchedCandidateSection}>
+                <MKTypography sx={{textAlign:"left"}}>Finalize Candidate</MKTypography>
+                {props.shortlistedCandidates.length>0?
+                  <Accordian2 accordianArray={props.shortlistedCandidates} />
+                  :null}
+              </div>
+              </Item>
+              </Grid>
       </Grid>
     </Box>
           </Card>

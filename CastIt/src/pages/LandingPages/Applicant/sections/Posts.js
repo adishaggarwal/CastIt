@@ -33,6 +33,28 @@ import post1 from "assets/images/examples/testimonial-6-2.jpg";
 import post2 from "assets/images/examples/testimonial-6-3.jpg";
 import post3 from "assets/images/examples/blog-9-4.jpg";
 import post4 from "assets/images/plus.png";
+//import postImg4 from "assets/images/postImgs/postImg4.jpg"
+
+
+import postImg1 from "assets/images/postImgs/ApplicantPost/postImg1.jpeg"
+
+import postImg2 from "assets/images/postImgs/ApplicantPost/postImg2.jpeg"
+
+import postImg3 from "assets/images/postImgs/ApplicantPost/postImg3.jpeg"
+
+import postImg4 from "assets/images/postImgs/ApplicantPost/postImg4.jpeg"
+
+import postImg5 from "assets/images/postImgs/ApplicantPost/postImg5.jpeg"
+
+import postImg6 from "assets/images/postImgs/ApplicantPost/postImg6.jpeg"
+
+import postImg7 from "assets/images/postImgs/ApplicantPost/postImg7.jpeg"
+
+import postImg8 from "assets/images/postImgs/ApplicantPost/postImg8.jpeg"
+
+import postImg9 from "assets/images/postImgs/ApplicantPost/postImg9.jpeg"
+
+import postImg10 from "assets/images/postImgs/ApplicantPost/postImg10.jpeg"
 
 function Places(props) {
 
@@ -50,6 +72,39 @@ function Places(props) {
       color: '#0072C6',
     },
   }));
+
+  const projects = [
+    {
+      photo:postImg1
+    },
+    {
+      photo:postImg2
+    },
+    {
+      photo:postImg3
+    },
+    {
+      photo:postImg4
+    },
+    {
+      photo:postImg5
+    },
+    {
+      photo:postImg6
+    },
+    {
+      photo:postImg7
+    },
+    {
+      photo:postImg8
+    },
+    {
+      photo:postImg9
+    },
+    {
+      photo:postImg10
+    },
+    ];
   const classes22 = useStyles22();
 
   function scrollToPosts()
@@ -102,7 +157,7 @@ function Places(props) {
 
     let options=  {
       "data":{
-        "applicantFormId":applicantFormId
+        "applicantFormId":deleteFormID
       }
       }
 
@@ -185,12 +240,12 @@ function Places(props) {
                       <Grid style={{marginLeft:"20px"}} item xs={12} sm={6} lg={3} >
             <TransparentBlogCard
               // image={post.movieImage}
-              image={post3}
+              image={projects[index].photo}
               isApplicant={true}
               isApplicantOptions={props.isApplicantOptions}
               // clickedDelete={()=>deletePost(post.applicantPortalBean.applicantFormId)}
-              clickedDelete={()=>handleConfirmDiag(post.applicantPortalBean.applicantFormId)}
-              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantFormId) :()=>applyPost(post.formId)}
+              clickedDelete={props.isApplicantOptions?()=>handleConfirmDiag(post.applicantPortalBean.applicantFormId):()=>handleConfirmDiag(post.applicantFormId)}
+              clickedEdit={props.isApplicantOptions ? ()=>editapplyPost(post.formId,post.applicantPortalBean.applicantFormId) :()=>applyPost(post.formId)}
               title={post.movieName}
               description={post.movieDesc}
               action={{

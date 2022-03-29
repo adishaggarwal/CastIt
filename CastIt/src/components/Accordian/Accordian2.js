@@ -9,6 +9,8 @@ import MKButton from "components/MKButton";
 import Contact4 from '../../pages/LandingPages/Author/sections/Contact4';
 import { useDispatch, useSelector, shallowEqual,connect } from "react-redux";
 import * as actions from '../../store/index';
+import { padding } from "@mui/system";
+import MKBox from "components/MKBox";
 
 const ControlledAccordions1=(props)=> {
   const [expanded, setExpanded] = React.useState(false);
@@ -74,10 +76,12 @@ const ControlledAccordions1=(props)=> {
   {
       return null;
   }
-                  })}
-                  <MKButton disabled={checkCount==0 && false} onClick={props.finaliseCandidates} variant="gradient" color="info">
-                              Finalize selected Applicants
-                            </MKButton>
+                  })}                
+                  {props.showForm==="shortlistClosedPage"?null:<MKButton style={{marginTop: "15px"}} disabled={checkCount==0 && false} onClick={props.finaliseCandidates} variant="gradient" color="info">
+                        Finalize selected Applicants
+                    </MKButton>}
+                    
+                  
     </div>
   );
 }
@@ -85,7 +89,8 @@ const ControlledAccordions1=(props)=> {
 const mapStateToProps = (state) => {
     return {
       matchedCandidates:state.ScreenIt.matchedCandidates,
-      shortlistedCandidates:state.ScreenIt.shortlistedCandidates
+      shortlistedCandidates:state.ScreenIt.shortlistedCandidates,
+      showForm:state.ScreenIt.showForm,
     };
   };
   
