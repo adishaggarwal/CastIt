@@ -47,7 +47,7 @@ function Profile(props) {
   return (
     <MKBox component="section" py={{ xs: 6, sm: 12 }}>
       <Container>
-      {props.showForm=="shortlistClosedPage"?<MKBox onClick={()=>openShortlistPage()} style={{position: 'absolute', left: 0, top: 0}}>
+      {props.showForm=="shortlistClosedPage" || props.showForm=="shortlistPage"?<MKBox onClick={()=>openShortlistPage()} style={{position: 'absolute', left: 0, top: 0}}>
               <KeyboardBackspaceRoundedIcon fontSize="large" color="info" style={{marginLeft: "25px", marginTop:"-600px", borderStyle: "outset", borderRadius: "6px"}}/>
           </MKBox>:null}
         <Grid container item xs={12} justifyContent="center" mx="auto">
@@ -72,13 +72,13 @@ function Profile(props) {
                 </Grid>
                 <Grid container style={{left: '5px', top: '200px'}}>
                   <DefaultCounterCard
-                    count={props.directorActivePosts.length}
+                    count={props.directorActivePosts.length-props.directorCloseCount}
                     suffix="+"
                     title="Ongoing Projects"
                     //description="Mix the sections, change the colors and unleash your creativity"
                   />
                   <DefaultCounterCard
-                    count={50}
+                    count={props.directorCloseCount}
                     title="Closed project"
                     //description="Mix the sections, change the colors and unleash your creativity"
                   />
@@ -155,6 +155,7 @@ const mapStateToProps = (state) => {
     userLastName:state.ScreenIt.userLastName,
     showForm:state.ScreenIt.showForm,
     directorActivePosts:state.ScreenIt.directorActivePosts,
+    directorCloseCount:state.ScreenIt.directorCloseCount
   };
 };
 

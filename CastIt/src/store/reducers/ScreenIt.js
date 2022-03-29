@@ -32,6 +32,7 @@ const initialState = {
   matchedCandidates:[],
   showSuccess:false,
   succmsg:"",
+  directorCloseCount:0,
   shortlistedCandidates:[],
   applicantAppliedPosts:[],
   applicantActivePosts:[],
@@ -140,7 +141,8 @@ const ScreenItreducer = (state = initialState, action) => {
             case actionTypes.SET_DIRECTORACTIVE_POSTS:
             return {
               ...state,
-              directorActivePosts:action.value
+              directorActivePosts:action.value,
+              directorCloseCount:action.count
             };
             case actionTypes.SET_PERCENTAGE:
             return {

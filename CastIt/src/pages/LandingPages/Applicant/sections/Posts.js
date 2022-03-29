@@ -36,16 +36,25 @@ import post4 from "assets/images/plus.png";
 //import postImg4 from "assets/images/postImgs/postImg4.jpg"
 
 
-import postImg1 from "assets/images/postImgs/ApplicantPost/postImg1.jpg"
-import postImg2 from "assets/images/postImgs/ApplicantPost/postImg2.jpg"
-import postImg3 from "assets/images/postImgs/ApplicantPost/postImg3.jpg"
-import postImg4 from "assets/images/postImgs/ApplicantPost/postImg4.jpg"
-import postImg5 from "assets/images/postImgs/ApplicantPost/postImg5.jpg"
-import postImg6 from "assets/images/postImgs/ApplicantPost/postImg6.jpg"
-import postImg7 from "assets/images/postImgs/ApplicantPost/postImg7.jpg"
-import postImg8 from "assets/images/postImgs/ApplicantPost/postImg8.jpg"
-import postImg9 from "assets/images/postImgs/ApplicantPost/postImg9.jpg"
-import postImg10 from "assets/images/postImgs/ApplicantPost/postImg10.jpg"
+import postImg1 from "assets/images/postImgs/ApplicantPost/postImg1.jpeg"
+
+import postImg2 from "assets/images/postImgs/ApplicantPost/postImg2.jpeg"
+
+import postImg3 from "assets/images/postImgs/ApplicantPost/postImg3.jpeg"
+
+import postImg4 from "assets/images/postImgs/ApplicantPost/postImg4.jpeg"
+
+import postImg5 from "assets/images/postImgs/ApplicantPost/postImg5.jpeg"
+
+import postImg6 from "assets/images/postImgs/ApplicantPost/postImg6.jpeg"
+
+import postImg7 from "assets/images/postImgs/ApplicantPost/postImg7.jpeg"
+
+import postImg8 from "assets/images/postImgs/ApplicantPost/postImg8.jpeg"
+
+import postImg9 from "assets/images/postImgs/ApplicantPost/postImg9.jpeg"
+
+import postImg10 from "assets/images/postImgs/ApplicantPost/postImg10.jpeg"
 
 function Places(props) {
 

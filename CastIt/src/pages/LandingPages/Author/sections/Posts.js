@@ -63,16 +63,25 @@ import Clapperboard from "assets/images/Clapperboard-Transparent.png"
 // import postImg6 from "assets/images/postImgs/postImg6.png"
 
 
-import postImg1 from "assets/images/postImgs/DirectorPost/postImg1.jpg"
+import postImg1 from "assets/images/postImgs/DirectorPost/postImg1.jpeg"
+
 import postImg2 from "assets/images/postImgs/DirectorPost/postImg2.jpg"
-import postImg3 from "assets/images/postImgs/DirectorPost/postImg3.jpg"
-import postImg4 from "assets/images/postImgs/DirectorPost/postImg4.jpg"
+
+import postImg3 from "assets/images/postImgs/DirectorPost/postImg3.jpeg"
+
+import postImg4 from "assets/images/postImgs/DirectorPost/postImg4.jpeg"
+
 import postImg5 from "assets/images/postImgs/DirectorPost/postImg5.jpg"
-import postImg6 from "assets/images/postImgs/DirectorPost/postImg6.jpg"
-import postImg7 from "assets/images/postImgs/DirectorPost/postImg7.jpg"
-import postImg8 from "assets/images/postImgs/DirectorPost/postImg8.jpg"
-import postImg9 from "assets/images/postImgs/DirectorPost/postImg9.jpg"
-import postImg10 from "assets/images/postImgs/DirectorPost/postImg10.jpg"
+
+import postImg6 from "assets/images/postImgs/DirectorPost/postImg6.jpeg"
+
+import postImg7 from "assets/images/postImgs/DirectorPost/postImg7.jpeg"
+
+import postImg8 from "assets/images/postImgs/DirectorPost/postImg8.jpeg"
+
+import postImg9 from "assets/images/postImgs/DirectorPost/postImg9.jpeg"
+
+import postImg10 from "assets/images/postImgs/DirectorPost/postImg10.jpeg"
 
 
 function Places(props) {
@@ -93,7 +102,7 @@ function Places(props) {
 
   const projects = [
     {
-      photo:postImg10
+      photo:postImg1
     },
     {
       photo:postImg2
