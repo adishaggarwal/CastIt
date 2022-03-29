@@ -81,14 +81,14 @@ function Places(props) {
   const [errMsg, seterrMsg] = useState("Some Error Occurred!");
   const [showSuccess, setshowSuccess] = useState(false);
   const [ConfirmDialogState, setshowConfirmDiag] = useState (false);
-  const [deleteFormID, setDeleteFormID] = useState ();
+  const [deleteFormID, setDeleteFormID] = useState ("");
   const [isNewPost, setIsNewPost] = useState (false);
   const [succMsg, setsuccMsg] = useState("Success!");
   const [listLoader,setlistLoader]=useState(false);
   const navigate = useNavigate();
 
-  const isClosed=props.closed;
-  const postLabel=isClosed==false? "Shortlist Applicant" : "View Application";
+  
+  const postLabel=props.closed==false? "Shortlist Applicant" : "View Application";
   
 
   const projects = [
@@ -123,6 +123,10 @@ function Places(props) {
       photo:postImg10
     },
     ];
+
+    useEffect(() => {
+      
+      }, [props.closed]);
 
   const useStyles22 = makeStyles((theme) => ({
     backdropLoader: {
@@ -194,7 +198,9 @@ function Places(props) {
 
   const openShortlistPage=(formId)=>{
     // navigate('/Shortlist');
+    
     props.setshowForm("shortlistPage");
+    
     props.setdirectorUpdateFormId(formId);
     //props.setIsNewPost(isClosed==false?"true":"false");
     
@@ -233,7 +239,7 @@ function Places(props) {
           </MKTypography>
         </Grid>
         <div className={classes.RolesBox}  container spacing={2}>
-          {isClosed==false?
+          {!props.closed?
             <Grid style={{marginLeft:"20px"}} item xs={12} sm={4} lg={2}>
                 <CenteredBlogCard
                   image={Plus_blue}
@@ -258,9 +264,8 @@ function Places(props) {
           {(props.postArr).map((post, index) => {
              
                     return (
-                      
-                      <Grid style={{marginLeft:"20px"}} item xs={12} sm={5} lg={2} >  
-                        {isClosed==false?
+                      <>
+                      {post.roleStatus=="Active"?<Grid style={{marginLeft:"20px"}} item xs={12} sm={5} lg={2} >  
                           <TransparentBlogCard
                             // image={post.movieImage}
                             image={projects[index].photo}
@@ -276,22 +281,9 @@ function Places(props) {
                               color: "info",
                               label: postLabel,
                             }}
-                          />:
-                            <TransparentBlogCard
-                            // image={post.movieImage}
-                            image={projects[index].photo}
-                            shortlistPage={()=>openShortlistPage(post.formId)}
-                            title={post.movieName}
-                            description={post.movieDesc}
-                            action={{
-                              type: "internal",
-                              route: "/Shortlist",
-                              color: "info",
-                              label: postLabel,
-                            }}
-                          />}
-                        </Grid>
-          
+                          />
+                        </Grid>:null}
+          </>
                     );
                   })}
         </div>

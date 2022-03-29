@@ -39,12 +39,17 @@ import bg6 from "assets/images/bg6.jpg";
 import profilePicture from "assets/images/bruce-mars.jpg";
 
 function Profile(props) {
+
+  const openShortlistPage=()=>{
+    props.setshowForm("none");  
+  }
+
   return (
     <MKBox component="section" py={{ xs: 6, sm: 12 }}>
       <Container>
-      <MKBox style={{position: 'absolute', left: 0, top: 0}}>
+      {props.showForm=="shortlistClosedPage"?<MKBox onClick={()=>openShortlistPage()} style={{position: 'absolute', left: 0, top: 0}}>
               <KeyboardBackspaceRoundedIcon fontSize="large" color="info" style={{marginLeft: "25px", marginTop:"-600px", borderStyle: "outset", borderRadius: "6px"}}/>
-          </MKBox>
+          </MKBox>:null}
         <Grid container item xs={12} justifyContent="center" mx="auto">
           {/* <MKBox mt={{ xs: -16, md: -20 }} textAlign="center">
             <MKAvatar src={profilePicture} alt="Burce Mars" size="xxl" shadow="xl" />
@@ -148,8 +153,15 @@ const mapStateToProps = (state) => {
   return {
     userFirstName:state.ScreenIt.userFirstName,
     userLastName:state.ScreenIt.userLastName,
+    showForm:state.ScreenIt.showForm,
     directorActivePosts:state.ScreenIt.directorActivePosts,
   };
 };
 
-export default connect(mapStateToProps, null)(Profile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setshowForm: (value) => dispatch(actions.setshowForm(value)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

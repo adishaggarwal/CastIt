@@ -77,9 +77,9 @@ const ControlledAccordions1=(props)=> {
       return null;
   }
                   })}                
-                  <MKButton style={{marginTop: "15px"}} disabled={checkCount==0 && false} onClick={props.finaliseCandidates} variant="gradient" color="info">
+                  {props.showForm==="shortlistClosedPage"?null:<MKButton style={{marginTop: "15px"}} disabled={checkCount==0 && false} onClick={props.finaliseCandidates} variant="gradient" color="info">
                         Finalize selected Applicants
-                    </MKButton>
+                    </MKButton>}
                     
                   
     </div>
@@ -89,7 +89,8 @@ const ControlledAccordions1=(props)=> {
 const mapStateToProps = (state) => {
     return {
       matchedCandidates:state.ScreenIt.matchedCandidates,
-      shortlistedCandidates:state.ScreenIt.shortlistedCandidates
+      shortlistedCandidates:state.ScreenIt.shortlistedCandidates,
+      showForm:state.ScreenIt.showForm,
     };
   };
   

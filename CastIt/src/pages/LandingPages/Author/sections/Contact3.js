@@ -413,9 +413,9 @@ function Contact(props) {
                       textAlign="right"
                       ml="auto"
                     >
-                        <MKButton onClick={rightSwipe} variant="gradient" color="info">
+                        {props.showForm=="shortlistClosedPage"?null:<MKButton onClick={rightSwipe} variant="gradient" color="info">
                           Shortlist
-                        </MKButton>
+                        </MKButton>}
                     </Grid>
                   </MKBox>
                 </MKBox>
