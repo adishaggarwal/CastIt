@@ -114,7 +114,8 @@ const headers = {
       dob:"",
       email:"",
       password:"",
-      confirmPassword:""
+      confirmPassword:"",
+      email2:""
     }
   );
   const [errorState, seterrorState] = useState(
@@ -124,7 +125,8 @@ const headers = {
       email:true,
       password:true,
       confirmPassword:true,
-      dob:false
+      dob:false,
+      email2:true
     }
   );
   const [signinData, setsigninData] = useState(
@@ -162,6 +164,10 @@ const headers = {
       errorData[key]=true;
     }
     else if(key=="email" && !emailFormat.test(value))
+    {
+      errorData[key]=true;
+    }
+    else if(key=="email2" && !emailFormat.test(value))
     {
       errorData[key]=true;
     }
@@ -276,6 +282,42 @@ const headers = {
       setlistLoader(false);
       });
   }
+
+
+  const submitForgotPassword = (e) => {
+    let data=  {
+      "userEmail":""+signupData.email2,
+      // "userPassword":""+signinData.password
+      }
+      // {
+      //   "userEmail":"abc1d@gmail.com",
+      //   "userPassword":"!Abc1234567"
+      //   }
+    
+    setlistLoader(true);
+
+  axios.post("/userdetails/forgot", data).then((res) => {
+    let errorMsg="";
+    setlistLoader(false);
+  if (res.data.error) {
+  //toaster
+  displayError(res.data.error);
+  
+      } else {
+  
+  // displaySuccess("User Account created successfully!!");
+  displaySuccess("Email has been sent!");
+ 
+  
+      }
+    })
+    .catch((error) => {
+      displayError(error.message);
+    setlistLoader(false);
+    });
+  }
+
+
 
 
   const submitSigninForm = (e) => {
@@ -491,7 +533,7 @@ const headers = {
     <MKBox pt={4} pb={3} px={3}>
       <MKBox component="form" role="form">
         <MKBox mb={2}>
-          <MKInput error={errorState.email} success={!errorState.email} onChange={(e)=>handleSignupInputs(e,"email")} type="email" label="Email" value={signupData.email} fullWidth />
+          <MKInput error={errorState.email2} success={!errorState.email2} onChange={(e)=>handleSignupInputs(e,"email2")} type="email" label="Email" value={signupData.email2} fullWidth />
         </MKBox>
         {/* <MKBox mb={2}>
           <MKInput error={errorState.password} success={!errorState.password} onChange={(e)=>handleSignupInputs(e,"password")} type="password" label="New Password" value={signupData.password} fullWidth />
@@ -500,8 +542,8 @@ const headers = {
           <MKInput error={errorState.confirmPassword} success={!errorState.confirmPassword} onChange={(e)=>handleSignupInputs(e,"confirmPassword")} type="password" label="Confirm Password" value={signupData.confirmPassword} fullWidth />
         </MKBox> */}
         <MKBox mt={4} mb={1}>
-          <MKButton disabled={errorState.firstName || errorState.lastName || errorState.dob || errorState.email || errorState.password || errorState.confirmPassword}
-            onClick={submitSignupForm} variant="gradient" color="info" fullWidth>
+          <MKButton disabled={errorState.email2}
+            onClick={submitForgotPassword} variant="gradient" color="info" fullWidth>
             Send password
           </MKButton>
         </MKBox>

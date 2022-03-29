@@ -1,34 +1,68 @@
 // Material Kit 2 React Examples
+
 import RotatingCard from "examples/Cards/RotatingCard";
+
 import RotatingCardFront from "examples/Cards/RotatingCard/RotatingCardFront";
+
 import RotatingCardBack from "examples/Cards/RotatingCard/RotatingCardBack";
 
 
+
+
 function InfoCard()
+
 {
+
     return (
+
         <RotatingCard>
+
   <RotatingCardFront
+
     image="https://bit.ly/3G5JXJZ"
-    icon="touch_app"
+
+    //icon="touch_app"
+
     title={
+
       <>
-        Feel the
+
+        Why use the CASTIT network
+
         <br />
-        Material Kit
+
+        to find talent & crew?
+
       </>
+
     }
-    description="All the MUI components that you need in a development have been re-design with the new look."
+
+    description="The Castit Network is your one-stop solution to make your project come to life"
+
   />
+
   <RotatingCardBack
+
     image="https://bit.ly/32ZoTGx"
+
     title="Discover More"
-    description="You will save a lot of time going from prototyping to full-functional code because all elements are implemented."
-    action={{ type: "internal", route: "/", label: "start with header" }}
+
+    description="We have a community of over 2.42k members including actors, film, TV and theatre professionals,
+
+    voice-over artists, extras, dancers, singers, musicians and child actors."
+
+    // action={{ type: "internal", label: "start with header" }}
+
   />
+
 </RotatingCard>
 
+
+
     );
+
 }
+
+
 
 export default InfoCard;

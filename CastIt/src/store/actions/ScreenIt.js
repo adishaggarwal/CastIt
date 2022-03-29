@@ -23,10 +23,11 @@ export const setshowForm = (value) => {
   };
 };
 
-export const setdirectorActivePosts = (value) => {
+export const setdirectorActivePosts = (value,count) => {
   return {
     type: actionTypes.SET_DIRECTORACTIVE_POSTS,
-    value: value
+    value: value,
+    count:count
   };
 };
 
@@ -256,7 +257,15 @@ export const fetchActiveRoles = () => {
     if (res.data.error) {
           dispatch(displayError(true,res.data.error));
         } else {
-          dispatch(setdirectorActivePosts(res.data));
+          let count=0;
+          for(let i=0;i<res.data.length;i++)
+          {
+            if(res.data[i].roleStatus==="CLOSE")
+            {
+              count++;
+            }
+          }
+          dispatch(setdirectorActivePosts(res.data,count));
         }
   
 }).catch((err) => {
